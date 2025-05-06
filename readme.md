@@ -1,9 +1,13 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/tvZJeQ95)
-# Name der App
+# DreamZzz - dein Fenster zur Traumwelt
 
 **Füge hier einen kurzen, knackigen Slogan ein, um deine App zu bewerben.**
 
-Beschreibe hier in ein paar Sätzen, was deine App bietet.
+DreamZzz ist deine digitale Begleitung für besseren Schlaf und intensivere Träume. Verwandle deine nächtlichen Abenteuer in visuelle Erinnerungen. Mit intelligentem Schlaftracking unterstützt dich die App dabei, die faszinierende Welt deiner Träume zu entschlüsseln und gleichzeitig deinen Schlaf langfristig zu optimieren.
+
+DreamZzz ist für alle, die ihre Träume besser verstehen, ihren Schlaf optimieren oder einfach einen kreativen Zugang zu ihrer nächtlichen Reise suchen. Egal ob du nach mehr Klarheit, Entspannung oder Inspiration suchst - DreamZzz vereint innovative Technologie mit intuitivem Design, um Träume greifbar zu machen.
+
+
 
 Für wen ist sie geeignet? Welches Problem löst sie? Was macht deine App anders/besser als andere Apps?
 Vermeide es, hier allzusehr in technische Details zu gehen.
