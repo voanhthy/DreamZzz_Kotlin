@@ -24,13 +24,15 @@ Füge hier am Ende die Screenshots deiner App ein.
 
 
 ## Features
-Hier kommen alle Features rein, welche deine App bietet.
+Kernfunktionen:
 
-**Tipp: Du kannst diese Punkte mit der Zeit abhaken, sodass am Ende eine vollständige Liste entsteht.**
-
-- [x] Feature 1
-- [x] Feature 2
-- [ ] ...
+- Traumaufzeichnung: Erfasse und speichere deine Träume ganz einfach per Texteingabe, damit sie nicht in Vergessenheit geraten.
+- KI-Integration: Verwandle deine Traumbeschreibungen mithilfe künstlicher Intelligenz in faszinierende, individuell generierte Bilder.
+- dynamische Traumgalerie: Erhalte eine visuelle Übersicht über deine gespeicherten Träume und ihre KI-generierten Bilder in einer interaktiven Galerie.
+- Benutzerverwaltung und Cloud-Speicherung: Erstelle ein Benutzerkonto und sichere deine Träume zuverlässig in der Cloud – jederzeit und von überall abrufbar.
+- Emotionen/Stimmung erfassen: Erfasse beim Speichern eines Traums deine Stimmung, um tiefere Einblicke in dein emotionales Erleben zu gewinnen.
+- interaktiver Nachthimmel: Jeder eingetragene Traum erscheint als Stern am Himmel – erschaffe deine persönliche Traumgalaxie.
+- mehrsprachige Unterstützung: Nutze die App in Deutsch und Englisch für ein intuitives und internationales Erlebnis.
 
 
 ## Technischer Aufbau
