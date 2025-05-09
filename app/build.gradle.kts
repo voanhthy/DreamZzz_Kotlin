@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    // navigation
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+    // ROOM
+    alias(libs.plugins.kotlin.ksp)
 }
 
 android {
@@ -56,4 +60,32 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // extended icons
+        implementation(libs.androidx.compose.material.icons.extended)
+    // viewmodel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    // navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization)
+    // api
+    implementation(libs.moshi)
+    implementation(libs.retrofit)
+    implementation(libs.converterMoshi)
+    // async image
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    // data store
+    implementation(libs.androidx.datastore.preferences)
+    // room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    // koin
+    implementation(project.dependencies.platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    // location
+    implementation(libs.play.services.location)
 }
