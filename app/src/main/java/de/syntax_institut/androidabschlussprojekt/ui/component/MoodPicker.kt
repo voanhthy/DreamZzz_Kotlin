@@ -1,24 +1,19 @@
-package de.syntax_institut.androidabschlussprojekt.ui.screen
+package de.syntax_institut.androidabschlussprojekt.ui.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun HomeScreen(
+fun MoodPicker(
     modifier: Modifier = Modifier
 ) {
-    // Begrüßungstext
-
-    // interaktiver Nachthimmel
-
-    // Kalendar
 
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview() {
+private fun MoodPickerPreview() {
     // Use Theme here
-    HomeScreen()
+    MoodPicker()
 }
