@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import de.syntax_institut.androidabschlussprojekt.ui.AppStart
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 
@@ -27,13 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        AddDreamScreen(
-                            text = "test",
-                            onInputChange = {},
-                            modifier = Modifier.padding(innerPadding)
-                        )
-                    }
+                    AppStart()
                 }
             }
         }

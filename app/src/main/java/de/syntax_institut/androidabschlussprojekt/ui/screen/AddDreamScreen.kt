@@ -45,7 +45,7 @@ fun AddDreamScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Texeingabefeld: Traumbeschreibung
+        // Texteingabefeld: Traumbeschreibung
         OutlinedTextField(
             value = text,
             onValueChange = onInputChange,
@@ -72,7 +72,7 @@ fun AddDreamScreen(
         // Button zum Generieren
         TextButton(
             onClickText = {},
-            title = "Generieren"
+            title = stringResource(R.string.generate)
         )
     }
 }
