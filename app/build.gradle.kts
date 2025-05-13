@@ -1,3 +1,13 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(FileInputStream(localPropertiesFile))
+}
+val apiKey = localProperties.getProperty("API_KEY") ?: ""
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -20,6 +30,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_KEY", "\"$apiKey\"")
     }
 
     buildTypes {
@@ -39,6 +50,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true // Aktiviere BuildConfig
         compose = true
     }
 }
@@ -88,4 +100,5 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     // location
     implementation(libs.play.services.location)
+    implementation(kotlin("test"))
 }

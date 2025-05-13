@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
-
+import de.syntax_institut.androidabschlussprojekt.ui.component.TextButton
+import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 
 
 @Composable
@@ -68,27 +70,33 @@ fun AddDreamScreen(
 
 
         // Button zum Generieren
+        TextButton(
+            onClickText = {},
+            title = "Generieren"
+        )
     }
 }
 
 // englisch
-@Preview(showBackground = true, locale = "en")
+@Preview(showBackground = true, locale = "en", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun AddDreamScreenPreviewEN() {
-    // Use Theme here
-    AddDreamScreen(
-        text = "",
-        onInputChange = {}
-    )
+    AndroidAbschlussprojektTheme {
+        AddDreamScreen(
+            text = "",
+            onInputChange = {}
+        )
+    }
 }
 
 // deutsch
 @Preview(showBackground = true, locale = "de")
 @Composable
 private fun AddDreamScreenPreview() {
-    // Use Theme here
-    AddDreamScreen(
-        text = "",
-        onInputChange = {}
-    )
+    AndroidAbschlussprojektTheme {
+        AddDreamScreen(
+            text = "",
+            onInputChange = {}
+        )
+    }
 }
