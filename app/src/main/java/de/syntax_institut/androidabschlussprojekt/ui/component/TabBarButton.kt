@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,27 +15,21 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TabBarButton(
     title: String,
-    active: Boolean,
+    isActive: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Button(
-        onClick = onClick,
-        modifier = modifier
-            .width(110.dp),
-        colors = ButtonColors(
-            containerColor = Color.Transparent,
-            contentColor = Color.Black,
-            disabledContainerColor = Color.Red,
-            disabledContentColor = Color.Green
-        )
+    TextButton(
+        modifier = Modifier.width(120.dp),
+        onClick = onClick
     ) {
         Text(
             title,
-            fontWeight = if (active) FontWeight.Bold else FontWeight.Light,
-//            color = if (active) Color.White else Color.Black,
+            fontWeight = if (isActive) FontWeight.Bold else FontWeight.Light,
+            color = if (isActive) Color.White else Color.Black,
         )
     }
+
 
 }
 
@@ -44,7 +39,7 @@ private fun TabBarButtonPreview() {
     // Use Theme here
     TabBarButton(
         title = "HOME",
-        active = true,
+        isActive = true,
         onClick = {}
     )
 }

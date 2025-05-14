@@ -11,7 +11,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 fun AppStart() {
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         AddDreamScreen(
-            text = "test",
+            text = "",
             onInputChange = {},
             modifier = Modifier.padding(innerPadding)
         )

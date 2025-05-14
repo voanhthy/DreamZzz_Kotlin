@@ -11,17 +11,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
 
 @Composable
 fun TabBar(
+    activeTab: TabItem,
+    onTabSelected: (TabItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .width(340.dp)
+            .width(360.dp)
             .height(50.dp)
             .clip(RoundedCornerShape(15.dp))
             .background(Color.Gray)
@@ -29,26 +32,13 @@ fun TabBar(
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            TabBarButton(
-                title = "HOME",
-                active = true,
-                onClick = {},
-                modifier = Modifier.weight(1f)
-            )
-
-            TabBarButton(
-                title = "GALLERY",
-                active = false,
-                onClick = {},
-                modifier = Modifier.weight(1f)
-            )
-
-            TabBarButton(
-                title = "YOU",
-                active = false,
-                onClick = {},
-                modifier = Modifier.weight(1f)
-            )
+            TabItem.entries.forEach { tab ->
+                TabBarButton(
+                    title = stringResource(id = tab.titleResId),
+                    isActive = tab == activeTab,
+                    onClick = { onTabSelected(tab) }
+                )
+            }
         }
     }
 }
@@ -57,5 +47,8 @@ fun TabBar(
 @Composable
 private fun TabBarPreview() {
     // Use Theme here
-    TabBar()
+    TabBar(
+        activeTab = TabItem.HOME,
+        onTabSelected = {}
+    )
 }

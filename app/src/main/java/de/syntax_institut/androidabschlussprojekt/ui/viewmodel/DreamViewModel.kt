@@ -21,7 +21,7 @@ class DreamViewModel: ViewModel() {
     val dreamImage = _dreamImage.asStateFlow()
 
     // TODO: Stil integrieren
-    fun fetchImage(prompt: String, apikey: String) {
+    fun fetchImage(prompt: String) {
         viewModelScope.launch {
             try {
                 val response = dreamImageApi.generateImage(

@@ -4,4 +4,7 @@
     <string name="tell_about_dream">Erzähle mir von deinem Traum</string>
     <string name="add_new_dream">Traum eintragen</string>
     <string name="generate">Generieren</string>
+    <string name="tab_home" translatable="false">HOME</string>
+    <string name="tab_gallery">GALERIE</string>
+    <string name="tab_you" translatable="false">YOU</string>
 </resources>
