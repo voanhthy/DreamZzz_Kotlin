@@ -1,8 +1,12 @@
 package de.syntax_institut.androidabschlussprojekt.di
 
+import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.dsl.module
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 
 /*
 Dependency Injection mit Koin
@@ -14,9 +18,13 @@ Dependency Injection mit Koin
 
 val appModule = module {
 
-//    single<DreamImageRepoInterface> {
-//        DreamImageRepoApiImpl(
-//
-//        )
-//    }
+    singleOf(DreamImageApi::retrofitService)
+
+    single<DreamImageRepoInterface> {
+        DreamImageRepoApiImpl(
+            get()
+        )
+    }
+
+    viewModelOf(::DreamViewModel)
 }

@@ -23,13 +23,13 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.TextButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import androidx.compose.runtime.getValue
-
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun AddDreamScreen(
     modifier: Modifier = Modifier,
-    dreamViewModel: DreamViewModel = viewModel()
+    dreamViewModel: DreamViewModel = koinViewModel()
 ) {
     // State Variablen
     val title by dreamViewModel.title.collectAsState()

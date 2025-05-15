@@ -3,10 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.syntax_institut.androidabschlussprojekt.BuildConfig
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
-import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
-import de.syntax_institut.androidabschlussprojekt.data.remote.model.DreamImageRequest
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
