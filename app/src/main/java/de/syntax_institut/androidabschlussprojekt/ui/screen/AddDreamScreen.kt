@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,11 +28,12 @@ import androidx.compose.runtime.getValue
 
 @Composable
 fun AddDreamScreen(
-    text: String,
-    onInputChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     dreamViewModel: DreamViewModel = viewModel()
 ) {
+    // State Variablen
+    val title by dreamViewModel.title.collectAsState()
+    val description by dreamViewModel.description.collectAsState()
     val dreamImage by dreamViewModel.dreamImage.collectAsState()
 
     Column(
@@ -45,8 +47,8 @@ fun AddDreamScreen(
 
         // Texteingabefeld: Titel
         OutlinedTextField(
-            value = text,
-            onValueChange = onInputChange,
+            value = title,
+            onValueChange = { dreamViewModel.updateTitle(it) },
             label = {
                 Text(stringResource(R.string.title))
             },
@@ -55,8 +57,8 @@ fun AddDreamScreen(
 
         // Texteingabefeld: Traumbeschreibung
         OutlinedTextField(
-            value = text,
-            onValueChange = onInputChange,
+            value = description,
+            onValueChange = { dreamViewModel.updateDescription(it) },
             label = {
                 Text(stringResource(R.string.tell_about_dream))
             },
@@ -89,7 +91,8 @@ fun AddDreamScreen(
         // Button zum Generieren
         TextButton(
             onClickText = {
-                dreamViewModel.fetchImage(text)
+                dreamViewModel.fetchImage(description)
+                Log.d("ButtonTest", "Generate-Button wurde gedrückt")
             },
             title = stringResource(R.string.generate)
         )
@@ -101,10 +104,7 @@ fun AddDreamScreen(
 @Composable
 private fun AddDreamScreenPreviewEN() {
     AndroidAbschlussprojektTheme {
-        AddDreamScreen(
-            text = "",
-            onInputChange = {}
-        )
+        AddDreamScreen()
     }
 }
 
@@ -113,9 +113,6 @@ private fun AddDreamScreenPreviewEN() {
 @Composable
 private fun AddDreamScreenPreview() {
     AndroidAbschlussprojektTheme {
-        AddDreamScreen(
-            text = "",
-            onInputChange = {}
-        )
+        AddDreamScreen()
     }
 }
