@@ -20,7 +20,7 @@ fun TabBarButton(
     modifier: Modifier = Modifier
 ) {
     TextButton(
-        modifier = Modifier.width(120.dp),
+        modifier = modifier.width(120.dp),
         onClick = onClick
     ) {
         Text(

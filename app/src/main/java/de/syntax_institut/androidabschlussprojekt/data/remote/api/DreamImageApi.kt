@@ -25,7 +25,7 @@ private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
-// OkHttpClient auf 60s setzen, da sonst TimeOut (nach 10s)
+// OkHttpClient (Netzwerkclient) auf 60s setzen, da sonst TimeOut (nach 10s)
 private val client = OkHttpClient.Builder()
     .connectTimeout(60, TimeUnit.SECONDS)
     .readTimeout(60, TimeUnit.SECONDS)

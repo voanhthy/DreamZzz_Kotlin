@@ -16,6 +16,7 @@ Dependency Injection mit Koin
 4. Dependencies in appModule definieren -> hier werden Dependencies aufgelöst
  */
 
+// hier alle Abhängigkeiten hinzufügen
 val appModule = module {
 
     singleOf(DreamImageApi::retrofitService)
