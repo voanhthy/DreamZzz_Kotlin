@@ -38,8 +38,10 @@ fun AppStart() {
     Scaffold(
         bottomBar = {
             TabBar(
+                modifier = Modifier,
                 activeTab = selectedTabItem,
                 onTabSelected = { selectedTab ->
+                    selectedTabItem = selectedTab
                     navController.navigate(selectedTab.route) {
                         // Stack Wachstum bei jedem Tab Klick vermeiden
                         popUpTo(navController.graph.startDestinationId) {

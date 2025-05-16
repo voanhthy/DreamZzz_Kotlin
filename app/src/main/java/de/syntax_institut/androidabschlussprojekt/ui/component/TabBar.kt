@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -24,19 +26,23 @@ fun TabBar(
 ) {
     Box(
         modifier = modifier
-            .width(360.dp)
-            .height(50.dp)
-            .clip(RoundedCornerShape(15.dp))
-            .background(Color.Gray)
+            .fillMaxWidth()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .width(330.dp)
+                .height(50.dp)
+                .clip(RoundedCornerShape(15.dp))
+                .background(Color.Gray)
         ) {
             TabItem.entries.forEach { tab ->
                 TabBarButton(
                     title = stringResource(id = tab.titleResId),
                     isActive = tab == activeTab,
-                    onClick = { onTabSelected(tab) }
+                    onClick = { onTabSelected(tab) },
+                    modifier = Modifier.weight(1f)
                 )
             }
         }
