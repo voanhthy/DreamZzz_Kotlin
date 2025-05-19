@@ -4,6 +4,7 @@ import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
 import org.koin.dsl.module
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -28,4 +29,6 @@ val appModule = module {
     }
 
     viewModelOf(::DreamViewModel)
+
+    viewModelOf(::SettingsViewModel)
 }

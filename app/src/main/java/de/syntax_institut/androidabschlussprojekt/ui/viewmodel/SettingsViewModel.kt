@@ -46,18 +46,20 @@ class SettingsViewModel(application: Application): AndroidViewModel(application)
             initialValue = false
         )
 
-    fun updateNotificationOn(isOn: Boolean) {
+    fun toggleNotificationOn() {
         viewModelScope.launch {
             dataStore.edit { values ->
-                values[DATASTORE_NOTIFCATION_KEY] = isOn
+                val current = values[DATASTORE_NOTIFCATION_KEY] ?: false
+                values[DATASTORE_NOTIFCATION_KEY] = !current
             }
         }
     }
 
-    fun updateDarkMode(isOn: Boolean) {
+    fun toggleDarkMode() {
         viewModelScope.launch {
             dataStore.edit { values ->
-                values[DATASTORE_DARKMODE_KEY] = isOn
+                val current = values[DATASTORE_DARKMODE_KEY] ?: false
+                values[DATASTORE_DARKMODE_KEY] =  !current
             }
         }
     }

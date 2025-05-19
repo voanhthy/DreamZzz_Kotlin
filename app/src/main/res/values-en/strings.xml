@@ -17,4 +17,6 @@
     <string name="category_normal">Normal dream</string>
     <string name="category_nightmare">Nightmare</string>
     <string name="category_lucid">Lucid dream</string>
+    <string name="language_german">German</string>
+    <string name="language_english">English</string>
 </resources>
