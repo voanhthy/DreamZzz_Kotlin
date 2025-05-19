@@ -70,8 +70,8 @@ fun AppStart() {
             }
 
             composable<SettingsRoute> {
-//                AddDreamScreen()
-                SettingsScreen()
+                AddDreamScreen()
+//                SettingsScreen()
             }
         }
     }

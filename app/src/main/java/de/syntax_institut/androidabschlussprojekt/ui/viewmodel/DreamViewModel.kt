@@ -3,15 +3,18 @@ package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDao
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DreamViewModel(
-    private val dreamImageRepoInterface: DreamImageRepoInterface
+    private val dreamImageRepoInterface: DreamImageRepoInterface,
+    private val dreamImagedao: DreamImageDao
 ): ViewModel() {
 
     private val TAG = "DreamViewModel"
@@ -30,7 +33,14 @@ class DreamViewModel(
     private val _selectedDreamCategory = MutableStateFlow<DreamCategory>(DreamCategory.NORMAL)
     val selectedDreamCategory = _selectedDreamCategory.asStateFlow()
 
+    val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
 
+    // Bild in Datenbank speichern
+    fun saveDreamImage(dreamImage: DreamImage) {
+        viewModelScope.launch {
+            dreamImagedao.insert(dreamImage)
+        }
+    }
 
     // TODO: Stil integrieren
     fun fetchImage(prompt: String) {
@@ -43,10 +53,12 @@ class DreamViewModel(
                 Log.d(TAG, "Bild-URL vom Repo: $imageUrl")
 
                 if (imageUrl != null) {
-                    _dreamImage.value = DreamImage(
+                    val dream = DreamImage(
                         url = imageUrl,
                         prompt = prompt
                     )
+                    _dreamImage.value = dream
+                    saveDreamImage(dream)
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error im ViewModel: $e")
