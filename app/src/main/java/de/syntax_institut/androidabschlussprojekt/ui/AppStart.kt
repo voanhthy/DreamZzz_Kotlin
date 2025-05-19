@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
 import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.GalleryScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.HomeScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.SettingsScreen
@@ -29,6 +30,13 @@ object GalleryRoute
 
 @Serializable
 object SettingsRoute
+
+@Serializable
+data class DreamDetailRoute(
+    val id: Long,
+//    val url: String,
+//    val prompt: String
+)
 
 @Composable
 fun AppStart() {
@@ -66,12 +74,26 @@ fun AppStart() {
             }
 
             composable<GalleryRoute> {
-                GalleryScreen()
+                GalleryScreen(
+                    onNavigateToDetailScreen = { dream ->
+                        navController.navigate(
+                            DreamDetailRoute(
+                                id = dream.id,
+//                                url = dream.url,
+//                                prompt = dream.prompt
+                            )
+                        )
+                    }
+                )
             }
 
             composable<SettingsRoute> {
                 AddDreamScreen()
 //                SettingsScreen()
+            }
+
+            composable<DreamDetailRoute> {
+                DreamDetailScreen()
             }
         }
     }

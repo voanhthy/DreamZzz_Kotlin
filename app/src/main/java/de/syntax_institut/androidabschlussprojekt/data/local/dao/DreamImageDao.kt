@@ -22,6 +22,9 @@ interface DreamImageDao {
     @Query("SELECT * from dreams ORDER BY id ASC")          // Abfrage
     fun getAllItems(): Flow<List<DreamImage>>
 
+    @Query("SELECT * from dreams WHERE id = :id")
+    fun getItemById(id: Long): Flow<DreamImage?>
+
     @Delete
     suspend fun delete(dreamImage: DreamImage)
 

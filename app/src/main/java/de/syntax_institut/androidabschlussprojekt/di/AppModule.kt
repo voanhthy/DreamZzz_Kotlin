@@ -1,16 +1,16 @@
 package de.syntax_institut.androidabschlussprojekt.di
 
-import androidx.room.Database
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDatabase
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
 import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
 
 /*
 Dependency Injection mit Koin
@@ -46,4 +46,6 @@ val appModule = module {
     viewModelOf(::DreamViewModel)
 
     viewModelOf(::SettingsViewModel)
+
+    viewModelOf(::DreamDetailViewModel)
 }

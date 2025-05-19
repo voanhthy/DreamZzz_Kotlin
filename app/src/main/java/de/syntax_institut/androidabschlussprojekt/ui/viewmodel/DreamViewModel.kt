@@ -58,7 +58,7 @@ class DreamViewModel(
                         prompt = prompt
                     )
                     _dreamImage.value = dream
-                    saveDreamImage(dream)
+                    saveDreamImage(dream)       // Bild speichern
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error im ViewModel: $e")
@@ -66,14 +66,17 @@ class DreamViewModel(
         }
     }
 
+    // Textfield Titel
     fun updateTitle(newTitle: String) {
         _title.value = newTitle
     }
 
+    // Textfield Beschreibung
     fun updateDescription(newDescription: String) {
         _description.value = newDescription
     }
 
+    // DreamCategory
     fun updateDreamCategory(category: DreamCategory) {
         _selectedDreamCategory.value = category
     }
