@@ -14,14 +14,15 @@ import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
 import coil3.compose.AsyncImage
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 
 
 @Composable
 fun DreamDetailScreen(
     modifier: Modifier = Modifier,
-    dreamViewModel: DreamViewModel = koinViewModel()
+    dreamDetailViewModel: DreamDetailViewModel = koinViewModel()
 ) {
-    val dreamImage by dreamViewModel.dreamImage.collectAsState()
+    val dreamImage by dreamDetailViewModel.dreamStateFlow.collectAsState()
 
     LazyColumn(
         modifier = modifier

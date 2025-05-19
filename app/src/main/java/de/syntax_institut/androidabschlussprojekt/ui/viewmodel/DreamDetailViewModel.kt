@@ -16,11 +16,13 @@ class DreamDetailViewModel(
 
     private val args = savedStateHandle.toRoute<DreamDetailRoute>()
 
-    // aus Datenbank holen
+    // aus Datenbank über id holen
     val dreamStateFlow = dreamImagedao.getItemById(args.id)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = null
         )
+//
+//    val id = args.id
 }

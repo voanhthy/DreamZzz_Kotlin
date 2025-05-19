@@ -33,9 +33,7 @@ object SettingsRoute
 
 @Serializable
 data class DreamDetailRoute(
-    val id: Long,
-//    val url: String,
-//    val prompt: String
+    val id: Long
 )
 
 @Composable
@@ -78,9 +76,7 @@ fun AppStart() {
                     onNavigateToDetailScreen = { dream ->
                         navController.navigate(
                             DreamDetailRoute(
-                                id = dream.id,
-//                                url = dream.url,
-//                                prompt = dream.prompt
+                                id = dream.id
                             )
                         )
                     }
