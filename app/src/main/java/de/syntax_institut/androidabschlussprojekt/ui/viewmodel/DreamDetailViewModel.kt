@@ -7,12 +7,11 @@ import androidx.navigation.toRoute
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDao
 import de.syntax_institut.androidabschlussprojekt.ui.DreamDetailRoute
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
 
 class DreamDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    private val dreamImagedao: DreamImageDao
+    dreamImagedao: DreamImageDao
 ): ViewModel() {
 
     private val args = savedStateHandle.toRoute<DreamDetailRoute>()

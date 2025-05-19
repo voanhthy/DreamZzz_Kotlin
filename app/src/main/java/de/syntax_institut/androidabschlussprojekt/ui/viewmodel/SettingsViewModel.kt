@@ -1,9 +1,12 @@
 package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 
 import android.app.Application
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.dataStore
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,10 +18,9 @@ import kotlinx.coroutines.launch
 private val DATASTORE_NOTIFCATION_KEY = booleanPreferencesKey("notificationsOn")
 private val DATASTORE_DARKMODE_KEY = booleanPreferencesKey("isDarkMode")
 
-class SettingsViewModel(application: Application): AndroidViewModel(application) {
-
-    // DataStore-Instanz
-    private val dataStore = application.dataStore
+class SettingsViewModel(
+    private val dataStore: DataStore<Preferences>
+): ViewModel() {
 
     private val isNotificationOnFlow = dataStore.data
             .map { preferences ->

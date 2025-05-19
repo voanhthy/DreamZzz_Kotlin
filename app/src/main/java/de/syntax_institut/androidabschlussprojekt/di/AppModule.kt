@@ -1,9 +1,15 @@
 package de.syntax_institut.androidabschlussprojekt.di
 
+import android.R.attr.handle
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDatabase
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
+import de.syntax_institut.androidabschlussprojekt.dataStore
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
@@ -34,6 +40,11 @@ val appModule = module {
     // einmalige Dependency: Dao
     single {
         get<DreamImageDatabase>().dreamImageDao()
+    }
+
+    // einmalige Dependency: DataStore
+    single<DataStore<Preferences>> {
+        androidContext().dataStore
     }
 
     // Repository wiedergegeben als Typ RepoInterface
