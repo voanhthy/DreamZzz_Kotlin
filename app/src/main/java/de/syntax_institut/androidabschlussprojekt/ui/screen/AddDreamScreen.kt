@@ -16,13 +16,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.TextButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import androidx.compose.runtime.getValue
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -35,6 +35,7 @@ fun AddDreamScreen(
     val title by dreamViewModel.title.collectAsState()
     val description by dreamViewModel.description.collectAsState()
     val dreamImage by dreamViewModel.dreamImage.collectAsState()
+    val selectedCategory by dreamViewModel.selectedDreamCategory.collectAsState()
 
     Column(
         modifier = modifier
@@ -71,7 +72,10 @@ fun AddDreamScreen(
 
 
         // Traum-Kategorie auswählen
-
+        DreamCategoryPicker(
+            selectedCategory = selectedCategory,
+            onClickSelected = { dreamViewModel.updateDreamCategory(it) }
+        )
 
         // Style Picker
 

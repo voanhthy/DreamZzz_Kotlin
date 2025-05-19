@@ -1,12 +1,8 @@
 package de.syntax_institut.androidabschlussprojekt.data.local.model.enums
+import de.syntax_institut.androidabschlussprojekt.R
 
-enum class DreamCategory(val title: String) {
-    NORMAL("Normaler Traum"),
-    NIGHTMARE("Albtraum"),
-    LUCID("Luzider Traum");
-
-    // einheitliche, typsichere Liste für UI
-    companion object {
-        val all = DreamCategory.entries
-    }
+enum class DreamCategory(val titleResId: Int) {
+    NORMAL(R.string.category_normal),
+    NIGHTMARE(R.string.category_nightmare),
+    LUCID(R.string.category_lucid)
 }

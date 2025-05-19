@@ -6,4 +6,15 @@
     <string name="add_new_dream">Add Dream</string>
     <string name="generate">Generate</string>
     <string name="tab_gallery">GALLERY</string>
+    <string name="type_of_dream">Type of dream:</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="member_since">Member since</string>
+    <string name="notifications">Notifications</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="language">Language</string>
+    <string name="about_this_app">About this app</string>
+    <string name="category_normal">Normal dream</string>
+    <string name="category_nightmare">Nightmare</string>
+    <string name="category_lucid">Lucid dream</string>
 </resources>

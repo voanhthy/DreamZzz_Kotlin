@@ -17,6 +17,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.GalleryScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.HomeScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.SettingsScreen
 import kotlinx.serialization.Serializable
 
 
@@ -69,7 +70,8 @@ fun AppStart() {
             }
 
             composable<SettingsRoute> {
-                AddDreamScreen()
+//                AddDreamScreen()
+                SettingsScreen()
             }
         }
     }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,6 +26,9 @@ class DreamViewModel(
 
     private val _description = MutableStateFlow("")
     val description = _description.asStateFlow()
+
+    private val _selectedDreamCategory = MutableStateFlow<DreamCategory>(DreamCategory.NORMAL)
+    val selectedDreamCategory = _selectedDreamCategory.asStateFlow()
 
 
 
@@ -56,6 +60,10 @@ class DreamViewModel(
     }
 
     fun updateDescription(newDescription: String) {
-        _description.value =newDescription
+        _description.value = newDescription
+    }
+
+    fun updateDreamCategory(category: DreamCategory) {
+        _selectedDreamCategory.value = category
     }
 }
