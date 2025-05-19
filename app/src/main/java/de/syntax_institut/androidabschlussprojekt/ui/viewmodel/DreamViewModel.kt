@@ -44,7 +44,6 @@ class DreamViewModel(
 
                 if (imageUrl != null) {
                     _dreamImage.value = DreamImage(
-                        id = "1",
                         url = imageUrl,
                         prompt = prompt
                     )
