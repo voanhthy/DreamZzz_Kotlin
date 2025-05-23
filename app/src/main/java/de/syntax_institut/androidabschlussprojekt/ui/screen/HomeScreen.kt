@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryListItem
 
 
 @Composable
@@ -49,6 +50,10 @@ fun HomeScreen(
         }
 
         // Kalender
+        GalleryListItem(
+            imageUrl = "https://www.munich-strategy.com/wp-content/uploads/2023/06/platzhalter.jpg",
+            prompt = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+        )
     }
 }
 
