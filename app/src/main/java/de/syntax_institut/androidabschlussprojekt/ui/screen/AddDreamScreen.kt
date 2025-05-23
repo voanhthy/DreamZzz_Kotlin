@@ -3,6 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.screen
 import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,6 +12,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,11 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
+import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.TextButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
-import androidx.compose.runtime.getValue
-import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -36,6 +39,7 @@ fun AddDreamScreen(
     val description by dreamViewModel.description.collectAsState()
     val dreamImage by dreamViewModel.dreamImage.collectAsState()
     val selectedCategory by dreamViewModel.selectedDreamCategory.collectAsState()
+    val selectedMood by dreamViewModel.selectedMood.collectAsState()
 
     Column(
         modifier = modifier
@@ -80,7 +84,17 @@ fun AddDreamScreen(
         // Style Picker
 
 
-        // Mood Picker
+        // Mood Picker TODO: in eine Box packen
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Wie fühlst du dich?")
+            MoodPicker(
+                selectedMood = selectedMood,
+                onSelectedMood = { dreamViewModel.setMood(it) }
+            )
+        }
 
         // TODO: temporär Bild anzeigen
         dreamImage?.url?.let { imageUrl ->

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDao
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +33,9 @@ class DreamViewModel(
 
     private val _selectedDreamCategory = MutableStateFlow<DreamCategory>(DreamCategory.NORMAL)
     val selectedDreamCategory = _selectedDreamCategory.asStateFlow()
+
+    private val _selectedMood = MutableStateFlow<Mood>(Mood.GOOD)
+    val selectedMood = _selectedMood.asStateFlow()
 
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
 
@@ -79,5 +83,9 @@ class DreamViewModel(
     // DreamCategory
     fun updateDreamCategory(category: DreamCategory) {
         _selectedDreamCategory.value = category
+    }
+
+    fun setMood(mood: Mood) {
+        _selectedMood.value = mood
     }
 }
