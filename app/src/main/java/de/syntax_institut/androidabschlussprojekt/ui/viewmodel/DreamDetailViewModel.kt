@@ -23,6 +23,4 @@ class DreamDetailViewModel(
             started = SharingStarted.WhileSubscribed(),
             initialValue = null
         )
-//
-//    val id = args.id
 }

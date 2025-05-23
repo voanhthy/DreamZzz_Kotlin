@@ -19,4 +19,7 @@
     <string name="category_lucid">Lucid dream</string>
     <string name="language_german">German</string>
     <string name="language_english">English</string>
+    <string name="detail_title">Title:</string>
+    <string name="todays_mood">How do you feel today?</string>
+    <string name="detail_date">Date:</string>
 </resources>

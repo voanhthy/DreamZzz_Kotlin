@@ -22,4 +22,7 @@
     <string name="category_lucid">Luzider Traum</string>
     <string name="language_german">Deutsch</string>
     <string name="language_english">Englisch</string>
+    <string name="detail_title">Titel:</string>
+    <string name="todays_mood">Wie fühlst du dich heute?</string>
+    <string name="detail_date">Datum:</string>
 </resources>
