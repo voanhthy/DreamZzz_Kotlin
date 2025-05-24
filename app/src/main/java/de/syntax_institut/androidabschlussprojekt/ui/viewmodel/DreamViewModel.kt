@@ -85,6 +85,7 @@ class DreamViewModel(
         _selectedDreamCategory.value = category
     }
 
+    // Mood
     fun setMood(mood: Mood) {
         _selectedMood.value = mood
     }

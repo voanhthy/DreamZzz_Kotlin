@@ -23,7 +23,7 @@ import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
-import de.syntax_institut.androidabschlussprojekt.ui.component.TextButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -107,7 +107,7 @@ fun AddDreamScreen(
 
 
         // Button zum Generieren
-        TextButton(
+        DreamZzzTextButton(
             onClickText = {
                 dreamViewModel.fetchImage(description)
                 Log.d("ButtonTest", "Generate-Button wurde gedrückt")

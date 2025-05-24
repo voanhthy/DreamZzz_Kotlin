@@ -25,4 +25,7 @@
     <string name="detail_title">Titel:</string>
     <string name="todays_mood">Wie fühlst du dich heute?</string>
     <string name="detail_date">Datum:</string>
+    <string name="gallery_description" translatable="false">Träume sind kleine Fenster in verborgene Welten. Welche Geschichte wird dein nächster Traum erzählen?</string>
+    <string name="button_minus" translatable="false">minus</string>
+    <string name="button_plus" translatable="false">plus</string>
 </resources>

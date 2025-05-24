@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,18 +18,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryListItem
 
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickNavigateToAddDream: () -> Unit
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        // Add Button
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            AddButton(
+                onAddClick = onClickNavigateToAddDream
+            )
+        }
+
         // Begrüßungstext
         Text("Hi Gast!",
             fontSize = 36.sp)
@@ -50,10 +63,7 @@ fun HomeScreen(
         }
 
         // Kalender
-        GalleryListItem(
-            imageUrl = "https://www.munich-strategy.com/wp-content/uploads/2023/06/platzhalter.jpg",
-            prompt = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
-        )
+
     }
 }
 
@@ -61,5 +71,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPreview() {
     // Use Theme here
-    HomeScreen()
+    HomeScreen(
+        onClickNavigateToAddDream = {}
+    )
 }

@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
+import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryGrid
 import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
@@ -32,9 +33,13 @@ object GalleryRoute
 object SettingsRoute
 
 @Serializable
+object AddDreamRoute
+
+@Serializable
 data class DreamDetailRoute(
     val id: Long
 )
+
 
 @Composable
 fun AppStart() {
@@ -68,7 +73,11 @@ fun AppStart() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<HomeRoute> {
-                HomeScreen()
+                HomeScreen(
+                    onClickNavigateToAddDream = {
+                        navController.navigate(AddDreamRoute)
+                    }
+                )
             }
 
             composable<GalleryRoute> {
@@ -79,17 +88,24 @@ fun AppStart() {
                                 id = dream.id
                             )
                         )
+                    },
+                    onNavigateToAddDreamScreen = {
+                        navController.navigate(AddDreamRoute)
                     }
                 )
             }
 
             composable<SettingsRoute> {
-                AddDreamScreen()
 //                SettingsScreen()
+                GalleryGrid()
             }
 
             composable<DreamDetailRoute> {
                 DreamDetailScreen()
+            }
+
+            composable<AddDreamRoute> {
+                AddDreamScreen()
             }
         }
     }
