@@ -72,7 +72,8 @@ koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 # location
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
-
+# Compose Foundation für LazyVerticalStaggeredGrid
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

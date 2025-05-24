@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,13 +15,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.ViewList
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -33,18 +34,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import coil3.compose.AsyncImage
+import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
+import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryListItem
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
-import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
-import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryGrid
-import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryListItem
+import kotlin.random.Random
+import kotlin.random.Random.Default.nextInt
 
 
 @Composable
@@ -56,6 +61,9 @@ fun GalleryScreen(
 ) {
     var isGrid by remember { mutableStateOf(false) }
     val dreamImages by dreamViewModel.savedDreamImages.collectAsState(listOf())
+    var gridColumns by remember { mutableStateOf(2) }
+    val minColumns = 1
+    val maxColumns = 8
 
     Column(
         modifier = modifier
@@ -91,31 +99,48 @@ fun GalleryScreen(
         Text(stringResource(R.string.tab_gallery))
         Text(stringResource(R.string.gallery_description))
 
-        // Button minus plus
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            TextButton(
-                onClick = {}
-            ) {
-                Text(stringResource(R.string.button_minus))
-            }
-            TextButton(
-                onClick = {}
-            ) {
-                Text(stringResource(R.string.button_plus))
-            }
-        }
-
         if (isGrid) {
+            // Button minus plus
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(
+                    onClick = {
+                        if (gridColumns > minColumns) {
+                            gridColumns--
+                        }
+                    },
+                    enabled = gridColumns > minColumns
+                ) {
+                    Text(stringResource(R.string.button_minus))
+                }
+                TextButton(
+                    onClick = {
+                        if (gridColumns < maxColumns) {
+                            gridColumns++
+                        }
+                    },
+                    enabled = gridColumns < maxColumns
+                ) {
+                    Text(stringResource(R.string.button_plus))
+                }
+            }
+
             // GalleryGrid
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(gridColumns),
                 modifier = modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalItemSpacing = 8.dp
             ) {
                 itemsIndexed(dreamImages) { index, dream ->
+                    // zufällige Höhe generieren
+                    val randomHeight = remember(dream.id) {
+                        Random.nextInt(100, 400).dp
+                    }
+
                     AsyncImage(
                         model = dream.url,
                         contentDescription = "Traumbild",
@@ -123,6 +148,10 @@ fun GalleryScreen(
                             .clickable {
                             onNavigateToDetailScreen(dream)
                         }
+                            .clip(shape = RoundedCornerShape(10.dp))
+                            .fillMaxWidth()
+                            .height(randomHeight),
+                        contentScale = ContentScale.Crop
                     )
                 }
             }

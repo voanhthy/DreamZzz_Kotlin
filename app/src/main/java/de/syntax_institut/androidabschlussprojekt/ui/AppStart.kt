@@ -13,7 +13,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
-import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryGrid
 import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
@@ -96,8 +95,7 @@ fun AppStart() {
             }
 
             composable<SettingsRoute> {
-//                SettingsScreen()
-                GalleryGrid()
+                SettingsScreen()
             }
 
             composable<DreamDetailRoute> {

@@ -101,4 +101,6 @@ dependencies {
     // location
     implementation(libs.play.services.location)
     implementation(kotlin("test"))
+    // Für LazyVerticalStaggeredGrid
+    implementation(libs.androidx.compose.foundation)
 }
