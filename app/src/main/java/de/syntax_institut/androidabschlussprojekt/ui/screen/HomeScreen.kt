@@ -18,8 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.HorizontalDivider
 import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.CalendarBar
 import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryListItem
+import java.time.LocalDate
 
 
 @Composable
@@ -53,7 +56,7 @@ fun HomeScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 24.dp)
+                    .padding(top = 24.dp, bottom = 8.dp)
                     .height(250.dp)
                     .clip(RoundedCornerShape(20.dp))
                     .background(Color.Blue)
@@ -63,7 +66,15 @@ fun HomeScreen(
         }
 
         // Kalender
-
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = 16.dp)
+        )
+        CalendarBar(
+            selectedDate = LocalDate.now(),
+            onSelectedDate = { }
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = 16.dp))
     }
 }
 
