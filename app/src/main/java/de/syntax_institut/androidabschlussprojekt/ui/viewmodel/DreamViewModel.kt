@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.Date
 
 class DreamViewModel(
     private val dreamImageRepoInterface: DreamImageRepoInterface,
@@ -37,6 +38,9 @@ class DreamViewModel(
     private val _selectedMood = MutableStateFlow<Mood>(Mood.GOOD)
     val selectedMood = _selectedMood.asStateFlow()
 
+    private val _date = MutableStateFlow(Date())
+    val date = _date.asStateFlow()
+
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
 
     // Bild in Datenbank speichern
@@ -59,9 +63,14 @@ class DreamViewModel(
                 if (imageUrl != null) {
                     val dream = DreamImage(
                         url = imageUrl,
-                        prompt = prompt
+                        prompt = prompt,
+                        mood = _selectedMood.value,
+                        typeOfDream = _selectedDreamCategory.value,
+                        title = _title.value,
+                        date = _date.value,
+                        interpretation = null
                     )
-                    _dreamImage.value = dream
+                    _dreamImage.value = dream   // State für DetailScreen aktualisieren
                     saveDreamImage(dream)       // Bild speichern
                 }
             } catch (e: Exception) {
@@ -70,6 +79,7 @@ class DreamViewModel(
         }
     }
 
+    // StateFlows aktualisieren
     // Textfield Titel
     fun updateTitle(newTitle: String) {
         _title.value = newTitle
@@ -88,5 +98,10 @@ class DreamViewModel(
     // Mood
     fun setMood(mood: Mood) {
         _selectedMood.value = mood
+    }
+
+    // Date
+    fun updateDate(newDate: Date) {
+        _date.value = newDate
     }
 }

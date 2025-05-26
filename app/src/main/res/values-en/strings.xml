@@ -6,7 +6,7 @@
     <string name="add_new_dream">Add Dream</string>
     <string name="generate">Generate</string>
     <string name="tab_gallery">GALLERY</string>
-    <string name="type_of_dream">Type of dream:</string>
+    <string name="type_of_dream">"Type of dream: "</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="member_since">Member since</string>
@@ -20,6 +20,10 @@
     <string name="language_german">German</string>
     <string name="language_english">English</string>
     <string name="detail_title">Title:</string>
-    <string name="todays_mood">How do you feel today?</string>
-    <string name="detail_date">Date:</string>
+    <string name="todays_mood">"How do you feel today? "</string>
+    <string name="detail_date">"Date: "</string>
+    <string name="mood_good">Good</string>
+    <string name="mood_sad">Sad</string>
+    <string name="mood_angry">Angry</string>
+    <string name="mood_happy">Happy</string>
 </resources>

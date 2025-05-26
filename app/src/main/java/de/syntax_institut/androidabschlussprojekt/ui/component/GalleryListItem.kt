@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,13 +21,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun GalleryListItem(
     imageUrl: String,
     prompt: String,
+    date: Date,
     modifier: Modifier = Modifier
 ) {
+    val formattedDate = remember(date) {
+        SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
+    }
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -68,7 +78,7 @@ fun GalleryListItem(
                 .zIndex(1f)         // über Box herausragen lassen
         ) {
             Text(
-                "23.05.2025",
+                formattedDate,
                 modifier = Modifier
                     .width(150.dp)
                     .background(Color.Green)
@@ -84,6 +94,7 @@ private fun ListItemPreview() {
     // Use Theme here
     GalleryListItem(
         imageUrl = "https://www.munich-strategy.com/wp-content/uploads/2023/06/platzhalter.jpg",
-        prompt = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+        prompt = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+        date = Date()
     )
 }

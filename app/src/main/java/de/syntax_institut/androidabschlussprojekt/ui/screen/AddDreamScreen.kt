@@ -1,7 +1,10 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,10 +14,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,8 +36,12 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButto
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
+@SuppressLint("RememberReturnType")
 @Composable
 fun AddDreamScreen(
     modifier: Modifier = Modifier,
@@ -40,14 +53,20 @@ fun AddDreamScreen(
     val dreamImage by dreamViewModel.dreamImage.collectAsState()
     val selectedCategory by dreamViewModel.selectedDreamCategory.collectAsState()
     val selectedMood by dreamViewModel.selectedMood.collectAsState()
+    val date by dreamViewModel.date.collectAsState()
+    val context = LocalContext.current
+
+    var showDatePicker by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(stringResource(R.string.add_new_dream).uppercase(),
-            fontSize = 30.sp)
+        Text(
+            stringResource(R.string.add_new_dream).uppercase(),
+            fontSize = 30.sp
+        )
 
 
         // Texteingabefeld: Titel
@@ -73,6 +92,52 @@ fun AddDreamScreen(
         )
 
         // Datum auswählen
+        val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
+
+        if (showDatePicker) {
+            // Kalender Instanz basierend auf dem aktuellem Datum
+            LaunchedEffect(showDatePicker) {
+                val calendar = Calendar.getInstance().apply { time = date }
+
+                val dialog = DatePickerDialog(
+                    context,
+                    { _, year, month, dayOfMonth ->
+
+                        val newDate = Calendar.getInstance().apply {
+                            set(year, month, dayOfMonth)
+                        }.time
+                        dreamViewModel.updateDate(newDate)
+                        showDatePicker = false
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                )
+                dialog.setOnDismissListener {
+                    showDatePicker = false
+                }
+                dialog.show()
+            }
+        }
+
+        OutlinedTextField(
+            value = formattedDate,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(stringResource(R.string.detail_date)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    showDatePicker = true
+                }
+        )
+
+//        if (showDatePicker) {
+//            DisposableEffect(Unit) {
+//                datePickerDialog.show()
+//                onDispose {  }
+//            }
+//        }
 
 
         // Traum-Kategorie auswählen

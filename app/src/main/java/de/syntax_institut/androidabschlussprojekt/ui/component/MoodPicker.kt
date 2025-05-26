@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 
@@ -40,7 +41,7 @@ fun MoodPicker(
             onClick = { expanded = true },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(selectedMood.title)
+            Text(stringResource(id = selectedMood.titleResId))
         }
 
         DropdownMenu(
@@ -49,7 +50,7 @@ fun MoodPicker(
         ) {
             Mood.entries.forEach { mood ->
                 DropdownMenuItem(
-                    text = { Text(mood.title) },
+                    text = { Text(stringResource(mood.titleResId)) },
                     onClick = {
                         onSelectedMood(mood)
                         expanded = false

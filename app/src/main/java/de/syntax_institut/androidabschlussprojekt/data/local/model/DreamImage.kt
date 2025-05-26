@@ -2,6 +2,8 @@ package de.syntax_institut.androidabschlussprojekt.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import java.util.Date
 
 @Entity(tableName = "dreams")
@@ -10,10 +12,10 @@ data class DreamImage(
     var id: Long = 0,
     var url: String,
 //    val imageData: Data?
-//    var date: Date,
+    var date: Date,
     var prompt: String,
-//    var title: String?,
-//    var interpretation: String?,
-//    var mood: String?,
-//    var typeOfDream: String?
+    var title: String? = null,
+    var interpretation: String?,
+    var mood: Mood,
+    var typeOfDream: DreamCategory
 )

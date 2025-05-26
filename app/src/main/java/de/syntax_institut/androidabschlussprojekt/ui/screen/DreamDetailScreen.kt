@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import de.syntax_institut.androidabschlussprojekt.ui.component.DetailBox
+import de.syntax_institut.androidabschlussprojekt.ui.component.DetailInfoBox
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -50,8 +51,9 @@ fun DreamDetailScreen(
 //                        modifier = Modifier.padding(16.dp))
 //
 //                }
+                Spacer(modifier = Modifier.padding(16.dp))
 
-                DetailBox(image)
+                DetailInfoBox(image)
             }
         }
 

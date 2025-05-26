@@ -7,7 +7,7 @@
     <string name="tab_home" translatable="false">HOME</string>
     <string name="tab_gallery">GALERIE</string>
     <string name="tab_you" translatable="false">YOU</string>
-    <string name="type_of_dream">Art des Traumes:</string>
+    <string name="type_of_dream">"Art des Traumes: "</string>
     <string name="name">Name</string>
     <string name="email">E-Mail</string>
     <string name="member_since">Mitglied seit</string>
@@ -23,9 +23,14 @@
     <string name="language_german">Deutsch</string>
     <string name="language_english">Englisch</string>
     <string name="detail_title">Titel:</string>
-    <string name="todays_mood">Wie fühlst du dich heute?</string>
-    <string name="detail_date">Datum:</string>
+    <string name="todays_mood">"Wie fühlst du dich heute? "</string>
+    <string name="detail_date">"Datum: "</string>
     <string name="gallery_description" translatable="false">Träume sind kleine Fenster in verborgene Welten. Welche Geschichte wird dein nächster Traum erzählen?</string>
     <string name="button_minus" translatable="false">minus</string>
     <string name="button_plus" translatable="false">plus</string>
+    <string name="mood_good">Gut</string>
+    <string name="mood_sad">Traurig</string>
+    <string name="mood_neutral" translatable="false">Neutral</string>
+    <string name="mood_angry">Wütend</string>
+    <string name="mood_happy">Glücklich</string>
 </resources>

@@ -162,6 +162,7 @@ fun GalleryScreen(
                     GalleryListItem(
                         imageUrl = dream.url,
                         prompt = dream.prompt,
+                        date = dream.date,
                         modifier = Modifier
                             .clickable {
                                 onNavigateToDetailScreen(dream)
