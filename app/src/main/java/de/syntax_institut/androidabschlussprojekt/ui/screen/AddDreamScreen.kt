@@ -68,7 +68,6 @@ fun AddDreamScreen(
             fontSize = 30.sp
         )
 
-
         // Texteingabefeld: Titel
         OutlinedTextField(
             value = title,

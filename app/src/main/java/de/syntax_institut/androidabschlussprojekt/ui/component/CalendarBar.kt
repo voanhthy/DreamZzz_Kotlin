@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzLavender
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -47,18 +51,21 @@ fun CalendarBar(
                     date.dayOfWeek
                         .getDisplayName(TextStyle.SHORT, Locale.getDefault())
                         .uppercase(Locale.getDefault())
-                        .trimEnd('.')
+                        .trimEnd('.'),
+                    style = MaterialTheme.typography.labelSmall
                 )
 
                 Box(
                     modifier = Modifier
+                        .size(40.dp)
                         .clip(shape = CircleShape)
                         .background(if (date == selectedDate) DreamZzzLavender else Color.Transparent)
-                        .clickable { onSelectedDate(date) }
-                        .padding(8.dp)
+                        .clickable { onSelectedDate(date) },
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        date.dayOfMonth.toString()
+                        date.dayOfMonth.toString(),
+                        fontSize = 13.sp
                     )
                 }
             }

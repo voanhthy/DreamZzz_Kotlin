@@ -32,9 +32,9 @@ fun TabBar(
     ) {
         Row(
             modifier = Modifier
-                .width(330.dp)
+                .width(300.dp)
                 .height(50.dp)
-                .clip(RoundedCornerShape(15.dp))
+                .clip(RoundedCornerShape(18.dp))
                 .background(Color.Gray)
         ) {
             TabItem.entries.forEach { tab ->

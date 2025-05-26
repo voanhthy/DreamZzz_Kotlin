@@ -100,7 +100,8 @@ fun GalleryScreen(
         Text(stringResource(R.string.tab_gallery),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(vertical = 8.dp))
-        Text(stringResource(R.string.gallery_description))
+        Text(stringResource(R.string.gallery_description),
+            style = MaterialTheme.typography.bodyLarge)
 
         if (isGrid) {
             // Button minus plus

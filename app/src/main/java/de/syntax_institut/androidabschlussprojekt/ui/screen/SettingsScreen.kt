@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.ui.component.LogoutButton
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -37,7 +38,14 @@ fun SettingsScreen(
             .padding(16.dp),
     ) {
         // Logout Button
-
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            LogoutButton(
+                onClickLogout = {}
+            )
+        }
 
         Text(stringResource(R.string.tab_you).uppercase(),
             style = MaterialTheme.typography.titleLarge,
@@ -46,79 +54,95 @@ fun SettingsScreen(
 
         HorizontalDivider()
 
-//        Settings.entries.forEach { label ->
-//            Row {
-//                Text(stringResource(label.labelResId))
-//            }
-//            HorizontalDivider()
-//        }
-
         // Name
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(stringResource(R.string.name))
-            Text("Gast")
+            Text(stringResource(R.string.name),
+                style = MaterialTheme.typography.bodyLarge)
+            Text("Gast",
+                style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()
 
         // E-Mail
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(stringResource(R.string.email))
-            Text("keine E-Mail")
+            Text(stringResource(R.string.email),
+                style = MaterialTheme.typography.bodyLarge)
+            Text("keine E-Mail",
+                style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()
 
 
         // Mitglied seit
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(stringResource(R.string.member_since))
-            Text("hier anmelden")
+            Text(stringResource(R.string.member_since),
+                style = MaterialTheme.typography.bodyLarge)
+            Text("hier anmelden",
+                style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()
 
 
         // Benachrichtigungen
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(stringResource(R.string.notifications))
             Text(if (isNotificationOn) "an" else "aus",
                 modifier = Modifier.clickable {
                     settingsViewModel.toggleNotificationOn()
-                })
+                },
+                style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()
 
 
         // Dunkelmodus
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(stringResource(R.string.dark_mode))
+            Text(stringResource(R.string.dark_mode),
+                style = MaterialTheme.typography.bodyLarge)
             Text(if (isDarkModeOn) "an" else "aus",
                 modifier = Modifier.clickable {
                     settingsViewModel.toggleDarkMode()
-                })
+                },
+                style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()
 
         // Sprache
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(stringResource(R.string.language))
-            Text("Deutsch")
+            Text(stringResource(R.string.language),
+                style = MaterialTheme.typography.bodyLarge)
+            Text("Deutsch",
+                style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()
 
@@ -127,15 +151,21 @@ fun SettingsScreen(
         Column {
             HorizontalDivider()
             // Über diese App
-            Text(stringResource(R.string.about_this_app))
+            Text(stringResource(R.string.about_this_app),
+                modifier = Modifier.padding(vertical = 8.dp),
+                style = MaterialTheme.typography.bodyLarge)
             HorizontalDivider()
 
             // Feedback
-            Text(stringResource(R.string.feedback))
+            Text(stringResource(R.string.feedback),
+                modifier = Modifier.padding(vertical = 8.dp),
+                style = MaterialTheme.typography.bodyLarge)
             HorizontalDivider()
 
             // FAQ
-            Text(stringResource(R.string.faq))
+            Text(stringResource(R.string.faq),
+                modifier = Modifier.padding(vertical = 8.dp),
+                style = MaterialTheme.typography.bodyLarge)
             HorizontalDivider()
         }
     }

@@ -25,9 +25,9 @@ val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = font_manrope,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 15.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.sp
     ),
 
     titleLarge = TextStyle(
@@ -39,9 +39,9 @@ val Typography = Typography(
     ),
 
     labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = font_ibmplexmono,
         fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
+        fontSize = 14.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
     )

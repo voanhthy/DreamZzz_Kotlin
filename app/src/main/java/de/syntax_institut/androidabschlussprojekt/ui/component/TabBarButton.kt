@@ -1,8 +1,10 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
+import android.R.attr.fontWeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -25,6 +27,7 @@ fun TabBarButton(
     ) {
         Text(
             title.uppercase(),
+            style = MaterialTheme.typography.labelSmall,
             fontWeight = if (isActive) FontWeight.Bold else FontWeight.Light,
             color = if (isActive) Color.White else Color.Black,
         )

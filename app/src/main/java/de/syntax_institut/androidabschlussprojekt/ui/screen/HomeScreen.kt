@@ -52,7 +52,7 @@ fun HomeScreen(
             modifier = Modifier.padding(vertical = 8.dp)
         )
         Text("Heute ist Freitag, der 16.05.2025 - ein neuer Tag voller Möglichkeiten. Doch bevor du durchstartest, nimm dir einen Moment für dich.",
-            fontSize = 15.sp)
+            style = MaterialTheme.typography.bodyLarge)
 
         // interaktiver Nachthimmel
         Box {
