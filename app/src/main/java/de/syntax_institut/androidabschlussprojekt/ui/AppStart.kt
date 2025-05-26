@@ -18,6 +18,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.GalleryScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.HomeScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.LoginScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.SettingsScreen
 import kotlinx.serialization.Serializable
 
@@ -77,6 +78,9 @@ fun AppStart() {
                         navController.navigate(AddDreamRoute)
                     }
                 )
+//                LoginScreen(
+//                    onValueChange = {}
+//                )
             }
 
             composable<GalleryRoute> {

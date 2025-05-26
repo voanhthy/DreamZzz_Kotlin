@@ -33,4 +33,7 @@
     <string name="mood_neutral" translatable="false">Neutral</string>
     <string name="mood_angry">Wütend</string>
     <string name="mood_happy">Glücklich</string>
+    <string name="login">Anmelden</string>
+    <string name="password">Passwort</string>
+    <string name="no_account">Kein Account? Registriere dich hier</string>
 </resources>
