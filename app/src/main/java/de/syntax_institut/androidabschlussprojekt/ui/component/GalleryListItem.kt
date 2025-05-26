@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -21,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
+import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzLavender
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.Date
 import java.util.Locale
 
@@ -45,7 +46,11 @@ fun GalleryListItem(
     ) {
         Card(
             shape = RoundedCornerShape(10.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White
+            )
         ) {
 
             Row(
@@ -81,7 +86,7 @@ fun GalleryListItem(
                 formattedDate,
                 modifier = Modifier
                     .width(150.dp)
-                    .background(Color.Green)
+                    .background(DreamZzzLavender)
                     .padding(horizontal = 24.dp, vertical = 4.dp)
             )
         }

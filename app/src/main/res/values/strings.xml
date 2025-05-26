@@ -2,11 +2,11 @@
     <string name="app_name">AndroidAbschlussprojekt</string>
     <string name="title">Titel (optinal)</string>
     <string name="tell_about_dream">Erzähle mir von deinem Traum</string>
-    <string name="add_new_dream">Traum eintragen</string>
+    <string name="add_new_dream">Traum festhalten</string>
     <string name="generate">Generieren</string>
-    <string name="tab_home" translatable="false">HOME</string>
-    <string name="tab_gallery">GALERIE</string>
-    <string name="tab_you" translatable="false">YOU</string>
+    <string name="tab_home" translatable="false">Home</string>
+    <string name="tab_gallery">Galerie</string>
+    <string name="tab_you" translatable="false">You</string>
     <string name="type_of_dream">Art des Traumes</string>
     <string name="name">Name</string>
     <string name="email">E-Mail</string>
@@ -23,7 +23,7 @@
     <string name="language_german">Deutsch</string>
     <string name="language_english">Englisch</string>
     <string name="detail_title">Titel:</string>
-    <string name="todays_mood">"Wie fühlst du dich heute? "</string>
+    <string name="todays_mood">"Wie fühlst du dich? "</string>
     <string name="detail_date">"Datum: "</string>
     <string name="gallery_description" translatable="false">Träume sind kleine Fenster in verborgene Welten. Welche Geschichte wird dein nächster Traum erzählen?</string>
     <string name="button_minus" translatable="false">minus</string>

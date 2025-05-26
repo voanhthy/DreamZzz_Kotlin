@@ -25,6 +25,7 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -96,7 +97,9 @@ fun GalleryScreen(
                 onAddClick = onNavigateToAddDreamScreen
             )
         }
-        Text(stringResource(R.string.tab_gallery))
+        Text(stringResource(R.string.tab_gallery),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(vertical = 8.dp))
         Text(stringResource(R.string.gallery_description))
 
         if (isGrid) {

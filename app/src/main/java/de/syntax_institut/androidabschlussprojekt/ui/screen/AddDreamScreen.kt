@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -151,12 +150,14 @@ fun AddDreamScreen(
         // Style Picker
 
 
+        Spacer(modifier = Modifier.padding(16.dp))
+
         // Mood Picker TODO: in eine Box packen
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Wie fühlst du dich?")
+
             MoodPicker(
                 selectedMood = selectedMood,
                 onSelectedMood = { dreamViewModel.setMood(it) }
@@ -172,6 +173,7 @@ fun AddDreamScreen(
             )
         }
 
+        Spacer(modifier = Modifier.padding(16.dp))
 
         // Button zum Generieren
         DreamZzzTextButton(

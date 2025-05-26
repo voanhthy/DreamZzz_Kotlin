@@ -24,7 +24,7 @@ fun TabBarButton(
         onClick = onClick
     ) {
         Text(
-            title,
+            title.uppercase(),
             fontWeight = if (isActive) FontWeight.Bold else FontWeight.Light,
             color = if (isActive) Color.White else Color.Black,
         )
