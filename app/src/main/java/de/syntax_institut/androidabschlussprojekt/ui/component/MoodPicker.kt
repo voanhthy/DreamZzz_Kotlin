@@ -29,14 +29,6 @@ fun MoodPicker(
     Box(
         modifier = modifier.fillMaxWidth()
     ) {
-//        Mood.entries.forEach { mood ->
-//            val isSelected = mood == selectedMood
-//            Text(
-//                mood.title,
-//                modifier = Modifier
-//                    .clickable { onSelectedMood(mood) }
-//            )
-//        }
         OutlinedButton(
             onClick = { expanded = true },
             modifier = Modifier.fillMaxWidth()

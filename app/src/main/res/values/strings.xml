@@ -7,7 +7,7 @@
     <string name="tab_home" translatable="false">HOME</string>
     <string name="tab_gallery">GALERIE</string>
     <string name="tab_you" translatable="false">YOU</string>
-    <string name="type_of_dream">"Art des Traumes: "</string>
+    <string name="type_of_dream">Art des Traumes</string>
     <string name="name">Name</string>
     <string name="email">E-Mail</string>
     <string name="member_since">Mitglied seit</string>
