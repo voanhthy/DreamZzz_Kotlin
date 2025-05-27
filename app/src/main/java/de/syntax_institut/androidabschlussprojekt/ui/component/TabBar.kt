@@ -35,7 +35,7 @@ fun TabBar(
                 .width(300.dp)
                 .height(50.dp)
                 .clip(RoundedCornerShape(18.dp))
-                .background(Color.Gray)
+                .background(Color.Gray.copy(0.7f))      // opacity
         ) {
             TabItem.entries.forEach { tab ->
                 TabBarButton(
