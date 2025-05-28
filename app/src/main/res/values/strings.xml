@@ -37,4 +37,17 @@
     <string name="password">Passwort</string>
     <string name="no_account">Kein Account? Registriere dich hier</string>
     <string name="register">Registrieren</string>
+    <string name="style_minimalism">Minimalismus</string>
+    <string name="style_abstract">Abstrakt</string>
+    <string name="style_bauhaus">Bauhaus</string>
+    <string name="style_comic">Comic</string>
+    <string name="style_geometric">Geometrisch</string>
+    <string name="style_impressionism">Impressionismus</string>
+    <string name="style_popart">Pop Art</string>
+    <string name="style_realism">Realismus</string>
+    <string name="style_retro">Retro</string>
+    <string name="style_sketchy">Skizzenhaft</string>
+    <string name="style_surrealism">Surrealismus</string>
+    <string name="style_watercolor">Wasserfarben</string>
+    <string name="choose_style">Stil auswählen</string>
 </resources>

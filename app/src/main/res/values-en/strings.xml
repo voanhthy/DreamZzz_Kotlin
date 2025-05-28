@@ -30,4 +30,17 @@
     <string name="password">Password</string>
     <string name="no_account">No account? Register here</string>
     <string name="register">Register</string>
+    <string name="style_abstract">abstract</string>
+    <string name="style_bauhaus">bauhaus</string>
+    <string name="style_comic">comic</string>
+    <string name="style_geometric">geometric</string>
+    <string name="style_impressionism">impressionism</string>
+    <string name="style_popart">popart</string>
+    <string name="style_realism">realism</string>
+    <string name="style_retro">retro</string>
+    <string name="style_sketchy">sketchy</string>
+    <string name="style_surrealism">surrealism</string>
+    <string name="style_watercolor">watercolor</string>
+    <string name="style_minimalism">minimalism</string>
+    <string name="choose_style">Choose Style</string>
 </resources>

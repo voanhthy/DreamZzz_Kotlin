@@ -14,13 +14,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
+import de.syntax_institut.androidabschlussprojekt.ui.LoginRoute
 import de.syntax_institut.androidabschlussprojekt.ui.NightSkyRoute
+import de.syntax_institut.androidabschlussprojekt.ui.RegisterRoute
 import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.GalleryScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.HomeScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.LoginScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.NightSkyScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.RegisterScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.SettingsScreen
 import kotlinx.serialization.Serializable
 
@@ -39,6 +43,12 @@ object AddDreamRoute
 
 @Serializable
 object NightSkyRoute
+
+@Serializable
+object RegisterRoute
+
+@Serializable
+object LoginRoute
 
 @Serializable
 data class DreamDetailRoute(
@@ -121,6 +131,18 @@ fun AppStart() {
 
             composable<NightSkyRoute> {
                 NightSkyScreen()
+            }
+
+            composable<RegisterRoute> {
+                RegisterScreen(
+                    onValueChange = {}
+                )
+            }
+
+            composable<LoginRoute> {
+                LoginScreen(
+                    onValueChange = {}
+                )
             }
         }
     }

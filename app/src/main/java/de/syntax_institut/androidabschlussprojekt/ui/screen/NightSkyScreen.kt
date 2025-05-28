@@ -14,6 +14,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -21,12 +23,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import de.syntax_institut.androidabschlussprojekt.ui.component.NightSkyInfoBox
+import androidx.compose.runtime.setValue
 
 
 @Composable
 fun NightSkyScreen(
     modifier: Modifier = Modifier
 ) {
+    var showInfoBox by remember { mutableStateOf(false) }
+
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -42,9 +50,12 @@ fun NightSkyScreen(
             horizontalArrangement = Arrangement.End
         ) {
             // Help Button
+            // TODO: Animation hinzufügen
             Button(
                 modifier = Modifier.padding(top = 16.dp),
-                onClick = {},
+                onClick = {
+                    showInfoBox = !showInfoBox      // Toggle
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
                     contentColor = Color.White
@@ -56,6 +67,14 @@ fun NightSkyScreen(
                     modifier = Modifier.size(36.dp)
                 )
             }
+        }
+
+        if (showInfoBox) {
+            NightSkyInfoBox(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 64.dp, end = 48.dp)
+            )
         }
     }
 }

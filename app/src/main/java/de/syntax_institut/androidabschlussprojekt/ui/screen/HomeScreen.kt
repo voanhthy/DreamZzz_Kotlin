@@ -1,7 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,12 +23,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.CalendarBar
-import de.syntax_institut.androidabschlussprojekt.ui.theme.font_andreas
 import java.time.LocalDate
-import de.syntax_institut.androidabschlussprojekt.R
 
 
 @Composable

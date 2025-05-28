@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -35,6 +36,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.ImageStylePicker
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzGray
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
@@ -165,8 +167,15 @@ fun AddDreamScreen(
             onClickSelected = { dreamViewModel.updateDreamCategory(it) }
         )
 
-        // Style Picker
+        Spacer(modifier = Modifier.padding(8.dp))
 
+        Text(stringResource(R.string.choose_style).uppercase(),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+        // Style Picker
+        ImageStylePicker()
 
         Spacer(modifier = Modifier.padding(16.dp))
 
