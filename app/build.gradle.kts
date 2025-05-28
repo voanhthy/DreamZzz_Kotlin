@@ -16,6 +16,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.serialization)
     // ROOM
     alias(libs.plugins.kotlin.ksp)
+    // firebase
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -103,4 +105,13 @@ dependencies {
     implementation(kotlin("test"))
     // Für LazyVerticalStaggeredGrid
     implementation(libs.androidx.compose.foundation)
+    // Firebase
+//    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
+//    implementation("com.google.firebase:firebase-analytics")
+    // firebase
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+    implementation(libs.firebase.firestore)
 }

@@ -74,15 +74,15 @@ fun AppStart() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<HomeRoute> {
-                HomeScreen(
-                    onClickNavigateToAddDream = {
-                        navController.navigate(AddDreamRoute)
-                    }
-                )
+//                HomeScreen(
+//                    onClickNavigateToAddDream = {
+//                        navController.navigate(AddDreamRoute)
+//                    }
+//                )
 //                LoginScreen(
 //                    onValueChange = {}
 //                )
-//                NightSkyScreen()
+                NightSkyScreen()
             }
 
             composable<GalleryRoute> {

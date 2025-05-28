@@ -5,4 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     // room
     alias(libs.plugins.kotlin.ksp) apply false
+    // firebase
+    alias(libs.plugins.google.gms.google.services) apply false
 }

@@ -15,7 +15,7 @@ data class DreamImage(
     var date: Date,
     var prompt: String,
     var title: String? = null,
-    var interpretation: String?,
+    var interpretation: String? = null,
     var mood: Mood,
     var typeOfDream: DreamCategory
 )

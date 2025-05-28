@@ -28,6 +28,13 @@ kspVersion = "2.0.21-1.0.25"
 koinBom = "4.1.0-Beta4"
 # location
 playServicesLocation = "21.3.0"
+# firebase
+googleGmsGoogleServices = "4.4.2"
+firebaseAuth = "23.2.0"
+credentials = "1.5.0"
+credentialsPlayServicesAuth = "1.5.0"
+googleid = "1.1.1"
+firebaseFirestore = "25.1.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -74,6 +81,13 @@ koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 # Compose Foundation für LazyVerticalStaggeredGrid
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+# firebase
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+androidx-credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
+androidx-credentials-play-services-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentialsPlayServicesAuth" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -84,4 +98,5 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 # room
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
-
+# firebase
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
