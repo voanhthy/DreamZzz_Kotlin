@@ -1,6 +1,8 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,9 +16,12 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,12 +29,14 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.CalendarBar
 import de.syntax_institut.androidabschlussprojekt.ui.theme.font_andreas
 import java.time.LocalDate
+import de.syntax_institut.androidabschlussprojekt.R
 
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onClickNavigateToAddDream: () -> Unit
+    onClickNavigateToAddDream: () -> Unit,
+    onClickNavigateToNightSky: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -55,17 +62,30 @@ fun HomeScreen(
             style = MaterialTheme.typography.bodyLarge)
 
         // interaktiver Nachthimmel
-        Box {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp, bottom = 8.dp)
-                    .height(250.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(Color.Blue)
-            ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp, bottom = 8.dp)
+                .height(250.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .clickable {
+                    onClickNavigateToNightSky()
+                }
+        ) {
+            Image(
+                painter = painterResource(R.drawable.sky),
+                contentDescription = "Night Sky",
+                modifier = Modifier.matchParentSize(),       // füllt die ganze Box aus
+                contentScale = ContentScale.Crop
+            )
 
-            }
+            Text("Du hast bereits 19 Träume eingetragen",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(12.dp)
+            )
         }
 
         // Kalender
@@ -86,6 +106,7 @@ fun HomeScreen(
 private fun HomeScreenPreview() {
     // Use Theme here
     HomeScreen(
-        onClickNavigateToAddDream = {}
+        onClickNavigateToAddDream = {},
+        onClickNavigateToNightSky = {}
     )
 }

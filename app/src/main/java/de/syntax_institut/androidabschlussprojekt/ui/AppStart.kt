@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
+import de.syntax_institut.androidabschlussprojekt.ui.NightSkyRoute
 import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
@@ -35,6 +36,9 @@ object SettingsRoute
 
 @Serializable
 object AddDreamRoute
+
+@Serializable
+object NightSkyRoute
 
 @Serializable
 data class DreamDetailRoute(
@@ -74,15 +78,18 @@ fun AppStart() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<HomeRoute> {
-//                HomeScreen(
-//                    onClickNavigateToAddDream = {
-//                        navController.navigate(AddDreamRoute)
-//                    }
-//                )
+                HomeScreen(
+                    onClickNavigateToAddDream = {
+                        navController.navigate(AddDreamRoute)
+                    },
+                    onClickNavigateToNightSky = {
+                        navController.navigate(NightSkyRoute)
+                    }
+                )
 //                LoginScreen(
 //                    onValueChange = {}
 //                )
-                NightSkyScreen()
+//                NightSkyScreen()
             }
 
             composable<GalleryRoute> {
@@ -110,6 +117,10 @@ fun AppStart() {
 
             composable<AddDreamRoute> {
                 AddDreamScreen()
+            }
+
+            composable<NightSkyRoute> {
+                NightSkyScreen()
             }
         }
     }
