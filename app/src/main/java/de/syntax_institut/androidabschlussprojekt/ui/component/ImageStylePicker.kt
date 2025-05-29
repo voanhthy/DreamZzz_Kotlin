@@ -1,18 +1,16 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
-import android.R.attr.fontWeight
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,27 +24,42 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.ImageStyle
-import de.syntax_institut.androidabschlussprojekt.R
+import androidx.compose.foundation.lazy.items
 
 @Composable
 fun ImageStylePicker(
+    selectedStyle: ImageStyle,
+    onClick: (ImageStyle) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(ImageStyle.entries) { style ->
+        items(ImageStyle.entries) {currentStyle ->
+
+            val isSelected = currentStyle == selectedStyle
+            val borderColor = if (isSelected) Color.Blue else Color.Transparent
+            val borderWidth = if (isSelected) 2.dp else 0.dp
+
             Box(
-                modifier = Modifier.size(120.dp),
+                modifier = Modifier.size(120.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .border(
+                        width = borderWidth,
+                        color = borderColor,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .clickable {
+                        onClick(currentStyle)
+                    },
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Image(
-                    painter = painterResource(style.drawableResId),
-                    contentDescription = stringResource(style.titleResId),
+                    painter = painterResource(currentStyle.drawableResId),
+                    contentDescription = stringResource(currentStyle.titleResId),
                     modifier = Modifier
                         .matchParentSize()
-                        .clip(RoundedCornerShape(8.dp))
                 )
 
                 Box(
@@ -59,7 +72,7 @@ fun ImageStylePicker(
                         ),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(stringResource(style.titleResId),
+                    Text(stringResource(currentStyle.titleResId),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.align(Alignment.Center)
@@ -74,5 +87,8 @@ fun ImageStylePicker(
 @Composable
 private fun ImageStylePickerPreview() {
     // Use Theme here
-    ImageStylePicker()
+    ImageStylePicker(
+        selectedStyle = ImageStyle.ABSTRACT,
+        onClick = {}
+    )
 }

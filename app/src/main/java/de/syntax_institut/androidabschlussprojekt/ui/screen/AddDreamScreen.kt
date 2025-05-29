@@ -5,13 +5,13 @@ import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -58,99 +58,103 @@ fun AddDreamScreen(
     val dreamImage by dreamViewModel.dreamImage.collectAsState()
     val selectedCategory by dreamViewModel.selectedDreamCategory.collectAsState()
     val selectedMood by dreamViewModel.selectedMood.collectAsState()
+    val selectedImageStyle by dreamViewModel.selectedImageStyle.collectAsState()
     val date by dreamViewModel.date.collectAsState()
     val context = LocalContext.current
 
     var showDatePicker by remember { mutableStateOf(false) }
 
-    Column(
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(
-            stringResource(R.string.add_new_dream).uppercase(),
-            fontSize = 30.sp
-        )
+        item {
 
-        // Texteingabefeld: Titel
-        OutlinedTextField(
-            value = title,
-            onValueChange = { dreamViewModel.updateTitle(it) },
-            label = {
-                Text(stringResource(R.string.title))
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = Color.White,
-                focusedContainerColor = Color.White,
-                focusedTextColor = DreamZzzGray,
-                unfocusedTextColor = DreamZzzGray,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent
+
+            Text(
+                stringResource(R.string.add_new_dream).uppercase(),
+                fontSize = 30.sp
             )
-        )
 
-        // Texteingabefeld: Traumbeschreibung
-        OutlinedTextField(
-            value = description,
-            onValueChange = { dreamViewModel.updateDescription(it) },
-            label = {
-                Text(stringResource(R.string.tell_about_dream))
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(150.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = Color.White,
-                focusedContainerColor = Color.White,
-                focusedTextColor = DreamZzzGray,
-                unfocusedTextColor = DreamZzzGray,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent
-            )
-        )
-
-        // Datum auswählen
-        val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
-
-        if (showDatePicker) {
-            // Kalender Instanz basierend auf dem aktuellem Datum
-            LaunchedEffect(showDatePicker) {
-                val calendar = Calendar.getInstance().apply { time = date }
-
-                val dialog = DatePickerDialog(
-                    context,
-                    { _, year, month, dayOfMonth ->
-
-                        val newDate = Calendar.getInstance().apply {
-                            set(year, month, dayOfMonth)
-                        }.time
-                        dreamViewModel.updateDate(newDate)
-                        showDatePicker = false
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
+            // Texteingabefeld: Titel
+            OutlinedTextField(
+                value = title,
+                onValueChange = { dreamViewModel.updateTitle(it) },
+                label = {
+                    Text(stringResource(R.string.title))
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Color.White,
+                    focusedContainerColor = Color.White,
+                    focusedTextColor = DreamZzzGray,
+                    unfocusedTextColor = DreamZzzGray,
+                    focusedBorderColor = Color.Transparent,
+                    unfocusedBorderColor = Color.Transparent
                 )
-                dialog.setOnDismissListener {
-                    showDatePicker = false
-                }
-                dialog.show()
-            }
-        }
+            )
 
-        OutlinedTextField(
-            value = formattedDate,
-            onValueChange = {},
-            readOnly = true,
-            label = { Text(stringResource(R.string.detail_date)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    showDatePicker = true
+            // Texteingabefeld: Traumbeschreibung
+            OutlinedTextField(
+                value = description,
+                onValueChange = { dreamViewModel.updateDescription(it) },
+                label = {
+                    Text(stringResource(R.string.tell_about_dream))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Color.White,
+                    focusedContainerColor = Color.White,
+                    focusedTextColor = DreamZzzGray,
+                    unfocusedTextColor = DreamZzzGray,
+                    focusedBorderColor = Color.Transparent,
+                    unfocusedBorderColor = Color.Transparent
+                )
+            )
+
+            // Datum auswählen
+            val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
+
+            if (showDatePicker) {
+                // Kalender Instanz basierend auf dem aktuellem Datum
+                LaunchedEffect(showDatePicker) {
+                    val calendar = Calendar.getInstance().apply { time = date }
+
+                    val dialog = DatePickerDialog(
+                        context,
+                        { _, year, month, dayOfMonth ->
+
+                            val newDate = Calendar.getInstance().apply {
+                                set(year, month, dayOfMonth)
+                            }.time
+                            dreamViewModel.updateDate(newDate)
+                            showDatePicker = false
+                        },
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                    )
+                    dialog.setOnDismissListener {
+                        showDatePicker = false
+                    }
+                    dialog.show()
                 }
-        )
+            }
+
+            OutlinedTextField(
+                value = formattedDate,
+                onValueChange = {},
+                readOnly = true,
+                label = { Text(stringResource(R.string.detail_date)) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        showDatePicker = true
+                    }
+            )
 
 //        if (showDatePicker) {
 //            DisposableEffect(Unit) {
@@ -159,57 +163,62 @@ fun AddDreamScreen(
 //            }
 //        }
 
-        Spacer(modifier = Modifier.padding(8.dp))
+            Spacer(modifier = Modifier.padding(8.dp))
 
-        // Traum-Kategorie auswählen
-        DreamCategoryPicker(
-            selectedCategory = selectedCategory,
-            onClickSelected = { dreamViewModel.updateDreamCategory(it) }
-        )
-
-        Spacer(modifier = Modifier.padding(8.dp))
-
-        Text(stringResource(R.string.choose_style).uppercase(),
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 8.dp)
+            // Traum-Kategorie auswählen
+            DreamCategoryPicker(
+                selectedCategory = selectedCategory,
+                onClickSelected = { dreamViewModel.updateDreamCategory(it) }
             )
 
-        // Style Picker
-        ImageStylePicker()
+            Spacer(modifier = Modifier.padding(8.dp))
 
-        Spacer(modifier = Modifier.padding(16.dp))
+            Text(
+                stringResource(R.string.choose_style).uppercase(),
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
 
-        // Mood Picker TODO: in eine Box packen
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+            // Style Picker
+            ImageStylePicker(
+                selectedStyle = selectedImageStyle,
+                onClick = { dreamViewModel.updateImageStyle(it) }
+            )
 
-            MoodPicker(
-                selectedMood = selectedMood,
-                onSelectedMood = { dreamViewModel.setMood(it) }
+            Spacer(modifier = Modifier.padding(16.dp))
+
+            // Mood Picker TODO: in eine Box packen
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                MoodPicker(
+                    selectedMood = selectedMood,
+                    onSelectedMood = { dreamViewModel.setMood(it) }
+                )
+            }
+
+            // TODO: temporär Bild anzeigen
+            dreamImage?.url?.let { imageUrl ->
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = "Bild",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            Spacer(modifier = Modifier.padding(16.dp))
+
+            // Button zum Generieren
+            DreamZzzTextButton(
+                onClickText = {
+                    dreamViewModel.fetchImage(description)
+                    Log.d("ButtonTest", "Generate-Button wurde gedrückt")
+                },
+                title = stringResource(R.string.generate)
             )
         }
-
-        // TODO: temporär Bild anzeigen
-        dreamImage?.url?.let { imageUrl ->
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = "Bild",
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-
-        Spacer(modifier = Modifier.padding(16.dp))
-
-        // Button zum Generieren
-        DreamZzzTextButton(
-            onClickText = {
-                dreamViewModel.fetchImage(description)
-                Log.d("ButtonTest", "Generate-Button wurde gedrückt")
-            },
-            title = stringResource(R.string.generate)
-        )
     }
 }
 

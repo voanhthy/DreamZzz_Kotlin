@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDao
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.ImageStyle
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import kotlinx.coroutines.flow.Flow
@@ -37,6 +38,9 @@ class DreamViewModel(
 
     private val _selectedMood = MutableStateFlow<Mood>(Mood.GOOD)
     val selectedMood = _selectedMood.asStateFlow()
+
+    private val _selectedImageStyle = MutableStateFlow<ImageStyle>(ImageStyle.WATERCOLOR)
+    val selectedImageStyle = _selectedImageStyle.asStateFlow()
 
     private val _date = MutableStateFlow(Date())
     val date = _date.asStateFlow()
@@ -103,5 +107,10 @@ class DreamViewModel(
     // Date
     fun updateDate(newDate: Date) {
         _date.value = newDate
+    }
+
+    // ImageStyle
+    fun updateImageStyle(newStyle: ImageStyle) {
+        _selectedImageStyle.value = newStyle
     }
 }
