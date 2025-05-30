@@ -173,4 +173,14 @@ class DreamViewModel(
         _dreamImage.value = null
         Log.d(TAG, "dreamImage wurde auf null zurückgesetzt")
     }
+
+    fun deleteDreamImage(dreamImage: DreamImage) {
+        viewModelScope.launch {
+            try {
+                dreamImagedao.delete(dreamImage)
+            } catch (e: Exception) {
+                Log.e(TAG, "Fehler beim Löschen", e)
+            }
+        }
+    }
 }
