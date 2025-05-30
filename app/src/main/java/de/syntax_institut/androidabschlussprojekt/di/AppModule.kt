@@ -6,10 +6,14 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDatabase
+import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamAnalyzeApi
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
+import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoApiImpl
+import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import de.syntax_institut.androidabschlussprojekt.dataStore
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamAnalyzeViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
@@ -29,8 +33,11 @@ Dependency Injection mit Koin
 // hier alle Abhängigkeiten hinzufügen
 val appModule = module {
 
-    // einmalige Dependency: API
+    // einmalige Dependency: API Image
     singleOf(DreamImageApi::retrofitService)
+
+    // einmalige Dependency: API Analyze
+    singleOf(DreamAnalyzeApi::retrofitServiceAnalyze)
 
     // einmalige Dependency: Datenbank
     single {
@@ -54,9 +61,17 @@ val appModule = module {
         )
     }
 
+    single<DreamAnalyzeRepoInterface> {
+        DreamAnalyzeRepoApiImpl(
+            get()
+        )
+    }
+
     viewModelOf(::DreamViewModel)
 
     viewModelOf(::SettingsViewModel)
 
     viewModelOf(::DreamDetailViewModel)
+
+    viewModelOf(::DreamAnalyzeViewModel)
 }

@@ -3,7 +3,6 @@ package de.syntax_institut.androidabschlussprojekt.data.repository
 import android.util.Log
 import de.syntax_institut.androidabschlussprojekt.BuildConfig
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.APIService
-import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
 import de.syntax_institut.androidabschlussprojekt.data.remote.model.DreamImageRequest
 
 // alles was mit api zu tun hat
