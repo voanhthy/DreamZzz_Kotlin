@@ -13,7 +13,6 @@ import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRe
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import de.syntax_institut.androidabschlussprojekt.dataStore
-import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamAnalyzeViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
@@ -72,6 +71,4 @@ val appModule = module {
     viewModelOf(::SettingsViewModel)
 
     viewModelOf(::DreamDetailViewModel)
-
-    viewModelOf(::DreamAnalyzeViewModel)
 }

@@ -43,4 +43,5 @@
     <string name="style_watercolor">watercolor</string>
     <string name="style_minimalism">minimalism</string>
     <string name="choose_style">Choose Style</string>
+    <string name="save">Save</string>
 </resources>

@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import android.R.attr.description
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.res.Configuration
@@ -32,7 +33,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import coil3.util.CoilUtils.result
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
@@ -50,7 +53,10 @@ import java.util.Locale
 @Composable
 fun AddDreamScreen(
     modifier: Modifier = Modifier,
-    dreamViewModel: DreamViewModel = koinViewModel()
+    onClickNavigateToLoadingScreen: () -> Unit,
+    onClickNavigateToPreviewScreen: (DreamImage) -> Unit,
+    dreamViewModel: DreamViewModel = koinViewModel(),
+//    dreamAnalyzeViewModel: DreamAnalyzeViewModel = koinViewModel()
 ) {
     // State Variablen
     val title by dreamViewModel.title.collectAsState()
@@ -60,9 +66,26 @@ fun AddDreamScreen(
     val selectedMood by dreamViewModel.selectedMood.collectAsState()
     val selectedImageStyle by dreamViewModel.selectedImageStyle.collectAsState()
     val date by dreamViewModel.date.collectAsState()
+    val result by dreamViewModel.analysisResult.collectAsState()
+    val isLoading by dreamViewModel.isLoading.collectAsState()
+
     val context = LocalContext.current
 
     var showDatePicker by remember { mutableStateOf(false) }
+
+
+    LaunchedEffect(isLoading, dreamImage) {         // wie onAppear
+        if (isLoading) {
+            Log.d("AddDreamScreen", "Bild wird geladen - zu LoadingScreen navigieren")
+            onClickNavigateToLoadingScreen()        // Bild wird geladen -> LoadingScreen
+        } else if (dreamImage != null) {
+            Log.d("AddDreamScreen", "Bild wurde geladen - zu PreviewScreen navigieren")
+            onClickNavigateToPreviewScreen(dreamImage!!)    // Bild wurde generiert -> PreviewScreen
+            dreamViewModel.resetDreamImage()
+        } else {
+            Log.d("AddDreamScreen", "isLoading ist false, dreamImage ist null - keine Navigation")
+        }
+    }
 
     LazyColumn(
         modifier = modifier
@@ -70,7 +93,6 @@ fun AddDreamScreen(
             .padding(16.dp)
     ) {
         item {
-
 
             Text(
                 stringResource(R.string.add_new_dream).uppercase(),
@@ -88,8 +110,8 @@ fun AddDreamScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color.White,
                     focusedContainerColor = Color.White,
-                    focusedTextColor = DreamZzzGray,
-                    unfocusedTextColor = DreamZzzGray,
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
                     focusedBorderColor = Color.Transparent,
                     unfocusedBorderColor = Color.Transparent
                 )
@@ -108,8 +130,8 @@ fun AddDreamScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color.White,
                     focusedContainerColor = Color.White,
-                    focusedTextColor = DreamZzzGray,
-                    unfocusedTextColor = DreamZzzGray,
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
                     focusedBorderColor = Color.Transparent,
                     unfocusedBorderColor = Color.Transparent
                 )
@@ -208,6 +230,10 @@ fun AddDreamScreen(
                 )
             }
 
+            result?.let {
+                Text(it)
+            }
+
             Spacer(modifier = Modifier.padding(16.dp))
 
             // Button zum Generieren
@@ -215,6 +241,7 @@ fun AddDreamScreen(
                 onClickText = {
                     dreamViewModel.fetchImage(description)
                     Log.d("ButtonTest", "Generate-Button wurde gedrückt")
+                    dreamViewModel.analyzeImage(description)
                 },
                 title = stringResource(R.string.generate)
             )
@@ -227,7 +254,10 @@ fun AddDreamScreen(
 @Composable
 private fun AddDreamScreenPreviewEN() {
     AndroidAbschlussprojektTheme {
-        AddDreamScreen()
+        AddDreamScreen(
+            onClickNavigateToLoadingScreen = {},
+            onClickNavigateToPreviewScreen = {}
+        )
     }
 }
 
@@ -236,6 +266,9 @@ private fun AddDreamScreenPreviewEN() {
 @Composable
 private fun AddDreamScreenPreview() {
     AndroidAbschlussprojektTheme {
-        AddDreamScreen()
+        AddDreamScreen(
+            onClickNavigateToLoadingScreen = {},
+            onClickNavigateToPreviewScreen = {}
+        )
     }
 }

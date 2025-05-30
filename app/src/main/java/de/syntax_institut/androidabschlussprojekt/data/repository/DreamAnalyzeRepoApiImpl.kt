@@ -15,7 +15,7 @@ class DreamAnalyzeRepoApiImpl (
             val response = apiServiceAnalyze.analyzeImage(
                 authHeader = "Bearer ${BuildConfig.API_KEY}",
                 request = DreamAnalyzeRequest(
-                    message = listOf(UserMessage(
+                    messages = listOf(UserMessage(
                         role = "system",
                         content = "Du bist ein Traumdeuter. Analysiere und interpretiere Träume auf Grundlage psychologischer und symbolischer Bedeutungen."),
                         UserMessage(
@@ -33,6 +33,7 @@ class DreamAnalyzeRepoApiImpl (
                 return "Fehler"
             }
         } catch (e: Exception) {
+            Log.e("DreamAnalyzeRepo", "Fehler bei Analyze: ${e.localizedMessage}")
             return  "Fehler bei Analyze"
         }
     }

@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 
 import android.util.Log
+import android.util.Log.e
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDao
@@ -8,6 +9,7 @@ import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.ImageStyle
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
+import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +19,7 @@ import java.util.Date
 
 class DreamViewModel(
     private val dreamImageRepoInterface: DreamImageRepoInterface,
+    private val dreamAnalyzeRepoInterface: DreamAnalyzeRepoInterface,
     private val dreamImagedao: DreamImageDao
 ): ViewModel() {
 
@@ -45,6 +48,12 @@ class DreamViewModel(
     private val _date = MutableStateFlow(Date())
     val date = _date.asStateFlow()
 
+    private val _analysisResult = MutableStateFlow<String?>(null)
+    val analysisResult = _analysisResult.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
 
     // Bild in Datenbank speichern
@@ -56,16 +65,22 @@ class DreamViewModel(
 
     // TODO: Stil integrieren
     fun fetchImage(prompt: String) {
+
+        // für Ladevorgang
+        _isLoading.value = true
+        Log.d(TAG, "Bild wird geladen - isLoading ist true")
+
         viewModelScope.launch {
             Log.d(TAG, "fetchImage aufgerufen mit Prompt: $prompt")
             try {
 
                 // API Call über Repo
-                val imageUrl = dreamImageRepoInterface.generateImage(prompt)
+                val imageUrl = dreamImageRepoInterface.generateImage(prompt, selectedImageStyle.value)
                 Log.d(TAG, "Bild-URL vom Repo: $imageUrl")
 
                 if (imageUrl != null) {
                     val dream = DreamImage(
+                        id = 0,
                         url = imageUrl,
                         prompt = prompt,
                         mood = _selectedMood.value,
@@ -74,11 +89,41 @@ class DreamViewModel(
                         date = _date.value,
                         interpretation = null
                     )
+                    Log.d(TAG, "Versuch _dreamImage.value ui $dream zu setzen")
                     _dreamImage.value = dream   // State für DetailScreen aktualisieren
+                    Log.d(TAG, "_dreamImage.value ist jetzt ${_dreamImage.value?.url ?: "NULL"}")
                     saveDreamImage(dream)       // Bild speichern
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error im ViewModel: $e")
+            } finally {
+                _isLoading.value = false
+                Log.d(TAG, "Bild erfolgreich geladen - isLoading ist false")
+            }
+        }
+    }
+
+    fun analyzeImage(prompt: String) {
+        viewModelScope.launch {
+            Log.d(TAG, "analyzeImage aufgerufen mit Prompt: $prompt")
+            try {
+                // API Call über Repo
+                val interpretation = dreamAnalyzeRepoInterface.analyzeImage(prompt)
+                Log.d(TAG, "Traumdeutung vom Repo: $interpretation")
+                // Interpretation speichern
+                _analysisResult.value = interpretation
+
+                if (interpretation != null) {
+                    val dreamAnalysis = DreamImage(
+                        url = "",
+                        date = _date.value,
+                        prompt = prompt,
+                        mood = _selectedMood.value,
+                        typeOfDream = _selectedDreamCategory.value
+                    )
+                }
+            } catch (e: Exception) {
+                e(TAG, "Error im ViewModel: $e")
             }
         }
     }
@@ -112,5 +157,20 @@ class DreamViewModel(
     // ImageStyle
     fun updateImageStyle(newStyle: ImageStyle) {
         _selectedImageStyle.value = newStyle
+    }
+
+    // Bild speichern
+    fun saveImage() {
+        viewModelScope.launch {
+            _dreamImage.value?.let { dream ->
+                dreamImagedao.insert(dream)
+                Log.d(TAG, "Bild wurde gespeichert: $dream")
+            } ?: Log.w(TAG, "Kein Bild zum Bild vorhanden")
+        }
+    }
+
+    fun resetDreamImage() {
+        _dreamImage.value = null
+        Log.d(TAG, "dreamImage wurde auf null zurückgesetzt")
     }
 }

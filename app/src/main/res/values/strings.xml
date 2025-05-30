@@ -50,4 +50,5 @@
     <string name="style_surrealism">Surrealismus</string>
     <string name="style_watercolor">Wasserfarben</string>
     <string name="choose_style">Stil auswählen</string>
+    <string name="save">Speichern</string>
 </resources>

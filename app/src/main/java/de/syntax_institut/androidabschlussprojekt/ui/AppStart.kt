@@ -14,16 +14,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
+import de.syntax_institut.androidabschlussprojekt.ui.LoadingRoute
 import de.syntax_institut.androidabschlussprojekt.ui.LoginRoute
 import de.syntax_institut.androidabschlussprojekt.ui.NightSkyRoute
+import de.syntax_institut.androidabschlussprojekt.ui.PreviewRoute
 import de.syntax_institut.androidabschlussprojekt.ui.RegisterRoute
 import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.GalleryScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.HomeScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.LoadingScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.LoginScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.NightSkyScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.PreviewScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.RegisterScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.SettingsScreen
 import kotlinx.serialization.Serializable
@@ -49,6 +53,14 @@ object RegisterRoute
 
 @Serializable
 object LoginRoute
+
+@Serializable
+data class PreviewRoute(
+    val url: String
+)
+
+@Serializable
+object LoadingRoute
 
 @Serializable
 data class DreamDetailRoute(
@@ -126,7 +138,17 @@ fun AppStart() {
             }
 
             composable<AddDreamRoute> {
-                AddDreamScreen()
+                AddDreamScreen(
+                    onClickNavigateToLoadingScreen = {
+                        navController.navigate(LoadingRoute)
+                    },
+                    onClickNavigateToPreviewScreen = { dream ->
+                        navController.navigate(
+                            PreviewRoute(
+                                url = dream.url
+                            )
+                        )}
+                )
             }
 
             composable<NightSkyRoute> {
@@ -143,6 +165,14 @@ fun AppStart() {
                 LoginScreen(
                     onValueChange = {}
                 )
+            }
+
+            composable<PreviewRoute> {
+                PreviewScreen()
+            }
+
+            composable<LoadingRoute> {
+                LoadingScreen()             // zu PreviewScreen navigieren
             }
         }
     }
