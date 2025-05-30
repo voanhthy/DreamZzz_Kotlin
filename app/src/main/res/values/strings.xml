@@ -34,8 +34,8 @@
     <string name="mood_angry">Wütend</string>
     <string name="mood_happy">Glücklich</string>
     <string name="login">Anmelden</string>
-    <string name="password">Passwort</string>
-    <string name="no_account">Kein Account? Registriere dich hier</string>
+    <string name="passwordInput">Passwort</string>
+    <string name="no_account">"Kein Account? "</string>
     <string name="register">Registrieren</string>
     <string name="style_minimalism">Minimalismus</string>
     <string name="style_abstract">Abstrakt</string>
@@ -51,4 +51,10 @@
     <string name="style_watercolor">Wasserfarben</string>
     <string name="choose_style">Stil auswählen</string>
     <string name="save">Speichern</string>
+    <string name="first_name">Vorname</string>
+    <string name="last_name">Nachname</string>
+    <string name="password_repeat">Passwort wiederholen</string>
+    <string name="register_here">Registriere dich hier</string>
+    <string name="already_have_an_account">Du hast bereits einen Account?</string>
+    <string name="login_here">Logge dich hier ein</string>
 </resources>

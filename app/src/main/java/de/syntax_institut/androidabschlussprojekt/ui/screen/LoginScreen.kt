@@ -1,20 +1,20 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,17 +24,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
-import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzGray
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun LoginScreen(
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    onNavigateToLoginScreen: () -> Unit,
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = koinViewModel()
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    
+    val emailInput by authViewModel.emailInput.collectAsState()
+    val passwordInput by authViewModel.passwordInput.collectAsState()
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -48,8 +50,8 @@ fun LoginScreen(
                 .padding(top = 16.dp))
 
         OutlinedTextField(
-            value = email,
-            onValueChange = onValueChange,
+            value = emailInput,
+            onValueChange = { authViewModel.updateEmailInput(it) },
             label = { Text(stringResource(R.string.email),
                 fontSize = 14.sp)},
             modifier = Modifier
@@ -58,8 +60,6 @@ fun LoginScreen(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White,
-                focusedTextColor = DreamZzzGray,
-                unfocusedTextColor = DreamZzzGray,
                 focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent
             )
@@ -68,15 +68,13 @@ fun LoginScreen(
         Spacer(modifier = Modifier.padding(2.dp))
 
         OutlinedTextField(
-            value = password,
-            onValueChange = onValueChange,
-            label = { Text(stringResource(R.string.password))},
+            value = passwordInput,
+            onValueChange = { authViewModel.updatePasswordInput(it) },
+            label = { Text(stringResource(R.string.passwordInput))},
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White,
-                focusedTextColor = DreamZzzGray,
-                unfocusedTextColor = DreamZzzGray,
                 focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent
             )
@@ -85,7 +83,9 @@ fun LoginScreen(
         Spacer(modifier = Modifier.padding(16.dp))
 
         DreamZzzTextButton(
-            onClickText = {},
+            onClickText = {
+                authViewModel.loginUser()
+            },
             title = stringResource(R.string.login),
             modifier = Modifier
                 .fillMaxWidth()
@@ -93,8 +93,27 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Text(stringResource(R.string.no_account),
-            modifier = Modifier)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // "Kein Account?"
+            Text(
+                stringResource(R.string.no_account),
+                modifier = Modifier,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            // "Registriere dich hier"
+            TextButton(
+                onClick = {
+                    onNavigateToLoginScreen
+                }
+            ) {
+                Text(stringResource(R.string.register_here),
+                    style = MaterialTheme.typography.bodyLarge)
+            }
+        }
     }
 }
 
@@ -103,6 +122,6 @@ fun LoginScreen(
 private fun LoginScreenPreview() {
     // Use Theme here
     LoginScreen(
-        onValueChange = {}
+        onNavigateToLoginScreen = {}
     )
 }

@@ -8,11 +8,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDatabase
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamAnalyzeApi
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
+import de.syntax_institut.androidabschlussprojekt.data.remote.firebase.AuthService
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import de.syntax_institut.androidabschlussprojekt.dataStore
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
@@ -48,6 +50,11 @@ val appModule = module {
         get<DreamImageDatabase>().dreamImageDao()
     }
 
+    // einmalige Dependency: Firebase
+    single {
+        AuthService.getInstance()
+    }
+
     // einmalige Dependency: DataStore
     single<DataStore<Preferences>> {
         androidContext().dataStore
@@ -71,4 +78,6 @@ val appModule = module {
     viewModelOf(::SettingsViewModel)
 
     viewModelOf(::DreamDetailViewModel)
+
+    viewModelOf(::AuthViewModel)
 }

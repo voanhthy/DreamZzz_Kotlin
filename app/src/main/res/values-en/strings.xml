@@ -27,8 +27,8 @@
     <string name="mood_angry">Angry</string>
     <string name="mood_happy">Happy</string>
     <string name="login">Login</string>
-    <string name="password">Password</string>
-    <string name="no_account">No account? Register here</string>
+    <string name="passwordInput">Password</string>
+    <string name="no_account">No account?</string>
     <string name="register">Register</string>
     <string name="style_abstract">abstract</string>
     <string name="style_bauhaus">bauhaus</string>
@@ -44,4 +44,10 @@
     <string name="style_minimalism">minimalism</string>
     <string name="choose_style">Choose Style</string>
     <string name="save">Save</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="password_repeat">Repeat Password</string>
+    <string name="register_here">Register here</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login_here">Log in here</string>
 </resources>
