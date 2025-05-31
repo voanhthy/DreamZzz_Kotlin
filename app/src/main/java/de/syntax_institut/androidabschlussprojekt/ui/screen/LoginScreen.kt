@@ -30,7 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(
-    onNavigateToLoginScreen: () -> Unit,
+    onNavigateToRegisterScreen: () -> Unit,
     modifier: Modifier = Modifier,
     authViewModel: AuthViewModel = koinViewModel()
 ) {
@@ -99,18 +99,18 @@ fun LoginScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // "Kein Account?"
-            Text(
-                stringResource(R.string.no_account),
-                modifier = Modifier,
-                style = MaterialTheme.typography.bodyLarge
-            )
+//            Text(
+//                stringResource(R.string.no_account),
+//                modifier = Modifier,
+//                style = MaterialTheme.typography.bodyLarge
+//            )
             // "Registriere dich hier"
             TextButton(
                 onClick = {
-                    onNavigateToLoginScreen
+                    onNavigateToRegisterScreen()
                 }
             ) {
-                Text(stringResource(R.string.register_here),
+                Text(stringResource(R.string.no_account),
                     style = MaterialTheme.typography.bodyLarge)
             }
         }
@@ -122,6 +122,6 @@ fun LoginScreen(
 private fun LoginScreenPreview() {
     // Use Theme here
     LoginScreen(
-        onNavigateToLoginScreen = {}
+        onNavigateToRegisterScreen = {}
     )
 }

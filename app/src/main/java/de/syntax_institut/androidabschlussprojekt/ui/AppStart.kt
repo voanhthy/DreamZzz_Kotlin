@@ -132,16 +132,16 @@ fun AppStart(
             navigation<AuthGraphRoute>(startDestination = LoginRoute) {
                 composable<RegisterRoute> {
                     RegisterScreen(
-                        onNavigateToRegisterScreen = {
-                            navController.navigate(RegisterRoute)
+                        onNavigateToLoginScreen = {
+                            navController.navigate(LoginRoute)
                         }
                     )
                 }
 
                 composable<LoginRoute> {
                     LoginScreen(
-                        onNavigateToLoginScreen = {
-                            navController.navigate(LoginRoute)
+                        onNavigateToRegisterScreen = {
+                            navController.navigate(RegisterRoute)
                         }
                     )
                 }

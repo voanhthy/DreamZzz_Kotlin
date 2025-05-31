@@ -35,7 +35,7 @@
     <string name="mood_happy">Glücklich</string>
     <string name="login">Anmelden</string>
     <string name="passwordInput">Passwort</string>
-    <string name="no_account">"Kein Account? "</string>
+    <string name="no_account">Kein Account? Registriere dich hier</string>
     <string name="register">Registrieren</string>
     <string name="style_minimalism">Minimalismus</string>
     <string name="style_abstract">Abstrakt</string>

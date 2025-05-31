@@ -33,6 +33,7 @@ fun SettingsScreen(
 ) {
     val isNotificationOn by settingsViewModel.isNotificationOnStateFlow.collectAsState()
     val isDarkModeOn by settingsViewModel.isDarkModeStateFlow.collectAsState()
+    val firstName by authViewModel.firstNameInput.collectAsState()
 
     Column(
         modifier = modifier
@@ -67,7 +68,7 @@ fun SettingsScreen(
         ) {
             Text(stringResource(R.string.name),
                 style = MaterialTheme.typography.bodyLarge)
-            Text("Gast",
+            Text(firstName,
                 style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()
