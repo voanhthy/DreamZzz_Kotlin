@@ -78,7 +78,7 @@ fun DetailInfoBox(
             )
 
             // Picker Beschreibung/Interpretation
-
+            DescriptionAnalysisPicker()
         }
     }
 }

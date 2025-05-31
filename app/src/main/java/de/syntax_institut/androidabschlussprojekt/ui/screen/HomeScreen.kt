@@ -15,6 +15,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,15 +27,21 @@ import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.CalendarBar
-import java.time.LocalDate
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
+import org.koin.androidx.compose.koinViewModel
+import androidx.compose.runtime.getValue
+
 
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onClickNavigateToAddDream: () -> Unit,
-    onClickNavigateToNightSky: () -> Unit
+    onClickNavigateToNightSky: () -> Unit,
+    dreamViewModel: DreamViewModel = koinViewModel()
 ) {
+    val date by dreamViewModel.date.collectAsState()
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -90,8 +97,8 @@ fun HomeScreen(
             modifier = Modifier.padding(vertical = 16.dp)
         )
         CalendarBar(
-            selectedDate = LocalDate.now(),
-            onSelectedDate = { }
+            selectedDate = date,
+            onSelectedDate = { dreamViewModel.updateDate(it) }
         )
         HorizontalDivider(
             modifier = Modifier.padding(vertical = 16.dp))

@@ -18,8 +18,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzLavender
@@ -57,7 +59,8 @@ fun GalleryListItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 // Bild
                 AsyncImage(
@@ -70,7 +73,8 @@ fun GalleryListItem(
                 // TODO: Helper Func Text kürzen
                 Text(
                     prompt,
-                    modifier = Modifier
+                    modifier = Modifier,
+                    textAlign = TextAlign.Center
                 )
             }
         }
@@ -79,15 +83,18 @@ fun GalleryListItem(
         Card(
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
+                .height(28.dp)
                 .offset(x = 25.dp, y = (-12).dp)
                 .zIndex(1f)         // über Box herausragen lassen
         ) {
             Text(
                 formattedDate,
                 modifier = Modifier
-                    .width(150.dp)
+                    .width(130.dp)
                     .background(DreamZzzLavender)
-                    .padding(horizontal = 24.dp, vertical = 4.dp)
+                    .padding(horizontal = 24.dp, vertical = 4.dp),
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center
             )
         }
     }

@@ -98,7 +98,7 @@ fun GalleryScreen(
         Text(stringResource(R.string.gallery_description),
             style = MaterialTheme.typography.bodyLarge)
 
-        if (isGrid) {
+        if (!isGrid) {
             // Button minus plus
             Row(
                 modifier = Modifier.fillMaxWidth(),
