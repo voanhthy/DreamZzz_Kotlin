@@ -6,7 +6,7 @@
     <string name="add_new_dream">Add Dream</string>
     <string name="generate">Generate</string>
     <string name="tab_gallery">Gallery</string>
-    <string name="type_of_dream">Type of dream</string>
+    <string name="type_of_dream">"Type of dream: "</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="member_since">Member since</string>
@@ -50,4 +50,6 @@
     <string name="register_here">Register here</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="login_here">Log in here</string>
+    <string name="description">Description</string>
+    <string name="analysis">Interpretation</string>
 </resources>

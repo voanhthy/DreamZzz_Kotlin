@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -50,7 +51,8 @@ fun DetailInfoBox(
         ) {
             val title = dreamImage.title
             if (title != null) {
-                Text(title)
+                Text(title,
+                    style = MaterialTheme.typography.titleLarge)
             } else {
                 Text("Unbekannter Traum")       // TODO: ???
             }
@@ -91,7 +93,7 @@ private fun DetailBoxPreview() {
             prompt = "lorem ipsum",
             mood = Mood.GOOD,
             typeOfDream = DreamCategory.NORMAL,
-            title = "lorem ipsum",
+            title = null,
             date = Date(),
             interpretation = null
         )

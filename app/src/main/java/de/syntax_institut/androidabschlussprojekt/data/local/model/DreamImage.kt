@@ -14,8 +14,8 @@ data class DreamImage(
 //    val imageData: Data?
     var date: Date,
     var prompt: String,
-    var title: String? = null,
-    var interpretation: String? = null,
+    var title: String? = "Unbekannter Traum",
+    var interpretation: String? = "Keine Traumdeutung vorhanden",
     var mood: Mood,
     var typeOfDream: DreamCategory
 )
