@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
-import android.R.attr.description
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.res.Configuration
@@ -33,15 +32,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import coil3.util.CoilUtils.result
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
-import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.ImageStylePicker
+import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
-import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzGray
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
@@ -56,7 +53,6 @@ fun AddDreamScreen(
     onClickNavigateToLoadingScreen: () -> Unit,
     onClickNavigateToPreviewScreen: (DreamImage) -> Unit,
     dreamViewModel: DreamViewModel = koinViewModel(),
-//    dreamAnalyzeViewModel: DreamAnalyzeViewModel = koinViewModel()
 ) {
     // State Variablen
     val title by dreamViewModel.title.collectAsState()

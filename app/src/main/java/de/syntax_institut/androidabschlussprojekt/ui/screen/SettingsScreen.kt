@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.LogoutButton
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -27,7 +28,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
-    settingsViewModel: SettingsViewModel = koinViewModel()
+    settingsViewModel: SettingsViewModel = koinViewModel(),
+    authViewModel: AuthViewModel = koinViewModel()
 ) {
     val isNotificationOn by settingsViewModel.isNotificationOnStateFlow.collectAsState()
     val isDarkModeOn by settingsViewModel.isDarkModeStateFlow.collectAsState()
@@ -43,7 +45,9 @@ fun SettingsScreen(
             horizontalArrangement = Arrangement.End
         ) {
             LogoutButton(
-                onClickLogout = {}
+                onClickLogout = {
+                    authViewModel.logoutUser()
+                }
             )
         }
 

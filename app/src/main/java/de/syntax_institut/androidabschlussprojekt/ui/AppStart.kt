@@ -14,12 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
 import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.GalleryScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.HomeScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.LoadingScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.LoginScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.NightSkyScreen
@@ -84,49 +86,81 @@ fun AppStart(
     val navController = rememberNavController()
 
     var selectedTabItem by remember { mutableStateOf(TabItem.HOME) }
-    
+
     val isLoggedIn by authViewModel.isLoggedIn.collectAsState()
 
+    val loginSuccess by authViewModel.loginSuccess.collectAsState()
 
-    if (isLoggedIn) {
-        Scaffold(
-            bottomBar = {
-                TabBar(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    activeTab = selectedTabItem,
-                    onTabSelected = { selectedTab ->
-                        selectedTabItem = selectedTab
-                        navController.navigate(selectedTab.route) {
-                            // Stack Wachstum bei jedem Tab Klick vermeiden
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true        // Zustand des vorherigen Tabs sichern
-                            }
-                            launchSingleTop = true      // doppelte Instanzen vermeiden
-                            restoreState =
-                                true         // alten Zustand beim Zurückspringen wiederherstellen
+    LaunchedEffect(loginSuccess) {
+        if (loginSuccess) {
+            navController.navigate(MainGraphRoute) {
+                popUpTo(AuthGraphRoute) {
+                    inclusive = true
+                }    // gesamtem Authentifizierungs-Stack entfernen
+            }
+            authViewModel.resetAuthStates()
+        }
+    }
+
+    Scaffold(
+        bottomBar = {
+            TabBar(
+                modifier = Modifier.padding(bottom = 16.dp),
+                activeTab = selectedTabItem,
+                onTabSelected = { selectedTab ->
+                    selectedTabItem = selectedTab
+                    navController.navigate(selectedTab.route) {
+                        // Stack Wachstum bei jedem Tab Klick vermeiden
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true        // Zustand des vorherigen Tabs sichern
                         }
+                        launchSingleTop = true      // doppelte Instanzen vermeiden
+                        restoreState =
+                            true         // alten Zustand beim Zurückspringen wiederherstellen
+                    }
+                }
+            )
+        },
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = if (isLoggedIn) MainGraphRoute else AuthGraphRoute,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            // Top Level Route - AuthGraphRoute
+            navigation<AuthGraphRoute>(startDestination = LoginRoute) {
+                composable<RegisterRoute> {
+                    RegisterScreen(
+                        onNavigateToRegisterScreen = {
+                            navController.navigate(RegisterRoute)
+                        }
+                    )
+                }
+
+                composable<LoginRoute> {
+                    LoginScreen(
+                        onNavigateToLoginScreen = {
+                            navController.navigate(LoginRoute)
+                        }
+                    )
+                }
+            }
+
+            // Top Level Route - MainGraphRoute
+            navigation<MainGraphRoute>(startDestination = HomeRoute) {
+                composable<HomeRoute> {
+                HomeScreen(
+                    onClickNavigateToAddDream = {
+                        navController.navigate(AddDreamRoute)
+                    },
+                    onClickNavigateToNightSky = {
+                        navController.navigate(NightSkyRoute)
                     }
                 )
-            },
-            modifier = Modifier.fillMaxSize()
-        ) { innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = selectedTabItem.route,
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                composable<HomeRoute> {
-//                HomeScreen(
-//                    onClickNavigateToAddDream = {
-//                        navController.navigate(AddDreamRoute)
-//                    },
-//                    onClickNavigateToNightSky = {
-//                        navController.navigate(NightSkyRoute)
-//                    }
-//                )
-                    LoginScreen(
-                        onNavigateToLoginScreen = {}
-                    )
+//                    LoginScreen(
+//                        onNavigateToLoginScreen = {}
+//                    )
 //                NightSkyScreen()
 //                RegisterScreen(
 //                    onValueChange = {}
@@ -175,34 +209,14 @@ fun AppStart(
                     NightSkyScreen()
                 }
 
-                composable<RegisterRoute> {
-                    RegisterScreen(
-                        onNavigateToRegisterScreen = {
-                            navController.navigate(RegisterRoute)
-                        }
-                    )
-                }
-
-                composable<LoginRoute> {
-                    LoginScreen(
-                        onNavigateToLoginScreen = {
-                            navController.navigate(LoginRoute)
-                        }
-                    )
-                }
-
                 composable<PreviewRoute> {
                     PreviewScreen()
                 }
 
                 composable<LoadingRoute> {
-                    LoadingScreen()             // zu PreviewScreen navigieren
+                    LoadingScreen()
                 }
             }
         }
-    } else {
-        RegisterScreen(
-            onNavigateToRegisterScreen = {}
-        )
     }
 }

@@ -239,6 +239,15 @@ class AuthViewModel: ViewModel() {
         }
     }
 
+    fun logoutUser(): Result<Unit> {
+        return try {
+            authService.logout()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     private fun resetShowHintStates() {
         _showEmailHint.value = false
         _showPasswordHint.value = false
@@ -251,5 +260,10 @@ class AuthViewModel: ViewModel() {
         _emailInput.value = ""
         _passwordInput.value = ""
         _passwordRepeatInput.value = ""
+    }
+
+    fun resetAuthStates() {
+        _registrationSuccess.value = false
+        _loginSuccess.value = false
     }
 }
