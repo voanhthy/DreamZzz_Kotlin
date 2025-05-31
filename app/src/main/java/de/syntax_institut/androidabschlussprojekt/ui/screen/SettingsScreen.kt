@@ -22,6 +22,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.LogoutButton
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -29,7 +30,8 @@ import org.koin.androidx.compose.koinViewModel
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     settingsViewModel: SettingsViewModel = koinViewModel(),
-    authViewModel: AuthViewModel = koinViewModel()
+    authViewModel: AuthViewModel = koinViewModel(),
+    userViewModel: UserViewModel = koinViewModel()
 ) {
     val isNotificationOn by settingsViewModel.isNotificationOnStateFlow.collectAsState()
     val isDarkModeOn by settingsViewModel.isDarkModeStateFlow.collectAsState()
@@ -54,7 +56,7 @@ fun SettingsScreen(
 
         Text(stringResource(R.string.tab_you).uppercase(),
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
             )
 
         HorizontalDivider()

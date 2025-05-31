@@ -1,23 +1,22 @@
 package de.syntax_institut.androidabschlussprojekt.di
 
-import android.R.attr.handle
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDatabase
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamAnalyzeApi
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
-import de.syntax_institut.androidabschlussprojekt.data.remote.firebase.AuthService
+import de.syntax_institut.androidabschlussprojekt.data.repository.AuthServiceRepoImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
+import de.syntax_institut.androidabschlussprojekt.data.repository.AuthServiceRepoInterface
 import de.syntax_institut.androidabschlussprojekt.dataStore
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.UserViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -52,7 +51,7 @@ val appModule = module {
 
     // einmalige Dependency: Firebase
     single {
-        AuthService.getInstance()
+        AuthServiceRepoImpl.getInstance()
     }
 
     // einmalige Dependency: DataStore
@@ -73,6 +72,13 @@ val appModule = module {
         )
     }
 
+    single<AuthServiceRepoInterface> {
+        AuthServiceRepoImpl(
+            firebaseAuth = get(),
+            firestore = get()
+        )
+    }
+
     viewModelOf(::DreamViewModel)
 
     viewModelOf(::SettingsViewModel)
@@ -80,4 +86,6 @@ val appModule = module {
     viewModelOf(::DreamDetailViewModel)
 
     viewModelOf(::AuthViewModel)
+
+    viewModelOf(::UserViewModel)
 }

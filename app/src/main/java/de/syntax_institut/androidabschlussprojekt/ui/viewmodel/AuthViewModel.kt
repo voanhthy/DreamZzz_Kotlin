@@ -1,12 +1,10 @@
 package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 
-import android.opengl.ETC1.isValid
 import android.util.Log
-import android.util.Log.e
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.syntax_institut.androidabschlussprojekt.data.remote.firebase.AuthService
+import de.syntax_institut.androidabschlussprojekt.data.repository.AuthServiceRepoImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -19,9 +17,9 @@ class AuthViewModel: ViewModel() {
 
     private val TAG = "AuthViewModel"
 
-    private val authService = AuthService.getInstance()
+    private val authServiceRepoImpl = AuthServiceRepoImpl.getInstance()
 
-    val isLoggedIn = authService.authState
+    val isLoggedIn = authServiceRepoImpl.authState
         .map { currentUser ->
             currentUser != null
         }.stateIn(
@@ -107,7 +105,7 @@ class AuthViewModel: ViewModel() {
             // mit AuthService registrieren
             if (validateRegisterInputs(firstName, lastName, email, password, passwordRepeat)) {
                 viewModelScope.launch {
-                    val result = authService.register(firstName, lastName, email, password)
+                    val result = authServiceRepoImpl.register(firstName, lastName, email, password)
                     result.onFailure { e ->
                         Log.e("AuthViewModel", "loginOrRegister: ", e)
                     }
@@ -115,7 +113,7 @@ class AuthViewModel: ViewModel() {
             }
         } else {
             // Login mit AuthService
-            authService.login(email, password)
+            authServiceRepoImpl.login(email, password)
         }
     }
 
@@ -180,7 +178,7 @@ class AuthViewModel: ViewModel() {
             }
 
             // Registrierung aufrufen
-            val result = authService.register(
+            val result = authServiceRepoImpl.register(
                 firstName = firstName,
                 lastName = lastName,
                 email = email,
@@ -234,14 +232,14 @@ class AuthViewModel: ViewModel() {
 //            }
 
             // User anmelden
-            val result = authService.login(email, password)
+            val result = authServiceRepoImpl.login(email, password)
             Log.d(TAG, "User erfolgreich angemeldet: $email")
         }
     }
 
     fun logoutUser(): Result<Unit> {
         return try {
-            authService.logout()
+            authServiceRepoImpl.logout()
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

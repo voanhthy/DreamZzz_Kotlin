@@ -1,4 +1,4 @@
-package de.syntax_institut.androidabschlussprojekt.data.remote.firebase
+package de.syntax_institut.androidabschlussprojekt.data.repository
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
@@ -8,25 +8,28 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
 import java.util.Date
-import java.util.UUID
 
-class AuthService {
+class AuthServiceRepoImpl(
+    private val firebaseAuth: FirebaseAuth,
+    private val firestore: FirebaseFirestore
+): AuthServiceRepoInterface {
 
-    private val TAG = "AuthService"
+    private val TAG = "AuthServiceRepoImpl"
 
     companion object {
         @Volatile
-        private var instance: AuthService? = null
+        private var instance: AuthServiceRepoImpl? = null
 
         fun getInstance() =
             instance ?: synchronized(this) {
                 instance
-                    ?: AuthService().also { instance = it }
+                    ?: AuthServiceRepoImpl(
+                        firebaseAuth = FirebaseAuth.getInstance(),
+                        firestore = FirebaseFirestore.getInstance()
+                    ).also { instance = it }
             }
     }
 
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val _authState: MutableStateFlow<User?> = MutableStateFlow(null)
     val authState: StateFlow<User?> = _authState
@@ -51,7 +54,7 @@ class AuthService {
         }
     }
 
-    suspend fun register(firstName: String, lastName: String, email: String, password: String): Result<Unit> {
+    override suspend fun register(firstName: String, lastName: String, email: String, password: String): Result<Unit> {
         try {
             val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .await()
@@ -74,12 +77,24 @@ class AuthService {
         }
     }
 
-    fun login(email: String, password: String) {
+    override fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
         Log.d(TAG, "User erfolgreich eingeloggt: ${email}")
     }
 
-    fun logout() {
+    override fun logout() {
         firebaseAuth.signOut()
     }
+
+    override fun getCurrentUserId(): String? {
+        return firebaseAuth.currentUser?.uid
+    }
+
+    override fun getCurrentUserEmail(): String? {
+        return firebaseAuth.currentUser?.email
+    }
+
+//    override fun getCurrentUserMemberSince(): Date? {
+//
+//    }
 }

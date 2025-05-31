@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import android.R.attr.top
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +42,7 @@ fun HomeScreen(
     dreamViewModel: DreamViewModel = koinViewModel()
 ) {
     val date by dreamViewModel.date.collectAsState()
+    val dreamImage by dreamViewModel.dreamImage.collectAsState()
 
     Column(
         modifier = modifier
@@ -60,7 +62,7 @@ fun HomeScreen(
         // Begrüßungstext
         Text("Hi Gast!",
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
         )
         Text("Heute ist Freitag, der 16.05.2025 - ein neuer Tag voller Möglichkeiten. Doch bevor du durchstartest, nimm dir einen Moment für dich.",
             style = MaterialTheme.typography.bodyLarge)
