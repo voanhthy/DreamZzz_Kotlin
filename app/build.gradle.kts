@@ -105,13 +105,12 @@ dependencies {
     implementation(kotlin("test"))
     // Für LazyVerticalStaggeredGrid
     implementation(libs.androidx.compose.foundation)
-    // Firebase
-//    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
-//    implementation("com.google.firebase:firebase-analytics")
     // firebase
     implementation(libs.firebase.auth)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.firebase.firestore)
+    // Kalender
+    implementation("com.kizitonwose.calendar:compose:2.7.0")
 }

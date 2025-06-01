@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.res.Configuration
 import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzCalendar
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.ImageStylePicker
@@ -143,7 +143,7 @@ fun AddDreamScreen(
 
             if (showDatePicker) {
                 // Kalender Instanz basierend auf dem aktuellem Datum
-                LaunchedEffect(showDatePicker) {
+
                     val calendar = Calendar.getInstance().apply { time = date }
 
                     val dialog = DatePickerDialog(
@@ -165,18 +165,24 @@ fun AddDreamScreen(
                     }
                     dialog.show()
                 }
-            }
 
-            OutlinedTextField(
-                value = formattedDate,
-                onValueChange = {},
-                readOnly = true,
-                label = { Text(stringResource(R.string.detail_date)) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        showDatePicker = true
-                    }
+
+//            OutlinedTextField(
+//                value = formattedDate,
+//                onValueChange = {},
+//                readOnly = true,
+//                label = { Text(stringResource(R.string.detail_date)) },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .clickable {
+//                        showDatePicker = true
+//                    }
+//            )
+
+
+            DreamZzzCalendar(
+                selectedDate = date,
+                onDateSelected = { dreamViewModel.updateDate(it) }
             )
 
 //        if (showDatePicker) {

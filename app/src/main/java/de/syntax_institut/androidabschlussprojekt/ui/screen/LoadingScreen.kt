@@ -1,6 +1,9 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
 import android.util.Log
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,6 +14,7 @@ import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 
 
 @Composable
@@ -30,8 +34,14 @@ fun LoadingScreen(
             }
         }
     }
-    
-    Text("Ich bin ein LadeScreen")
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text("Ich bin ein LadeScreen")
+    }
 }
 
 @Preview(showBackground = true)

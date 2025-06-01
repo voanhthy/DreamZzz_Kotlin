@@ -64,4 +64,8 @@
     <string name="greeting_text">Heute ist %1$s, der %2$s - ein neuer Tag voller Möglichkeiten. Doch bevor du durchstartest, nimm dir einen Moment für dich.</string>
     <string name="pattern_date">dd.MM.yyyy</string>
     <string name="welcome_with_name" translatable="false">Hi %1$s!</string>
+    <plurals name="dream_count_plurals">
+        <item quantity="one">Du hast bereits 1 Traum eingetragen</item>
+        <item quantity="other">Du hast bereits %d Träume eingetragen</item>
+    </plurals>
 </resources>
