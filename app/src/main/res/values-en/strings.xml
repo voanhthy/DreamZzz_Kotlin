@@ -54,4 +54,6 @@
     <string name="analysis">Interpretation</string>
     <string name="type_of_dream_detail">"Type of Dream: "</string>
     <string name="guest">Guest</string>
+    <string name="greeting_text">"Today is %1$s, %2$s — a new day full of possibilities. But before you get started, take a moment for yourself. "</string>
+    <string name="pattern_date">EEEE, MMM d, yyyy</string>
 </resources>

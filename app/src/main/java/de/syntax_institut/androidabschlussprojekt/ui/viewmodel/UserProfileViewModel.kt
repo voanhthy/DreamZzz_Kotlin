@@ -8,8 +8,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.koin.core.KoinApplication.Companion.init
 import java.util.Date
 
 class UserProfileViewModel(
@@ -26,6 +28,17 @@ class UserProfileViewModel(
     val isLoading = _isLoading.asStateFlow()
 
     val userProfile: StateFlow<User?> = authServiceRepoInterface.authState
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = null
+        )
+
+    // Vornamen aus Flow<User?> ableiten
+    val firstName = authServiceRepoInterface.authState
+        .map { user: User? ->
+            user?.firstName
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),

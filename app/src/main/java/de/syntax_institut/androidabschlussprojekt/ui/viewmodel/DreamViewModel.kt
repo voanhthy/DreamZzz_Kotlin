@@ -13,6 +13,8 @@ import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamFirestoreRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
+import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestamp
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,6 +24,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Date
+import java.util.UUID
 
 class DreamViewModel(
     private val dreamImageRepoInterface: DreamImageRepoInterface,
@@ -93,7 +96,9 @@ class DreamViewModel(
 
         // für Ladevorgang
         _isLoading.value = true
+        _dreamImage.value = null        // vorheriges Bild zurücksetzen
         Log.d(TAG, "Bild wird geladen - isLoading ist true")
+        val startTime = System.currentTimeMillis()
 
         viewModelScope.launch {
             Log.d(TAG, "fetchImage aufgerufen mit Prompt: $prompt")
@@ -105,7 +110,7 @@ class DreamViewModel(
 
                 if (imageUrl != null) {
                     val dream = DreamImage(
-                        id = "",
+                        id = UUID.randomUUID().toString(),
                         url = imageUrl,
                         prompt = prompt,
                         mood = _selectedMood.value,
@@ -114,14 +119,23 @@ class DreamViewModel(
                         date = _date.value,
                         interpretation = null
                     )
+
                     Log.d(TAG, "Versuch _dreamImage.value ui $dream zu setzen")
                     _dreamImage.value = dream   // State für DetailScreen aktualisieren
                     Log.d(TAG, "_dreamImage.value ist jetzt ${_dreamImage.value?.url ?: "NULL"}")
                     saveDreamImage(dream)       // Bild speichern
+                    dreamFirestoreRepoInterface.addDream(dream)
                 }
             } catch (e: Exception) {
                 e(TAG, "Error im ViewModel: $e")
             } finally {
+                val elapsedTime = System.currentTimeMillis() - startTime
+                val minDisplayTime = 1500L
+
+                if (elapsedTime < minDisplayTime) {
+                    delay(minDisplayTime - elapsedTime)
+                }
+
                 _isLoading.value = false
                 Log.d(TAG, "Bild erfolgreich geladen - isLoading ist false")
             }
@@ -210,16 +224,16 @@ class DreamViewModel(
     }
 
     // Datum ohne Uhrzeit anzeigen
-    private fun dateWithoutTimestamp(date: Date): Date {
-        val calendar = Calendar.getInstance().apply { time = date }
-
-        // für den Vergleich Std, Min, Sek, Millisek auf 0 setzen
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        return  calendar.time
-    }
+//    private fun dateWithoutTimestamp(date: Date): Date {
+//        val calendar = Calendar.getInstance().apply { time = date }
+//
+//        // für den Vergleich Std, Min, Sek, Millisek auf 0 setzen
+//        calendar.set(Calendar.HOUR_OF_DAY, 0)
+//        calendar.set(Calendar.MINUTE, 0)
+//        calendar.set(Calendar.SECOND, 0)
+//        calendar.set(Calendar.MILLISECOND, 0)
+//        return  calendar.time
+//    }
 
     fun updateSelectedDate(date: Date) {
         _selectedDate.value = dateWithoutTimestamp(date)

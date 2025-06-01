@@ -23,7 +23,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -71,50 +70,23 @@ fun AddDreamScreen(
     var showDatePicker by remember { mutableStateOf(false) }
 
 
-//    LaunchedEffect(isLoading, dreamImage) {         // wie onAppear
-//        if (isLoading) {
-//            Log.d("AddDreamScreen", "Bild wird geladen - zu LoadingScreen navigieren")
-//            onClickNavigateToLoadingScreen()        // Bild wird geladen -> LoadingScreen
-//        } else if (dreamImage != null) {
-//            Log.d("AddDreamScreen", "Bild wurde geladen - zu PreviewScreen navigieren")
-//            onClickNavigateToPreviewScreen(dreamImage!!)    // Bild wurde generiert -> PreviewScreen
-//            dreamViewModel.resetDreamImage()
-//        } else {
-//            Log.d("AddDreamScreen", "isLoading ist false, dreamImage ist null - keine Navigation")
-//        }
-//    }
-//    LaunchedEffect(isLoading, dreamImage) {
+//    LaunchedEffect(dreamImage) {
 //        when {
-//            isLoading -> {
-//                Log.d("AddDreamScreen", "Bild wird geladen")
-//                onClickNavigateToLoadingScreen()
-//            }
 //            dreamImage != null -> {
 //                Log.d("AddDreamScreen", "Bild wurde geladen - zu PreviewScreen navigieren")
 //                onClickNavigateToPreviewScreen(dreamImage!!)
 //                dreamViewModel.resetDreamImage()
 //            }
-//            else -> {
-//                Log.d("AddDreamScreen", "Kein Bild, kein Ladevorgang")
-//            }
 //        }
 //    }
 
-    val image = dreamImage
-    val loading = isLoading
-
-    LaunchedEffect(Unit) {
-        snapshotFlow { Pair(loading, image) }
-            .collect { (isLoading, dreamImage) ->
-                when {
-                    isLoading -> onClickNavigateToLoadingScreen()
-                    dreamImage != null -> {
-                        Log.d("AddDreamScreen", "Bild wurde geladen - zu PreviewScreen navigieren")
-                        onClickNavigateToPreviewScreen(dreamImage)
-                        dreamViewModel.resetDreamImage()
-                    }
-                }
-            }
+    LaunchedEffect(isLoading) {
+        if (isLoading) {
+            Log.d("AddDreamScreen", "Bild wird geladen")
+            onClickNavigateToLoadingScreen()
+        } else {
+            Log.d("AddDreamScreen", "Kein Bild, kein Ladevorgang")
+        }
     }
 
 

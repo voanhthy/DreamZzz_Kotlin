@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
-import android.R.attr.top
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +30,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.CalendarBar
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
-
+import de.syntax_institut.androidabschlussprojekt.ui.component.Greeting
 
 
 @Composable
@@ -60,12 +59,7 @@ fun HomeScreen(
         }
 
         // Begrüßungstext
-        Text("Hi Gast!",
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-        )
-        Text("Heute ist Freitag, der 16.05.2025 - ein neuer Tag voller Möglichkeiten. Doch bevor du durchstartest, nimm dir einen Moment für dich.",
-            style = MaterialTheme.typography.bodyLarge)
+        Greeting()
 
         // interaktiver Nachthimmel
         Box(

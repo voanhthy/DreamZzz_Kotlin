@@ -29,6 +29,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.screen.PreviewScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.RegisterScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.SettingsScreen
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
@@ -208,7 +209,19 @@ fun AppStart(
                 }
 
                 composable<LoadingRoute> {
-                    LoadingScreen()
+                    val parentEntry = remember(it) {
+                        navController.getBackStackEntry(AddDreamRoute)
+                    }
+                    val sharedViewModel: DreamViewModel = koinViewModel(viewModelStoreOwner = parentEntry)
+
+                    LoadingScreen(
+                        dreamViewModel = sharedViewModel,
+                        onNavigateToPreview = { dream ->
+                            navController.navigate(PreviewRoute(
+                                id = dream.id
+                            ))
+                        }
+                    )
                 }
             }
         }

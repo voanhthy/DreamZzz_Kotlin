@@ -31,6 +31,9 @@ import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestamp
+import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestampLong
+
 
 @SuppressLint("RememberReturnType")
 @Composable
@@ -71,16 +74,18 @@ fun CalendarBar(
                     date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR) &&
                     date1.get(Calendar.DAY_OF_YEAR) == date2.get(Calendar.DAY_OF_YEAR)
                 }
-                
-                // falls Date Traum gespeichert hat, kleinen Punkt anzeigen
+
+                // Überprüfung ob angezeigter Tag der ausgewählte Tag ist
+                val selectedDateWithDream = remember(dateToDisplay, datesWithDreams) {
+                    val selectedDateWithoutTimestamp = dateWithoutTimestampLong(selectedDate)
+                    val dateWithoutTimestampToDisplay = dateWithoutTimestampLong(dateToDisplay)
+                    selectedDateWithoutTimestamp == dateWithoutTimestampToDisplay
+                }
+
+                // falls Datum gespeichert, kleinen Punkt anzeigen
                 val dateWithDream = remember(dateToDisplay, datesWithDreams) {
-                    val calendar = Calendar.getInstance().apply { time = dateToDisplay }
-                    // für den Vergleich Std, Min, Sek, Millisek auf 0 setzen
-                    calendar.set(Calendar.HOUR_OF_DAY, 0)
-                    calendar.set(Calendar.MINUTE, 0)
-                    calendar.set(Calendar.SECOND, 0)
-                    calendar.set(Calendar.MILLISECOND, 0)
-                    datesWithDreams.contains(calendar.timeInMillis)
+                    val dateWithoutTimestampToDisplay = dateWithoutTimestampLong(dateToDisplay)
+                    datesWithDreams.contains(dateWithoutTimestampToDisplay)
                 }
                 
                 Box(
@@ -106,7 +111,7 @@ fun CalendarBar(
                                 .padding(1.dp)
                                 .size(4.dp)
                                 .clip(CircleShape)
-                                .background(if (dateWithDream) Color.Gray else Color.Transparent)     
+                                .background(if (selectedDateWithDream) Color.Gray else Color.Transparent)
                         )
                     }
                 }

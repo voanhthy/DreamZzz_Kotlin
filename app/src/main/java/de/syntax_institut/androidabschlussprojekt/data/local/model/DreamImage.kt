@@ -12,12 +12,12 @@ data class DreamImage(
     @PrimaryKey         // ohne autoGenerate, da String-ID von Firestore
     @DocumentId         // wichtig, damit Firestore dieses Feld als Dokument-ID verwendet
     var id: String = "",
-    var url: String,
+    var url: String = "",
 //    val imageData: Data?
-    var date: Date,
-    var prompt: String,
+    var date: Date = Date(),
+    var prompt: String = "",
     var title: String? = "Unbekannter Traum",
     var interpretation: String? = "Keine Traumdeutung vorhanden",
-    var mood: Mood,
-    var typeOfDream: DreamCategory
+    var mood: Mood = Mood.GOOD,
+    var typeOfDream: DreamCategory = DreamCategory.NORMAL
 )
