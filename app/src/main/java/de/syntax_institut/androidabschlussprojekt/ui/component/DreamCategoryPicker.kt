@@ -10,9 +10,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +29,7 @@ fun DreamCategoryPicker(
     Column(
         modifier = modifier
     ) {
-        Text(stringResource(R.string.type_of_dream).uppercase(),
+        Text(stringResource(R.string.type_of_dream_add_screen).uppercase(),
             modifier = Modifier.padding(vertical = 8.dp))
         LazyRow(
             modifier = Modifier

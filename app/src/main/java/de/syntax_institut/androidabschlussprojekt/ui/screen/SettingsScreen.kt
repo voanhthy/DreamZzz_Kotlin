@@ -14,6 +14,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,8 +25,9 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.LogoutButton
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.UserViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.UserProfileViewModel
 import org.koin.androidx.compose.koinViewModel
+import java.text.SimpleDateFormat
 
 
 @Composable
@@ -31,11 +35,16 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     settingsViewModel: SettingsViewModel = koinViewModel(),
     authViewModel: AuthViewModel = koinViewModel(),
-    userViewModel: UserViewModel = koinViewModel()
+    userProfileViewModel: UserProfileViewModel = koinViewModel()
 ) {
     val isNotificationOn by settingsViewModel.isNotificationOnStateFlow.collectAsState()
     val isDarkModeOn by settingsViewModel.isDarkModeStateFlow.collectAsState()
-    val firstName by authViewModel.firstNameInput.collectAsState()
+//    val firstName by userViewModel.firstNameInput.collectAsState()
+    val email by userProfileViewModel.emailFromAuth.collectAsState()
+    val memberSince by userProfileViewModel.memberSinceFromAuth.collectAsState()
+
+    val userProfile by userProfileViewModel.userProfile.collectAsState()
+//    var firstName by remember { mutableStateOf(userProfile?.firstName) ?: "" }
 
     Column(
         modifier = modifier
@@ -70,7 +79,13 @@ fun SettingsScreen(
         ) {
             Text(stringResource(R.string.name),
                 style = MaterialTheme.typography.bodyLarge)
-            Text(firstName,
+
+            val fullName = if (userProfile?.firstName?.isNotBlank() == true || userProfile?.lastName?.isNotBlank() == true) {
+                "${userProfile?.firstName.orEmpty()} ${userProfile?.lastName.orEmpty()}"
+            } else {
+                stringResource(R.string.guest)
+            }
+            Text(fullName,
                 style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()
@@ -84,7 +99,7 @@ fun SettingsScreen(
         ) {
             Text(stringResource(R.string.email),
                 style = MaterialTheme.typography.bodyLarge)
-            Text("keine E-Mail",
+            Text(email ?: "keine E-Mail",
                 style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()
@@ -99,7 +114,7 @@ fun SettingsScreen(
         ) {
             Text(stringResource(R.string.member_since),
                 style = MaterialTheme.typography.bodyLarge)
-            Text("hier anmelden",
+            Text(memberSince?.let { SimpleDateFormat("dd.MM.yyyy").format(it) } ?: "Nicht verfügbar",
                 style = MaterialTheme.typography.bodyLarge)
         }
         HorizontalDivider()

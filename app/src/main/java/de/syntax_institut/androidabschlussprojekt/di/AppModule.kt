@@ -2,6 +2,8 @@ package de.syntax_institut.androidabschlussprojekt.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDatabase
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamAnalyzeApi
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.DreamImageApi
@@ -15,8 +17,9 @@ import de.syntax_institut.androidabschlussprojekt.dataStore
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.PreviewViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
-import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.UserViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.UserProfileViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -41,17 +44,12 @@ val appModule = module {
 
     // einmalige Dependency: Datenbank
     single {
-        DreamImageDatabase.getDatabase(androidContext())
+        DreamImageDatabase.getDatabase(androidContext())        // context wird benötigt
     }
 
     // einmalige Dependency: Dao
     single {
         get<DreamImageDatabase>().dreamImageDao()
-    }
-
-    // einmalige Dependency: Firebase
-    single {
-        AuthServiceRepoImpl.getInstance()
     }
 
     // einmalige Dependency: DataStore
@@ -79,6 +77,14 @@ val appModule = module {
         )
     }
 
+    single {
+        FirebaseAuth.getInstance()
+    }
+
+    single {
+        FirebaseFirestore.getInstance()
+    }
+
     viewModelOf(::DreamViewModel)
 
     viewModelOf(::SettingsViewModel)
@@ -87,5 +93,7 @@ val appModule = module {
 
     viewModelOf(::AuthViewModel)
 
-    viewModelOf(::UserViewModel)
+    viewModelOf(::UserProfileViewModel)
+
+    viewModelOf(::PreviewViewModel)
 }

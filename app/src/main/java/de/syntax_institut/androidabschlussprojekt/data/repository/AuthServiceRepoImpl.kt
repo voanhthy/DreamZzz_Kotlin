@@ -16,23 +16,9 @@ class AuthServiceRepoImpl(
 
     private val TAG = "AuthServiceRepoImpl"
 
-    companion object {
-        @Volatile
-        private var instance: AuthServiceRepoImpl? = null
-
-        fun getInstance() =
-            instance ?: synchronized(this) {
-                instance
-                    ?: AuthServiceRepoImpl(
-                        firebaseAuth = FirebaseAuth.getInstance(),
-                        firestore = FirebaseFirestore.getInstance()
-                    ).also { instance = it }
-            }
-    }
-
 
     private val _authState: MutableStateFlow<User?> = MutableStateFlow(null)
-    val authState: StateFlow<User?> = _authState
+    override val authState: StateFlow<User?> = _authState
 
     init {
         firebaseAuth.addAuthStateListener { auth ->
@@ -77,13 +63,20 @@ class AuthServiceRepoImpl(
         }
     }
 
-    override fun login(email: String, password: String) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-        Log.d(TAG, "User erfolgreich eingeloggt: ${email}")
+    override suspend fun login(email: String, password: String): Result<Unit> {
+        return try {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+            Log.d(TAG, "User erfolgreich eingeloggt: ${email}")
+            return Result.success(Unit)
+        } catch (e: Exception) {
+            Log.d(TAG, "Login fehlgeschlagen")
+            return Result.failure(e)
+        }
     }
 
     override fun logout() {
         firebaseAuth.signOut()
+        Log.d(TAG, "User erfolgreich ausgeloggt")
     }
 
     override fun getCurrentUserId(): String? {
@@ -94,7 +87,27 @@ class AuthServiceRepoImpl(
         return firebaseAuth.currentUser?.email
     }
 
-//    override fun getCurrentUserMemberSince(): Date? {
-//
-//    }
+    override fun getCurrentUserMemberSince(): Date? {
+        return firebaseAuth.currentUser?.metadata?.creationTimestamp?.let { Date(it) }
+    }
+
+    override suspend fun createUserProfile(user: User) {
+        val uid = user.userId
+
+        if (uid.isBlank()) {
+            throw IllegalArgumentException("User ID darf nicht leer sein")
+        }
+        firestore.collection("users").document(uid).set(user).await()
+        Log.d(TAG, "User Profil erstellt für UID: $uid")
+    }
+
+    override suspend fun updateUserProfile(user: User) {
+        val uid = user.userId
+
+        if (uid.isBlank()) {
+            throw IllegalArgumentException("User ID darf nicht leer sein")
+        }
+        firestore.collection("users").document(uid).set(user).await()
+        Log.d(TAG, "User Profil erstellt für UID: $uid")
+    }
 }

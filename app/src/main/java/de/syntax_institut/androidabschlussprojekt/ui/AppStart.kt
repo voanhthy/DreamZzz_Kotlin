@@ -59,7 +59,7 @@ object NightSkyRoute
 
 @Serializable
 data class PreviewRoute(
-    val url: String
+    val id: Long
 )
 
 @Serializable
@@ -198,7 +198,8 @@ fun AppStart(
                         onClickNavigateToPreviewScreen = { dream ->
                             navController.navigate(
                                 PreviewRoute(
-                                    url = dream.url
+//                                    url = dream.url
+                                    id = dream.id
                                 )
                             )
                         }

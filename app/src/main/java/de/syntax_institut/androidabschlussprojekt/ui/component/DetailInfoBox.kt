@@ -62,7 +62,7 @@ fun DetailInfoBox(
                 Text(formattedDate)
             }
             Row {
-                Text(stringResource(R.string.type_of_dream))
+                Text(stringResource(R.string.type_of_dream_detail))
                 Text(stringResource(dreamImage.typeOfDream.titleResId))
             }
             Row {
@@ -78,7 +78,9 @@ fun DetailInfoBox(
             )
 
             // Picker Beschreibung/Interpretation
-            DescriptionAnalysisPicker()
+            DescriptionAnalysisPicker(
+                value = dreamImage.prompt ?: "Keine Traumdeutung"
+            )
         }
     }
 }

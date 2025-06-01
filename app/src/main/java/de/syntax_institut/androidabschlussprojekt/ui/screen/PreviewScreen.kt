@@ -16,13 +16,15 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButto
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import de.syntax_institut.androidabschlussprojekt.R
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.PreviewViewModel
 
 @Composable
 fun PreviewScreen(
     dreamViewModel: DreamViewModel = koinViewModel(),
+    previewViewModel: PreviewViewModel = koinViewModel(),
     modifier: Modifier = Modifier
 ) {
-    val dreamImage by dreamViewModel.dreamImage.collectAsState()
+    val dreamImage by previewViewModel.dreamStateFlow.collectAsState()
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -42,7 +44,8 @@ fun PreviewScreen(
             onClickText = {
                 dreamViewModel.saveImage()
             },
-            title = stringResource(R.string.save)
+            title = stringResource(R.string.save),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
