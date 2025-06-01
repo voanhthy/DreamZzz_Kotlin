@@ -59,7 +59,7 @@ object NightSkyRoute
 
 @Serializable
 data class PreviewRoute(
-    val id: Long
+    val id: String
 )
 
 @Serializable
@@ -67,7 +67,7 @@ object LoadingRoute
 
 @Serializable
 data class DreamDetailRoute(
-    val id: Long
+    val id: String
 )
 
 
@@ -91,8 +91,8 @@ fun AppStart(
 
     val loginSuccess by authViewModel.loginSuccess.collectAsState()
 
-    LaunchedEffect(loginSuccess) {
-        if (loginSuccess) {
+    LaunchedEffect(isLoggedIn) {
+        if (isLoggedIn) {
             navController.navigate(MainGraphRoute) {
                 popUpTo(AuthGraphRoute) {
                     inclusive = true
@@ -150,21 +150,14 @@ fun AppStart(
             // Top Level Route - MainGraphRoute
             navigation<MainGraphRoute>(startDestination = HomeRoute) {
                 composable<HomeRoute> {
-                HomeScreen(
-                    onClickNavigateToAddDream = {
-                        navController.navigate(AddDreamRoute)
-                    },
-                    onClickNavigateToNightSky = {
-                        navController.navigate(NightSkyRoute)
-                    }
-                )
-//                    LoginScreen(
-//                        onNavigateToLoginScreen = {}
-//                    )
-//                NightSkyScreen()
-//                RegisterScreen(
-//                    onValueChange = {}
-//                )
+                    HomeScreen(
+                        onClickNavigateToAddDream = {
+                            navController.navigate(AddDreamRoute)
+                        },
+                        onClickNavigateToNightSky = {
+                            navController.navigate(NightSkyRoute)
+                        }
+                    )
                 }
 
                 composable<GalleryRoute> {

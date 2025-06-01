@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,10 +32,12 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+@SuppressLint("RememberReturnType")
 @Composable
 fun CalendarBar(
     selectedDate: Date,
     onSelectedDate: (Date) -> Unit,
+    datesWithDreams: Set<Long>,         // Set von Dates, an denen Träume eingetragen wurden
     modifier: Modifier = Modifier
 ) {
     // heute
@@ -68,6 +71,18 @@ fun CalendarBar(
                     date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR) &&
                     date1.get(Calendar.DAY_OF_YEAR) == date2.get(Calendar.DAY_OF_YEAR)
                 }
+                
+                // falls Date Traum gespeichert hat, kleinen Punkt anzeigen
+                val dateWithDream = remember(dateToDisplay, datesWithDreams) {
+                    val calendar = Calendar.getInstance().apply { time = dateToDisplay }
+                    // für den Vergleich Std, Min, Sek, Millisek auf 0 setzen
+                    calendar.set(Calendar.HOUR_OF_DAY, 0)
+                    calendar.set(Calendar.MINUTE, 0)
+                    calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
+                    datesWithDreams.contains(calendar.timeInMillis)
+                }
+                
                 Box(
                     modifier = Modifier
                         .size(44.dp)
@@ -91,7 +106,7 @@ fun CalendarBar(
                                 .padding(1.dp)
                                 .size(4.dp)
                                 .clip(CircleShape)
-                                .background(Color.Gray)     // TODO: if else
+                                .background(if (dateWithDream) Color.Gray else Color.Transparent)     
                         )
                     }
                 }
@@ -104,8 +119,12 @@ fun CalendarBar(
 @Composable
 private fun CalendarBarPreview() {
     // Use Theme here
+    val today = Date()
+    val yesterday = Date(today.time - 86_400_000L) // 1 Tag in ms
+
     CalendarBar(
         selectedDate = Date(),
-        onSelectedDate = {}
+        onSelectedDate = {},
+        datesWithDreams = setOf(today.time, yesterday.time)
     )
 }

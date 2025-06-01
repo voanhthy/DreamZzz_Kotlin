@@ -42,7 +42,7 @@ fun HomeScreen(
     dreamViewModel: DreamViewModel = koinViewModel()
 ) {
     val date by dreamViewModel.date.collectAsState()
-    val dreamImage by dreamViewModel.dreamImage.collectAsState()
+    val datesWithDreams by dreamViewModel.datesWithDreams.collectAsState()
 
     Column(
         modifier = modifier
@@ -100,7 +100,8 @@ fun HomeScreen(
         )
         CalendarBar(
             selectedDate = date,
-            onSelectedDate = { dreamViewModel.updateDate(it) }
+            onSelectedDate = { dreamViewModel.updateDate(it) },
+            datesWithDreams = datesWithDreams
         )
         HorizontalDivider(
             modifier = Modifier.padding(vertical = 16.dp))

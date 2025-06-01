@@ -3,6 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.utils.helper
 import androidx.room.TypeConverter
 import java.util.Date
 
+// nötig für Room
 class DateConverter {
     // Long-Wert in Date-Objekt zurückwandeln
     @TypeConverter

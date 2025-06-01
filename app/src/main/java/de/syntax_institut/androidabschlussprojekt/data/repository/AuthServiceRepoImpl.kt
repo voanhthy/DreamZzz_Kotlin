@@ -12,7 +12,7 @@ import java.util.Date
 class AuthServiceRepoImpl(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
-): AuthServiceRepoInterface {
+) : AuthServiceRepoInterface {
 
     private val TAG = "AuthServiceRepoImpl"
 
@@ -32,15 +32,22 @@ class AuthServiceRepoImpl(
                 Log.d(TAG, "Kein User mit UID: ${authUser?.uid}")
             } else {
                 // eingeloggt
-                firestore.collection("users").document(authUser.uid).get().addOnSuccessListener { userDoc ->
-                    _authState.value = userDoc.toObject(User::class.java)
-                }
+                firestore.collection("users").document(authUser.uid)
+                    .get()
+                    .addOnSuccessListener { userDoc ->
+                        _authState.value = userDoc.toObject(User::class.java)
+                    }
                 Log.d(TAG, "User von Firestore geladen: ${authUser.email}")
             }
         }
     }
 
-    override suspend fun register(firstName: String, lastName: String, email: String, password: String): Result<Unit> {
+    override suspend fun register(
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String
+    ): Result<Unit> {
         try {
             val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .await()

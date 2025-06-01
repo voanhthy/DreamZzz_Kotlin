@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 
+import android.icu.util.Calendar
 import android.util.Log
 import android.util.Log.e
 import androidx.lifecycle.ViewModel
@@ -10,16 +11,22 @@ import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCa
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.ImageStyle
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoInterface
+import de.syntax_institut.androidabschlussprojekt.data.repository.DreamFirestoreRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Date
 
 class DreamViewModel(
     private val dreamImageRepoInterface: DreamImageRepoInterface,
     private val dreamAnalyzeRepoInterface: DreamAnalyzeRepoInterface,
+    private val dreamFirestoreRepoInterface: DreamFirestoreRepoInterface,
     private val dreamImagedao: DreamImageDao
 ): ViewModel() {
 
@@ -56,6 +63,24 @@ class DreamViewModel(
 
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
 
+    val datesWithDreams = dreamFirestoreRepoInterface.getDatesWithDreams()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = emptySet()
+        )
+
+    private val _selectedDate = MutableStateFlow(dateWithoutTimestamp(Date()))
+    val selectedDate = _selectedDate.asStateFlow()
+
+    val dreamsForSelectedDate = _selectedDate
+        .flatMapLatest { date ->
+            dreamFirestoreRepoInterface.getDreamsForDate(
+                date = _selectedDate.value
+            )
+        }
+
+
     // Bild in Datenbank speichern
     fun saveDreamImage(dreamImage: DreamImage) {
         viewModelScope.launch {
@@ -80,7 +105,7 @@ class DreamViewModel(
 
                 if (imageUrl != null) {
                     val dream = DreamImage(
-                        id = 0,
+                        id = "",
                         url = imageUrl,
                         prompt = prompt,
                         mood = _selectedMood.value,
@@ -95,7 +120,7 @@ class DreamViewModel(
                     saveDreamImage(dream)       // Bild speichern
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Error im ViewModel: $e")
+                e(TAG, "Error im ViewModel: $e")
             } finally {
                 _isLoading.value = false
                 Log.d(TAG, "Bild erfolgreich geladen - isLoading ist false")
@@ -179,8 +204,26 @@ class DreamViewModel(
             try {
                 dreamImagedao.delete(dreamImage)
             } catch (e: Exception) {
-                Log.e(TAG, "Fehler beim Löschen", e)
+                e(TAG, "Fehler beim Löschen", e)
             }
         }
     }
+
+    // Datum ohne Uhrzeit anzeigen
+    private fun dateWithoutTimestamp(date: Date): Date {
+        val calendar = Calendar.getInstance().apply { time = date }
+
+        // für den Vergleich Std, Min, Sek, Millisek auf 0 setzen
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return  calendar.time
+    }
+
+    fun updateSelectedDate(date: Date) {
+        _selectedDate.value = dateWithoutTimestamp(date)
+    }
+
+
 }

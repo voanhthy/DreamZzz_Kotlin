@@ -1,10 +1,17 @@
 package de.syntax_institut.androidabschlussprojekt.data.repository
 
 import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
 import de.syntax_institut.androidabschlussprojekt.BuildConfig
+import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.ImageStyle
 import de.syntax_institut.androidabschlussprojekt.data.remote.api.APIService
 import de.syntax_institut.androidabschlussprojekt.data.remote.model.DreamImageRequest
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import java.util.Calendar
+import java.util.Date
+import kotlin.jvm.java
 
 // alles was mit api zu tun hat
 
@@ -33,4 +40,5 @@ class DreamImageRepoApiImpl(
             return null
         }
     }
+
 }

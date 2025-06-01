@@ -20,7 +20,7 @@ class AuthViewModel(
 
     private val TAG = "AuthViewModel"
 
-
+    // isLoggedIn = true, sobald FirebaseAuth.authStateListener ein User-Objekt liefert
     val isLoggedIn = authServiceRepoInterface.authState
         .map { currentUser ->
             currentUser != null
@@ -234,7 +234,7 @@ class AuthViewModel(
 //            }
 
             // User anmelden
-            val result = authServiceRepoInterface.login(email, password)
+            authServiceRepoInterface.login(email, password)
             Log.d(TAG, "User erfolgreich angemeldet: $email")
         }
     }

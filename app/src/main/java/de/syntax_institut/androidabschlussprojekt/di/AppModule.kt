@@ -13,6 +13,8 @@ import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRe
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoApiImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.AuthServiceRepoInterface
+import de.syntax_institut.androidabschlussprojekt.data.repository.DreamFirestoreRepoImpl
+import de.syntax_institut.androidabschlussprojekt.data.repository.DreamFirestoreRepoInterface
 import de.syntax_institut.androidabschlussprojekt.dataStore
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
@@ -73,6 +75,12 @@ val appModule = module {
     single<AuthServiceRepoInterface> {
         AuthServiceRepoImpl(
             firebaseAuth = get(),
+            firestore = get()
+        )
+    }
+    
+    single<DreamFirestoreRepoInterface> {
+        DreamFirestoreRepoImpl(
             firestore = get()
         )
     }

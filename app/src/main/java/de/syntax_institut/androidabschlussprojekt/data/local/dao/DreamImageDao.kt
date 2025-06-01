@@ -23,7 +23,7 @@ interface DreamImageDao {
     fun getAllItems(): Flow<List<DreamImage>>
 
     @Query("SELECT * from dreams WHERE id = :id")
-    fun getItemById(id: Long): Flow<DreamImage?>
+    fun getItemById(id: String): Flow<DreamImage?>
 
     @Delete
     suspend fun delete(dreamImage: DreamImage)
