@@ -28,5 +28,4 @@ class PreviewViewModel(
 
     val savedImage = MutableStateFlow<DreamImage?>(null)
 
-//    val url = args.url
 }

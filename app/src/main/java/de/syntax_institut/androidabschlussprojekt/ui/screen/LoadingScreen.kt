@@ -28,12 +28,10 @@ fun LoadingScreen(
     val dreamImage by dreamViewModel.dreamImage.collectAsState()
 
     LaunchedEffect(dreamImage) {
-        when {
-            dreamImage != null -> {
-                Log.d("AddDreamScreen", "Bild wurde geladen - zu PreviewScreen navigieren")
-                onNavigateToPreview(dreamImage!!)
-                dreamViewModel.resetDreamImage()
-            }
+        // erst navigieren, wenn Bild und Interpretation vorhanden sind
+        if (dreamImage != null && !dreamImage!!.interpretation.isNullOrBlank()) {
+            Log.d("AddDreamScreen", "Bild wurde geladen - zu PreviewScreen navigieren")
+            onNavigateToPreview(dreamImage!!)
         }
     }
 

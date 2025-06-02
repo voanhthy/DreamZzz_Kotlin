@@ -41,12 +41,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import coil3.util.CoilUtils.result
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzCalendar
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamsByDate
 import de.syntax_institut.androidabschlussprojekt.ui.component.ImageStylePicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
@@ -62,7 +62,6 @@ import java.util.Locale
 fun AddDreamScreen(
     modifier: Modifier = Modifier,
     onClickNavigateToLoadingScreen: () -> Unit,
-    onClickNavigateToPreviewScreen: (DreamImage) -> Unit,
     dreamViewModel: DreamViewModel = koinViewModel(),
 ) {
     // State Variablen
@@ -99,16 +98,6 @@ fun AddDreamScreen(
         }
     }
 
-
-//    LaunchedEffect(dreamImage) {
-//        when {
-//            dreamImage != null -> {
-//                Log.d("AddDreamScreen", "Bild wurde geladen - zu PreviewScreen navigieren")
-//                onClickNavigateToPreviewScreen(dreamImage!!)
-//                dreamViewModel.resetDreamImage()
-//            }
-//        }
-//    }
 
     LaunchedEffect(isLoading) {
         if (isLoading) {
@@ -288,10 +277,9 @@ fun AddDreamScreen(
                 onClickText = {
                     dreamViewModel.fetchImage(description)
                     Log.d("ButtonTest", "Generate-Button wurde gedrückt")
-                    dreamViewModel.analyzeImage(description)
                 },
                 title = stringResource(R.string.generate),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -303,8 +291,7 @@ fun AddDreamScreen(
 private fun AddDreamScreenPreviewEN() {
     AndroidAbschlussprojektTheme {
         AddDreamScreen(
-            onClickNavigateToLoadingScreen = {},
-            onClickNavigateToPreviewScreen = {}
+            onClickNavigateToLoadingScreen = {}
         )
     }
 }
@@ -315,8 +302,7 @@ private fun AddDreamScreenPreviewEN() {
 private fun AddDreamScreenPreview() {
     AndroidAbschlussprojektTheme {
         AddDreamScreen(
-            onClickNavigateToLoadingScreen = {},
-            onClickNavigateToPreviewScreen = {}
+            onClickNavigateToLoadingScreen = {}
         )
     }
 }

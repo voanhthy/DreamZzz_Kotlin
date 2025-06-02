@@ -2,7 +2,9 @@ package de.syntax_institut.androidabschlussprojekt.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,6 +38,7 @@ fun DreamDetailScreen(
     val dreamImage by dreamDetailViewModel.dreamStateFlow.collectAsState()
 
     Scaffold(
+//        contentWindowInsets = WindowInsets(0.dp),
         containerColor = Color.White
     ) { innerPadding ->
 
@@ -43,7 +46,8 @@ fun DreamDetailScreen(
             modifier = modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .background(Color.White)
+                .background(Color.White),
+            contentPadding = PaddingValues(0.dp)
         ) {
             // generiertes Bild
             item {
@@ -56,29 +60,24 @@ fun DreamDetailScreen(
                             contentDescription = "Bild",
                             modifier = Modifier
                                 .fillMaxWidth(),
-//                                .height(300.dp),
                             contentScale = ContentScale.Crop
                         )
 
+                        // Gradient
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-//                                .matchParentSize()
                                 .height(40.dp)
                                 .align(Alignment.BottomCenter)
-//                                .offset(y = 100.dp)
                                 .background(
                                     brush = Brush.verticalGradient(
                                         colors = listOf(
-//                                            Color.Transparent,
                                             Color.Transparent,
                                             Color.White.copy(0.2f),
                                             Color.White.copy(0.5f),
                                             Color.White.copy(0.8f),
                                             Color.White,
-                                        ),
-//                                        startY = 0f,
-//                                        endY = Float.POSITIVE_INFINITY
+                                        )
                                     )
                                 )
                         )
@@ -89,17 +88,8 @@ fun DreamDetailScreen(
             // Box mit Infos
             item {
                 dreamImage?.let { image ->
-//                Box(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .clip(RoundedCornerShape(15.dp))
-//                        .background(DreamZzzGray)
-//                ) {
-//                    Text(image.prompt,
-//                        modifier = Modifier.padding(16.dp))
-//
-//                }
-                    Spacer(modifier = Modifier.padding(16.dp))
+
+                    Spacer(modifier = Modifier.padding(8.dp))
 
                     DetailInfoBox(
                         image,
@@ -107,7 +97,6 @@ fun DreamDetailScreen(
                     )
                 }
             }
-
         }
     }
 }

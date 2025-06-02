@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
+import de.syntax_institut.androidabschlussprojekt.ui.LoginRoute
 import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
@@ -112,12 +113,17 @@ fun AppStart(
                     selectedTabItem = selectedTab
                     navController.navigate(selectedTab.route) {
                         // Stack Wachstum bei jedem Tab Klick vermeiden
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true        // Zustand des vorherigen Tabs sichern
-                        }
-                        launchSingleTop = true      // doppelte Instanzen vermeiden
-                        restoreState =
-                            true         // alten Zustand beim Zurückspringen wiederherstellen
+//                        popUpTo(navController.graph.startDestinationId) {
+//                            saveState = true        // Zustand des vorherigen Tabs sichern
+//                        }
+//                        launchSingleTop = true      // doppelte Instanzen vermeiden
+//                        restoreState =
+//                            true                    // alten Zustand beim Zurückspringen wiederherstellen
+
+                        // besser: Tab wird jedes mal auf Anfang gesetzt
+                        popUpTo(MainGraphRoute) { saveState = false }
+                        launchSingleTop = true
+                        restoreState = false
                     }
                 }
             )
@@ -143,6 +149,9 @@ fun AppStart(
                     LoginScreen(
                         onNavigateToRegisterScreen = {
                             navController.navigate(RegisterRoute)
+                        },
+                        onNavigateToHomeScreen = {
+                            navController.navigate(HomeRoute)
                         }
                     )
                 }
@@ -188,14 +197,6 @@ fun AppStart(
                     AddDreamScreen(
                         onClickNavigateToLoadingScreen = {
                             navController.navigate(LoadingRoute)
-                        },
-                        onClickNavigateToPreviewScreen = { dream ->
-                            navController.navigate(
-                                PreviewRoute(
-//                                    url = dream.url
-                                    id = dream.id
-                                )
-                            )
                         }
                     )
                 }
@@ -205,11 +206,21 @@ fun AppStart(
                 }
 
                 composable<PreviewRoute> {
+                    val parentEntry = remember(it) {
+                        navController.getBackStackEntry(AddDreamRoute)
+                    }
+                    val sharedViewModel: DreamViewModel =
+                        koinViewModel(viewModelStoreOwner = parentEntry)
+
                     PreviewScreen(
+                        dreamViewModel = sharedViewModel,
                         onNavigateToDreamDetail = { dream ->
-                            navController.navigate(PreviewRoute(
-                                id = dream.id
-                            ))
+                            navController.navigate(
+                                DreamDetailRoute(
+                                    id = dream.id
+                                )
+                            )
+
                         }
                     )
                 }
@@ -218,15 +229,19 @@ fun AppStart(
                     val parentEntry = remember(it) {
                         navController.getBackStackEntry(AddDreamRoute)
                     }
-                    val sharedViewModel: DreamViewModel = koinViewModel(viewModelStoreOwner = parentEntry)
+                    // Zustand bleibt erhalten
+                    val sharedViewModel: DreamViewModel =
+                        koinViewModel(viewModelStoreOwner = parentEntry)
 
                     LoadingScreen(
                         dreamViewModel = sharedViewModel,
                         onNavigateToPreview = { dream ->
-                            navController.navigate(PreviewRoute(
-                                id = dream.id
-                            ))
-                        }
+                            navController.navigate(
+                                PreviewRoute(
+                                    id = dream.id
+                                )
+                            )
+                        },
                     )
                 }
             }

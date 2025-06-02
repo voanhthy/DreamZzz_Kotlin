@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 
-import android.icu.util.Calendar
 import android.util.Log
 import android.util.Log.e
 import androidx.lifecycle.ViewModel
@@ -13,12 +12,12 @@ import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamFirestoreRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
+import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils
 import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestamp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -27,12 +26,13 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
 
+
 class DreamViewModel(
     private val dreamImageRepoInterface: DreamImageRepoInterface,
     private val dreamAnalyzeRepoInterface: DreamAnalyzeRepoInterface,
     private val dreamFirestoreRepoInterface: DreamFirestoreRepoInterface,
     private val dreamImagedao: DreamImageDao
-): ViewModel() {
+) : ViewModel() {
 
     private val TAG = "DreamViewModel"
 
@@ -59,6 +59,9 @@ class DreamViewModel(
     private val _date = MutableStateFlow(Date())
     val date = _date.asStateFlow()
 
+    private val _interpretation = MutableStateFlow("")
+    val interpretation = _interpretation.asStateFlow()
+
     private val _analysisResult = MutableStateFlow<String?>(null)
     val analysisResult = _analysisResult.asStateFlow()
 
@@ -70,6 +73,13 @@ class DreamViewModel(
 
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
 
+    val savedDreamImagesState = savedDreamImages
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = emptyList()
+        )
+
     val datesWithDreams = dreamFirestoreRepoInterface.getDatesWithDreams()
         .stateIn(
             scope = viewModelScope,
@@ -80,11 +90,19 @@ class DreamViewModel(
     private val _selectedDate = MutableStateFlow(dateWithoutTimestamp(Date()))
     val selectedDate = _selectedDate.asStateFlow()
 
-    val dreamsForSelectedDate = _selectedDate
+    // firestore
+//    val dreamsForSelectedDate = _selectedDate
+//        .flatMapLatest { date ->
+//            dreamFirestoreRepoInterface.getDreamsForDate(
+//                date = _selectedDate.value
+//            )
+//        }
+
+    val dreamsForSelectedDate = selectedDate
         .flatMapLatest { date ->
-            dreamFirestoreRepoInterface.getDreamsForDate(
-                date = _selectedDate.value
-            )
+            dreamImagedao.getAllItems().map { list ->
+                list.filter { DateUtils.dateWithoutTimestamp(it.date) == date }
+            }
         }
 
     val dreamCount = savedDreamImages
@@ -94,7 +112,6 @@ class DreamViewModel(
             started = SharingStarted.WhileSubscribed(),
             initialValue = 0
         )
-
 
 
     // TODO: Stil integrieren
@@ -111,11 +128,15 @@ class DreamViewModel(
             try {
 
                 // API Call über Repo
-                val imageUrl = dreamImageRepoInterface.generateImage(prompt, selectedImageStyle.value)
+                val imageUrl =
+                    dreamImageRepoInterface.generateImage(prompt, selectedImageStyle.value)
                 Log.d(TAG, "Bild-URL vom Repo: $imageUrl")
 
+                val interpretation = dreamAnalyzeRepoInterface.analyzeImage(prompt)
+
+                // DreamImage erstellen
                 if (imageUrl != null) {
-                    val dream = DreamImage(
+                    val newDream = DreamImage(
                         id = UUID.randomUUID().toString(),
                         url = imageUrl,
                         prompt = prompt,
@@ -123,14 +144,17 @@ class DreamViewModel(
                         typeOfDream = _selectedDreamCategory.value,
                         title = _title.value,
                         date = _date.value,
-                        interpretation = null
+                        interpretation = interpretation
                     )
 
-                    Log.d(TAG, "Versuch _dreamImage.value ui $dream zu setzen")
-                    _dreamImage.value = dream   // State für DetailScreen aktualisieren
+                    Log.d(TAG, "Neues DreamImage erstellt: $newDream")
+
+                    _dreamImage.value = newDream   // State für DetailScreen aktualisieren
+
                     Log.d(TAG, "_dreamImage.value ist jetzt ${_dreamImage.value?.url ?: "NULL"}")
-                    saveImage()       // Bild speichern
-                    dreamFirestoreRepoInterface.addDream(dream)
+
+                    // Dream in Firestore speichern
+                    dreamFirestoreRepoInterface.addDream(newDream)
                 }
             } catch (e: Exception) {
                 e(TAG, "Error im ViewModel: $e")
@@ -237,5 +261,15 @@ class DreamViewModel(
     fun appendTranscribedDescription(text: String) {
         _description.value += if (_description.value.isBlank()) text else " $text"
     }
+
+//    fun getDreamsByDate(date: Date): List<DreamImage> {
+//        val selectedDate = Calendar.getInstance().apply { time = date }
+//
+//        return savedDreamImagesState.value.filter {
+//            Calendar.getInstance()
+//            Calendar.getInstance().apply { time = date }.get(Calendar.YEAR) == selectedDate.get(java.util.Calendar.YEAR) &&
+//            Calendar.getInstance().apply { time = date }.get(Calendar.DAY_OF_YEAR) == selectedDate.get(java.util.Calendar.DAY_OF_YEAR)
+//        }
+//    }
 
 }

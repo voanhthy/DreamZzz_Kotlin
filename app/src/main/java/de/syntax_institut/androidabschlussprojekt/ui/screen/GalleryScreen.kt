@@ -58,7 +58,7 @@ fun GalleryScreen(
 ) {
     var isGrid by remember { mutableStateOf(false) }
     val dreamImages by dreamViewModel.savedDreamImages.collectAsState(listOf())
-    var gridColumns by remember { mutableStateOf(2) }
+    var gridColumns by remember { mutableStateOf(3) }
     val minColumns = 1
     val maxColumns = 8
 

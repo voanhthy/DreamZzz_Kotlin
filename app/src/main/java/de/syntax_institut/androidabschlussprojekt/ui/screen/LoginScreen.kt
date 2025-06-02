@@ -31,6 +31,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LoginScreen(
     onNavigateToRegisterScreen: () -> Unit,
+    onNavigateToHomeScreen: () -> Unit,
     modifier: Modifier = Modifier,
     authViewModel: AuthViewModel = koinViewModel()
 ) {
@@ -85,6 +86,7 @@ fun LoginScreen(
         DreamZzzTextButton(
             onClickText = {
                 authViewModel.loginUser()
+                onNavigateToHomeScreen()
             },
             title = stringResource(R.string.login),
             modifier = Modifier
@@ -122,6 +124,7 @@ fun LoginScreen(
 private fun LoginScreenPreview() {
     // Use Theme here
     LoginScreen(
-        onNavigateToRegisterScreen = {}
+        onNavigateToRegisterScreen = {},
+        onNavigateToHomeScreen = {}
     )
 }

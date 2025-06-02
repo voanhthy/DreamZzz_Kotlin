@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -34,19 +35,20 @@ fun PreviewScreen(
     onNavigateToDreamDetail: (DreamImage) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val dreamImage by previewViewModel.dreamStateFlow.collectAsState()
+    val dreamImage by dreamViewModel.dreamImage.collectAsState()
+    val isLoading by dreamViewModel.isLoading.collectAsState()
     val savedImage by previewViewModel.savedImage.collectAsState()
     var hasNavigated by remember { mutableStateOf(false) }
 
     // gespeichert und bereit zu navigieren
-    LaunchedEffect(savedImage) {
-        val image = savedImage
-        if (image != null && !hasNavigated) {
-            hasNavigated = true
-            Log.d("PreviewScreen", "Bild gespeichert - zu DreamDetailScreen navigieren")
-            onNavigateToDreamDetail(image)
-        }
-    }
+//    LaunchedEffect(dreamImage) {
+//        val image = dreamImage
+//        if (image != null && !hasNavigated) {
+//            hasNavigated = true
+//            Log.d("PreviewScreen", "Bild gespeichert - zu DreamDetailScreen navigieren")
+//            onNavigateToDreamDetail(image)
+//        }
+//    }
     
     Column(
         modifier = modifier
@@ -55,24 +57,33 @@ fun PreviewScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        dreamImage?.url?.let { imageUrl ->
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = "Bild",
+        if (isLoading) {
+            CircularProgressIndicator()
+        } else {
+            Log.d("PreviewScreen", "Bild ist da: ${dreamImage?.url}")
+
+            dreamImage?.url?.let { imageUrl ->
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = "Bild",
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            Spacer(modifier = Modifier.padding(16.dp))
+
+            // Speichern Button - nur wenn Bild geladen
+
+            DreamZzzTextButton(
+                onClickText = {
+                    dreamImage?.let {
+                        dreamViewModel.saveImage()
+                        onNavigateToDreamDetail(it)
+                    }
+                },
+                title = stringResource(R.string.save),
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        
-        Spacer(modifier = Modifier.padding(16.dp))
-
-        // Speichern Button
-        DreamZzzTextButton(
-            onClickText = {
-                dreamViewModel.saveImage()
-            },
-            title = stringResource(R.string.save),
-            modifier = Modifier.fillMaxWidth()
-        )
     }
 }
 

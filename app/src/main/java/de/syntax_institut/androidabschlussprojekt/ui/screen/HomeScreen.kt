@@ -31,6 +31,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.pluralStringResource
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamsByDate
 import de.syntax_institut.androidabschlussprojekt.ui.component.Greeting
 
 
@@ -44,6 +45,9 @@ fun HomeScreen(
     val date by dreamViewModel.date.collectAsState()
     val datesWithDreams by dreamViewModel.datesWithDreams.collectAsState()
     val dreamCount by dreamViewModel.dreamCount.collectAsState()
+    val dreamsByDate by dreamViewModel.dreamsForSelectedDate.collectAsState(
+        initial = emptyList()
+    )
 
     Column(
         modifier = modifier
@@ -102,6 +106,10 @@ fun HomeScreen(
         )
         HorizontalDivider(
             modifier = Modifier.padding(vertical = 16.dp))
+
+        DreamsByDate(
+            dreams = dreamsByDate
+        )
     }
 }
 

@@ -1,9 +1,11 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
+import android.R.attr.top
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,9 +55,14 @@ fun DetailInfoBox(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val title = dreamImage.title
+
             if (title != null) {
                 Text(title,
-                    style = MaterialTheme.typography.titleLarge)
+                    style = MaterialTheme.typography.titleLarge,
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
+                    textAlign = TextAlign.Center)
             } else {
                 Text("Unbekannter Traum")       // TODO: ???
             }
@@ -80,7 +89,8 @@ fun DetailInfoBox(
 
             // Picker Beschreibung/Interpretation
             DescriptionAnalysisPicker(
-                value = dreamImage.prompt ?: "Keine Traumdeutung"
+                description = dreamImage.prompt,
+                interpretation = dreamImage.interpretation.toString()
             )
         }
     }
