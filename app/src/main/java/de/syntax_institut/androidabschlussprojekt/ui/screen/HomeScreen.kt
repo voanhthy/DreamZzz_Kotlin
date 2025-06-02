@@ -45,9 +45,11 @@ fun HomeScreen(
     val date by dreamViewModel.date.collectAsState()
     val datesWithDreams by dreamViewModel.datesWithDreams.collectAsState()
     val dreamCount by dreamViewModel.dreamCount.collectAsState()
+    // aus DB
     val dreamsByDate by dreamViewModel.dreamsForSelectedDate.collectAsState(
         initial = emptyList()
     )
+    val selectedDate by dreamViewModel.selectedDate.collectAsState()
 
     Column(
         modifier = modifier
@@ -101,7 +103,7 @@ fun HomeScreen(
         )
         CalendarBar(
             selectedDate = date,
-            onSelectedDate = { dreamViewModel.updateDate(it) },
+            onSelectedDate = { dreamViewModel.updateSelectedDate(it) },
             datesWithDreams = datesWithDreams
         )
         HorizontalDivider(

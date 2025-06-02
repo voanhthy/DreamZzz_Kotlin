@@ -17,6 +17,8 @@ import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -31,6 +33,7 @@ fun LoadingScreen(
         // erst navigieren, wenn Bild und Interpretation vorhanden sind
         if (dreamImage != null && !dreamImage!!.interpretation.isNullOrBlank()) {
             Log.d("AddDreamScreen", "Bild wurde geladen - zu PreviewScreen navigieren")
+            delay(5000)
             onNavigateToPreview(dreamImage!!)
         }
     }

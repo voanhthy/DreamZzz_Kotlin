@@ -28,6 +28,8 @@ import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzLavender
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import de.syntax_institut.androidabschlussprojekt.utils.helper.TextFormatHelper.truncateText
+
 
 @Composable
 fun GalleryListItem(
@@ -72,7 +74,7 @@ fun GalleryListItem(
                 // Beschreibung
                 // TODO: Helper Func Text kürzen
                 Text(
-                    prompt,
+                    truncateText(prompt, 100),
                     modifier = Modifier,
                     textAlign = TextAlign.Center
                 )

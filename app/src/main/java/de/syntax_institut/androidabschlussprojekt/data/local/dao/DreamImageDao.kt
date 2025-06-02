@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import kotlinx.coroutines.flow.Flow
+import java.util.Date
 
 @Dao
 interface DreamImageDao {
@@ -24,6 +25,9 @@ interface DreamImageDao {
 
     @Query("SELECT * from dreams WHERE id = :id")
     fun getItemById(id: String): Flow<DreamImage?>
+
+    @Query("SELECT * from dreams WHERE date = :date")
+    fun getDreamsByDate(date: Date): Flow<List<DreamImage>>
 
     @Delete
     suspend fun delete(dreamImage: DreamImage)

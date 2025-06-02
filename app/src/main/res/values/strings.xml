@@ -68,4 +68,5 @@
         <item quantity="one">Du hast bereits 1 Traum eingetragen</item>
         <item quantity="other">Du hast bereits %d Träume eingetragen</item>
     </plurals>
+    <string name="no_dream_for_date">Was hat dich diese Nacht bewegt? Halte es fest, bevor dein Traum verblasst...</string>
 </resources>

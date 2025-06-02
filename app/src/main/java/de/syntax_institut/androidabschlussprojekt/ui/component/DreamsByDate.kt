@@ -17,11 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
+import de.syntax_institut.androidabschlussprojekt.R
 
 
 @Composable
@@ -34,7 +36,7 @@ fun DreamsByDate(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (dreams.isEmpty()) {
-            // TODO: placeholder image
+            Text(stringResource(R.string.no_dream_for_date))
         } else {
             dreams.forEach { dream ->
 

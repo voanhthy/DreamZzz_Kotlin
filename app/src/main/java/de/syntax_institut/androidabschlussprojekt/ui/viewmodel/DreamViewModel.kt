@@ -41,6 +41,7 @@ class DreamViewModel(
     private val _dreamImage = MutableStateFlow<DreamImage?>(null)
     val dreamImage = _dreamImage.asStateFlow()
 
+    //// Eingabefelder zum generieren des Bildes
     private val _title = MutableStateFlow("")
     val title = _title.asStateFlow()
 
@@ -58,6 +59,7 @@ class DreamViewModel(
 
     private val _date = MutableStateFlow(Date())
     val date = _date.asStateFlow()
+    ////
 
     private val _interpretation = MutableStateFlow("")
     val interpretation = _interpretation.asStateFlow()
@@ -71,7 +73,22 @@ class DreamViewModel(
     private val _savedImage = MutableStateFlow<DreamImage?>(null)
     val savedImage = _savedImage.asStateFlow()
 
+    private val _selectedDate = MutableStateFlow(dateWithoutTimestamp(Date()))
+    val selectedDate = _selectedDate.asStateFlow()
+
+
+    //// Room
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
+
+    // bei jeder Änderung von _selectedDate wird automatisch eine neue Datenbankabfrage gestartet
+    val dreamsForSelectedDate = _selectedDate
+        .flatMapLatest { date ->
+            dreamImagedao.getDreamsByDate(dateWithoutTimestamp(date))
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = emptyList()
+        )
 
     val savedDreamImagesState = savedDreamImages
         .stateIn(
@@ -80,6 +97,8 @@ class DreamViewModel(
             initialValue = emptyList()
         )
 
+
+    //// Firestore
     val datesWithDreams = dreamFirestoreRepoInterface.getDatesWithDreams()
         .stateIn(
             scope = viewModelScope,
@@ -87,24 +106,17 @@ class DreamViewModel(
             initialValue = emptySet()
         )
 
-    private val _selectedDate = MutableStateFlow(dateWithoutTimestamp(Date()))
-    val selectedDate = _selectedDate.asStateFlow()
-
-    // firestore
 //    val dreamsForSelectedDate = _selectedDate
 //        .flatMapLatest { date ->
 //            dreamFirestoreRepoInterface.getDreamsForDate(
 //                date = _selectedDate.value
 //            )
 //        }
+    ////
 
-    val dreamsForSelectedDate = selectedDate
-        .flatMapLatest { date ->
-            dreamImagedao.getAllItems().map { list ->
-                list.filter { DateUtils.dateWithoutTimestamp(it.date) == date }
-            }
-        }
 
+
+    // Anzahl aller Träume für NightSky
     val dreamCount = savedDreamImages
         .map { it.size }
         .stateIn(
@@ -114,7 +126,7 @@ class DreamViewModel(
         )
 
 
-    // TODO: Stil integrieren
+    // Bild + Interpretation generieren
     fun fetchImage(prompt: String) {
 
         // für Ladevorgang
@@ -143,7 +155,7 @@ class DreamViewModel(
                         mood = _selectedMood.value,
                         typeOfDream = _selectedDreamCategory.value,
                         title = _title.value,
-                        date = _date.value,
+                        date = dateWithoutTimestamp(_date.value),
                         interpretation = interpretation
                     )
 
@@ -172,30 +184,6 @@ class DreamViewModel(
         }
     }
 
-    fun analyzeImage(prompt: String) {
-        viewModelScope.launch {
-            Log.d(TAG, "analyzeImage aufgerufen mit Prompt: $prompt")
-            try {
-                // API Call über Repo
-                val interpretation = dreamAnalyzeRepoInterface.analyzeImage(prompt)
-                Log.d(TAG, "Traumdeutung vom Repo: $interpretation")
-                // Interpretation speichern
-                _analysisResult.value = interpretation
-
-                if (interpretation != null) {
-                    val dreamAnalysis = DreamImage(
-                        url = "",
-                        date = _date.value,
-                        prompt = prompt,
-                        mood = _selectedMood.value,
-                        typeOfDream = _selectedDreamCategory.value
-                    )
-                }
-            } catch (e: Exception) {
-                e(TAG, "Error im ViewModel: $e")
-            }
-        }
-    }
 
     // StateFlows aktualisieren
     // Textfield Titel
@@ -220,7 +208,7 @@ class DreamViewModel(
 
     // Date
     fun updateDate(newDate: Date) {
-        _date.value = newDate
+        _date.value = dateWithoutTimestamp(newDate)
     }
 
     // ImageStyle
@@ -228,7 +216,7 @@ class DreamViewModel(
         _selectedImageStyle.value = newStyle
     }
 
-    // Bild speichern
+    // Traum lokal speichern (Room)
     fun saveImage() {
         viewModelScope.launch {
             _dreamImage.value?.let { dream ->
@@ -258,18 +246,9 @@ class DreamViewModel(
         _selectedDate.value = dateWithoutTimestamp(date)
     }
 
+    //// Spracheingabe
+    // transkibierter Text
     fun appendTranscribedDescription(text: String) {
         _description.value += if (_description.value.isBlank()) text else " $text"
     }
-
-//    fun getDreamsByDate(date: Date): List<DreamImage> {
-//        val selectedDate = Calendar.getInstance().apply { time = date }
-//
-//        return savedDreamImagesState.value.filter {
-//            Calendar.getInstance()
-//            Calendar.getInstance().apply { time = date }.get(Calendar.YEAR) == selectedDate.get(java.util.Calendar.YEAR) &&
-//            Calendar.getInstance().apply { time = date }.get(Calendar.DAY_OF_YEAR) == selectedDate.get(java.util.Calendar.DAY_OF_YEAR)
-//        }
-//    }
-
 }

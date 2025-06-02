@@ -60,4 +60,5 @@
         <item quantity="one">You have already added 1 dream</item>
         <item quantity="other">You have already added %d dreams</item>
     </plurals>
+    <string name="no_dream_for_date">What moved you tonight? Capture it before your dream fades away...</string>
 </resources>
