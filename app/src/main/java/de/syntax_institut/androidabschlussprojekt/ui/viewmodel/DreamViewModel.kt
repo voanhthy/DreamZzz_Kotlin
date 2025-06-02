@@ -234,5 +234,8 @@ class DreamViewModel(
         _selectedDate.value = dateWithoutTimestamp(date)
     }
 
+    fun appendTranscribedDescription(text: String) {
+        _description.value += if (_description.value.isBlank()) text else " $text"
+    }
 
 }

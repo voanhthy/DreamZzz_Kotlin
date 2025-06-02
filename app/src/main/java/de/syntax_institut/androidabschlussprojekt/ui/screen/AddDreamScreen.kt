@@ -1,9 +1,15 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import android.R.attr.description
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.content.res.Configuration
+import android.speech.RecognizerIntent
+import android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +17,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -31,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import coil3.util.CoilUtils.result
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzCalendar
@@ -65,9 +76,28 @@ fun AddDreamScreen(
     val result by dreamViewModel.analysisResult.collectAsState()
     val isLoading by dreamViewModel.isLoading.collectAsState()
 
-    val context = LocalContext.current
-
     var showDatePicker by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val spokenText = result.data
+            ?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            ?.firstOrNull()
+        spokenText?.let {
+            dreamViewModel.appendTranscribedDescription(it)
+        }
+    }
+
+    val speechIntent = remember {
+        Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            putExtra(RecognizerIntent.EXTRA_PROMPT, "Sprich deinen Traum...")
+
+        }
+    }
 
 
 //    LaunchedEffect(dreamImage) {
@@ -135,7 +165,17 @@ fun AddDreamScreen(
                     focusedContainerColor = Color.White,
                     focusedBorderColor = Color.Transparent,
                     unfocusedBorderColor = Color.Transparent
-                )
+                ),
+                // Mikrofon-Icon für Sprachaufnahme
+                trailingIcon = {
+                    IconButton(
+                        onClick = { launcher.launch(speechIntent) }
+                    ) {
+                        Icon(
+                            Icons.Default.Mic,
+                            contentDescription = "Spracheingabe starten")
+                    }
+                }
             )
 
             // Datum auswählen
