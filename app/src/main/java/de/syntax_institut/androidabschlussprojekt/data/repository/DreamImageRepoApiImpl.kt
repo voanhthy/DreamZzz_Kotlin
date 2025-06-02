@@ -27,7 +27,7 @@ class DreamImageRepoApiImpl(
         return try {
             val response = apiService.generateImage(
                 authHeader = "Bearer ${BuildConfig.API_KEY}",
-                request = DreamImageRequest(promptWithStyle, model = "dall-e-3", n = 1, size = "1024x1024"))
+                request = DreamImageRequest(promptWithStyle, model = "dall-e-2", n = 1, size = "1024x1024"))
 
             if (response.isSuccessful && response.body() != null) {
                 return response.body()?.data?.firstOrNull()?.url

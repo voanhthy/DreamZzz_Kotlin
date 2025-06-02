@@ -111,7 +111,7 @@ fun CalendarBar(
                                 .padding(1.dp)
                                 .size(4.dp)
                                 .clip(CircleShape)
-                                .background(if (selectedDateWithDream) Color.Gray else Color.Transparent)
+                                .background(if (dateWithDream) Color.Gray else Color.Transparent)
                         )
                     }
                 }

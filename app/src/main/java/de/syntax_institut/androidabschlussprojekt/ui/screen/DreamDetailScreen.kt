@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.DetailInfoBox
+import de.syntax_institut.androidabschlussprojekt.ui.component.TabBarButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzGray
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -33,42 +35,60 @@ fun DreamDetailScreen(
 ) {
     val dreamImage by dreamDetailViewModel.dreamStateFlow.collectAsState()
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-    ) {
-        // generiertes Bild
-        item {
-            dreamImage?.let { image ->
-                Box(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    AsyncImage(
-                        model = image.url,
-                        contentDescription = "Bild",
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        contentScale = ContentScale.Crop
-                    )
+    Scaffold(
+        containerColor = Color.White
+    ) { innerPadding ->
 
+        LazyColumn(
+            modifier = modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .background(Color.White)
+        ) {
+            // generiertes Bild
+            item {
+                dreamImage?.let { image ->
                     Box(
-                        modifier = Modifier
-                            .matchParentSize()
-                            .align(Alignment.BottomCenter)
-                            .offset(y = 100.dp)
-                            .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(Color.Transparent, Color.Transparent, Color.Transparent.copy(0.7f), DreamZzzGray.copy(1f)),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        AsyncImage(
+                            model = image.url,
+                            contentDescription = "Bild",
+                            modifier = Modifier
+                                .fillMaxWidth(),
+//                                .height(300.dp),
+                            contentScale = ContentScale.Crop
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+//                                .matchParentSize()
+                                .height(40.dp)
+                                .align(Alignment.BottomCenter)
+//                                .offset(y = 100.dp)
+                                .background(
+                                    brush = Brush.verticalGradient(
+                                        colors = listOf(
+//                                            Color.Transparent,
+                                            Color.Transparent,
+                                            Color.White.copy(0.2f),
+                                            Color.White.copy(0.5f),
+                                            Color.White.copy(0.8f),
+                                            Color.White,
+                                        ),
+//                                        startY = 0f,
+//                                        endY = Float.POSITIVE_INFINITY
+                                    )
                                 )
-                            )
-                    )
+                        )
+                    }
                 }
             }
-        }
 
-        // Box mit Infos
-        item {
-            dreamImage?.let { image ->
+            // Box mit Infos
+            item {
+                dreamImage?.let { image ->
 //                Box(
 //                    modifier = Modifier
 //                        .fillMaxWidth()
@@ -79,13 +99,16 @@ fun DreamDetailScreen(
 //                        modifier = Modifier.padding(16.dp))
 //
 //                }
-                Spacer(modifier = Modifier.padding(16.dp))
+                    Spacer(modifier = Modifier.padding(16.dp))
 
-                DetailInfoBox(image,
-                    modifier = Modifier.padding(16.dp))
+                    DetailInfoBox(
+                        image,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
             }
-        }
 
+        }
     }
 }
 

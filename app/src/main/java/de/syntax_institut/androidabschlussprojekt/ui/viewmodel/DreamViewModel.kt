@@ -65,6 +65,9 @@ class DreamViewModel(
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
+    private val _savedImage = MutableStateFlow<DreamImage?>(null)
+    val savedImage = _savedImage.asStateFlow()
+
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
 
     val datesWithDreams = dreamFirestoreRepoInterface.getDatesWithDreams()
@@ -93,12 +96,6 @@ class DreamViewModel(
         )
 
 
-    // Bild in Datenbank speichern
-    fun saveDreamImage(dreamImage: DreamImage) {
-        viewModelScope.launch {
-            dreamImagedao.insert(dreamImage)
-        }
-    }
 
     // TODO: Stil integrieren
     fun fetchImage(prompt: String) {
@@ -132,7 +129,7 @@ class DreamViewModel(
                     Log.d(TAG, "Versuch _dreamImage.value ui $dream zu setzen")
                     _dreamImage.value = dream   // State für DetailScreen aktualisieren
                     Log.d(TAG, "_dreamImage.value ist jetzt ${_dreamImage.value?.url ?: "NULL"}")
-                    saveDreamImage(dream)       // Bild speichern
+                    saveImage()       // Bild speichern
                     dreamFirestoreRepoInterface.addDream(dream)
                 }
             } catch (e: Exception) {
@@ -212,6 +209,7 @@ class DreamViewModel(
         viewModelScope.launch {
             _dreamImage.value?.let { dream ->
                 dreamImagedao.insert(dream)
+                _savedImage.value = dream
                 Log.d(TAG, "Bild wurde gespeichert: $dream")
             } ?: Log.w(TAG, "Kein Bild zum Bild vorhanden")
         }
@@ -231,18 +229,6 @@ class DreamViewModel(
             }
         }
     }
-
-    // Datum ohne Uhrzeit anzeigen
-//    private fun dateWithoutTimestamp(date: Date): Date {
-//        val calendar = Calendar.getInstance().apply { time = date }
-//
-//        // für den Vergleich Std, Min, Sek, Millisek auf 0 setzen
-//        calendar.set(Calendar.HOUR_OF_DAY, 0)
-//        calendar.set(Calendar.MINUTE, 0)
-//        calendar.set(Calendar.SECOND, 0)
-//        calendar.set(Calendar.MILLISECOND, 0)
-//        return  calendar.time
-//    }
 
     fun updateSelectedDate(date: Date) {
         _selectedDate.value = dateWithoutTimestamp(date)

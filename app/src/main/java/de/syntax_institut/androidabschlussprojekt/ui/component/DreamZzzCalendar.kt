@@ -146,13 +146,10 @@ fun DreamZzzCalendar(
                         text = day.date.dayOfMonth.toString(),
                         color = textColor
                     )
-
                 }
             }
         )
     }
-
-
 }
 
 @Preview(showBackground = true)

@@ -205,7 +205,13 @@ fun AppStart(
                 }
 
                 composable<PreviewRoute> {
-                    PreviewScreen()
+                    PreviewScreen(
+                        onNavigateToDreamDetail = { dream ->
+                            navController.navigate(PreviewRoute(
+                                id = dream.id
+                            ))
+                        }
+                    )
                 }
 
                 composable<LoadingRoute> {

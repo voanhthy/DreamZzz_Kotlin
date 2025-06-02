@@ -59,7 +59,7 @@
     <string name="login_here">Logge dich hier ein</string>
     <string name="description">Traumbeschreibung</string>
     <string name="analysis">Traumdeutung</string>
-    <string name="type_of_dream_detail">Art des Traumes:</string>
+    <string name="type_of_dream_detail">"Art des Traumes: "</string>
     <string name="guest">Gast</string>
     <string name="greeting_text">Heute ist %1$s, der %2$s - ein neuer Tag voller Möglichkeiten. Doch bevor du durchstartest, nimm dir einen Moment für dich.</string>
     <string name="pattern_date">dd.MM.yyyy</string>

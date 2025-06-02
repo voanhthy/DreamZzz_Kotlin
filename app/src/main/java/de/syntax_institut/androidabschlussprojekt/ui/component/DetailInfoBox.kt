@@ -23,6 +23,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
+import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzGray
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -41,7 +42,7 @@ fun DetailInfoBox(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(15.dp))
-            .background(Color.White)
+            .background(DreamZzzGray)
     ) {
         Column(
             modifier = Modifier
