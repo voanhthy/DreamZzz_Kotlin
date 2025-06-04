@@ -37,8 +37,7 @@ fun PreviewScreen(
 ) {
     val dreamImage by dreamViewModel.dreamImage.collectAsState()
     val isLoading by dreamViewModel.isLoading.collectAsState()
-    val savedImage by previewViewModel.savedImage.collectAsState()
-    var hasNavigated by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
 
     // gespeichert und bereit zu navigieren
 //    LaunchedEffect(dreamImage) {
@@ -72,12 +71,12 @@ fun PreviewScreen(
             Spacer(modifier = Modifier.padding(16.dp))
 
             // Speichern Button - nur wenn Bild geladen
-
             DreamZzzTextButton(
                 onClickText = {
                     dreamImage?.let {
                         dreamViewModel.saveImage()
                         onNavigateToDreamDetail(it)
+                        showDialog = true
                     }
                 },
                 title = stringResource(R.string.save),

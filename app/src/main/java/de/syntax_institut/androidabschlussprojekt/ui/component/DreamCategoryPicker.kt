@@ -2,6 +2,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.component
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -32,7 +33,8 @@ fun DreamCategoryPicker(
         Text(stringResource(R.string.type_of_dream_add_screen).uppercase(),
             modifier = Modifier.padding(vertical = 8.dp))
         LazyRow(
-            modifier = Modifier
+            modifier = Modifier,
+            contentPadding = PaddingValues(0.dp)
         ) {
             items(DreamCategory.entries.size) { index ->
                 val category = DreamCategory.entries[index]

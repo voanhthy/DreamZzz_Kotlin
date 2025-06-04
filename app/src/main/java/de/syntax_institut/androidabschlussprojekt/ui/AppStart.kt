@@ -166,6 +166,13 @@ fun AppStart(
                         },
                         onClickNavigateToNightSky = {
                             navController.navigate(NightSkyRoute)
+                        },
+                        onClickNavigateToDreamDetail = { dream ->
+                            navController.navigate(
+                                DreamDetailRoute(
+                                    id = dream.id
+                                )
+                            )
                         }
                     )
                 }

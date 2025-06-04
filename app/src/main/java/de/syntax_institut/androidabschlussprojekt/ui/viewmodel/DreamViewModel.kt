@@ -12,7 +12,6 @@ import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamFirestoreRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
-import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils
 import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestamp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -208,7 +207,9 @@ class DreamViewModel(
 
     // Date
     fun updateDate(newDate: Date) {
-        _date.value = dateWithoutTimestamp(newDate)
+        val cleanDate = dateWithoutTimestamp(newDate)
+        _date.value = cleanDate
+        _selectedDate.value = cleanDate
     }
 
     // ImageStyle

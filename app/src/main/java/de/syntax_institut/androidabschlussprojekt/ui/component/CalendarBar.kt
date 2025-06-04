@@ -52,14 +52,23 @@ fun CalendarBar(
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         daysRange.forEach { dayOffset ->
-            val calendar = remember { Calendar.getInstance() }
 
-            calendar.time = today.time
-            calendar.add(Calendar.DAY_OF_YEAR, dayOffset)
-            val dateToDisplay = calendar.time
+            val dateToDisplay = Calendar.getInstance().apply {
+                time = today.time
+                add(Calendar.DAY_OF_YEAR, dayOffset)
+            }.time
 
             val dayOfWeekFormatter = remember { SimpleDateFormat("EE", Locale.getDefault()) }
             val dayOfMonthFormatter = remember { SimpleDateFormat("dd", Locale.getDefault()) }
+
+            val isSelected = dateWithoutTimestamp(selectedDate) == dateWithoutTimestamp(dateToDisplay)
+
+            // falls Datum gespeichert, kleinen Punkt anzeigen
+            val dateWithDream = remember(dateToDisplay, datesWithDreams) {
+                val dateWithoutTimestampToDisplay = dateWithoutTimestampLong(dateToDisplay)
+                datesWithDreams.contains(dateWithoutTimestampToDisplay)
+            }
+
 
             Column(
                 modifier = Modifier,
@@ -67,26 +76,6 @@ fun CalendarBar(
             ) {
                 Text(dayOfWeekFormatter.format(dateToDisplay).uppercase(Locale.getDefault()).trimEnd('.'),
                     style = MaterialTheme.typography.labelSmall)
-
-                val isSelected = remember(selectedDate, dateToDisplay) {
-                    val date1 = Calendar.getInstance().apply { time = selectedDate }
-                    val date2 = Calendar.getInstance().apply { time = dateToDisplay }
-                    date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR) &&
-                    date1.get(Calendar.DAY_OF_YEAR) == date2.get(Calendar.DAY_OF_YEAR)
-                }
-
-                // Überprüfung ob angezeigter Tag der ausgewählte Tag ist
-                val selectedDateWithDream = remember(dateToDisplay, datesWithDreams) {
-                    val selectedDateWithoutTimestamp = dateWithoutTimestampLong(selectedDate)
-                    val dateWithoutTimestampToDisplay = dateWithoutTimestampLong(dateToDisplay)
-                    selectedDateWithoutTimestamp == dateWithoutTimestampToDisplay
-                }
-
-                // falls Datum gespeichert, kleinen Punkt anzeigen
-                val dateWithDream = remember(dateToDisplay, datesWithDreams) {
-                    val dateWithoutTimestampToDisplay = dateWithoutTimestampLong(dateToDisplay)
-                    datesWithDreams.contains(dateWithoutTimestampToDisplay)
-                }
                 
                 Box(
                     modifier = Modifier

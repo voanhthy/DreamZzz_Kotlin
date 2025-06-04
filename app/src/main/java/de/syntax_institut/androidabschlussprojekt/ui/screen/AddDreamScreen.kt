@@ -10,6 +10,7 @@ import android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -117,8 +118,10 @@ fun AddDreamScreen(
         item {
 
             Text(
-                stringResource(R.string.add_new_dream).uppercase(),
-                fontSize = 30.sp
+                stringResource(R.string.add_new_dream),
+                style = MaterialTheme.typography.titleLarge,
+                fontSize = 34.sp,
+                modifier = Modifier.padding(top = 16.dp)
             )
 
             // Texteingabefeld: Titel
@@ -207,7 +210,7 @@ fun AddDreamScreen(
 //                        showDatePicker = true
 //                    }
 //            )
-
+            Spacer(modifier = Modifier.padding(16.dp))
 
             DreamZzzCalendar(
                 selectedDate = date,
