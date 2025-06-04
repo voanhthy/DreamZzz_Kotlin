@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,11 +30,11 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.CalendarBar
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.pluralStringResource
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamsByDate
 import de.syntax_institut.androidabschlussprojekt.ui.component.Greeting
-
 
 
 @Composable
@@ -47,14 +46,13 @@ fun HomeScreen(
     dreamViewModel: DreamViewModel = koinViewModel()
 ) {
     val date by dreamViewModel.date.collectAsState()
+    // TODO: Daten kommen aus Firestore (lieber Room?)
     val datesWithDreams by dreamViewModel.datesWithDreams.collectAsState()
     val dreamCount by dreamViewModel.dreamCount.collectAsState()
     // aus DB
     val dreamsByDate by dreamViewModel.dreamsForSelectedDate.collectAsState(
         initial = emptyList()
     )
-    val selectedDate by dreamViewModel.selectedDate.collectAsState()
-    val dreamImage by dreamViewModel.dreamImage.collectAsState()
 
     LazyColumn(
         modifier = modifier
