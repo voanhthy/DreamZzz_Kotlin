@@ -53,6 +53,7 @@ fun HomeScreen(
     val dreamsByDate by dreamViewModel.dreamsForSelectedDate.collectAsState(
         initial = emptyList()
     )
+    val selectedDate by dreamViewModel.selectedDate.collectAsState()
 
     LazyColumn(
         modifier = modifier
@@ -106,7 +107,7 @@ fun HomeScreen(
                 modifier = Modifier.padding(vertical = 16.dp)
             )
             CalendarBar(
-                selectedDate = date,
+                selectedDate = selectedDate,
                 onSelectedDate = { dreamViewModel.updateSelectedDate(it) },
                 datesWithDreams = datesWithDreams
             )

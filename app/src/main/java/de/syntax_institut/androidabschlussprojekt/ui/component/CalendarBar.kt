@@ -76,10 +76,11 @@ fun CalendarBar(
             ) {
                 Text(dayOfWeekFormatter.format(dateToDisplay).uppercase(Locale.getDefault()).trimEnd('.'),
                     style = MaterialTheme.typography.labelSmall)
-                
+
+                // lila Kreis ums Datum
                 Box(
                     modifier = Modifier
-                        .size(44.dp)
+                        .size(48.dp)
                         .clip(shape = CircleShape)
                         .background(if (isSelected) DreamZzzLavender else Color.Transparent)
                         .clickable { onSelectedDate(dateToDisplay) },
