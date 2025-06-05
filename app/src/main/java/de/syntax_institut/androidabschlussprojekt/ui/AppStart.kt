@@ -209,7 +209,15 @@ fun AppStart(
                 }
 
                 composable<NightSkyRoute> {
-                    NightSkyScreen()
+                    NightSkyScreen(
+                        onNavigateToDreamDetail = { dream ->
+                            navController.navigate(
+                                DreamDetailRoute(
+                                    id = dream.id
+                                )
+                            )
+                        }
+                    )
                 }
 
                 composable<PreviewRoute> {
@@ -227,7 +235,6 @@ fun AppStart(
                                     id = dream.id
                                 )
                             )
-
                         }
                     )
                 }
