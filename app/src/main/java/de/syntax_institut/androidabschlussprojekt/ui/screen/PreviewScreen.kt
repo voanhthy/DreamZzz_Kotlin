@@ -26,12 +26,12 @@ import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
+import de.syntax_institut.androidabschlussprojekt.ui.component.SuccessDialog
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.PreviewViewModel
 
 @Composable
 fun PreviewScreen(
     dreamViewModel: DreamViewModel = koinViewModel(),
-    previewViewModel: PreviewViewModel = koinViewModel(),
     onNavigateToDreamDetail: (DreamImage) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -39,16 +39,7 @@ fun PreviewScreen(
     val isLoading by dreamViewModel.isLoading.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
 
-    // gespeichert und bereit zu navigieren
-//    LaunchedEffect(dreamImage) {
-//        val image = dreamImage
-//        if (image != null && !hasNavigated) {
-//            hasNavigated = true
-//            Log.d("PreviewScreen", "Bild gespeichert - zu DreamDetailScreen navigieren")
-//            onNavigateToDreamDetail(image)
-//        }
-//    }
-    
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -75,13 +66,24 @@ fun PreviewScreen(
                 onClickText = {
                     dreamImage?.let {
                         dreamViewModel.saveImage()
-                        onNavigateToDreamDetail(it)
                         showDialog = true
                     }
                 },
                 title = stringResource(R.string.save),
                 modifier = Modifier.fillMaxWidth()
             )
+
+            if (showDialog) {
+                SuccessDialog(
+                    showDialog = true,
+                    onDismiss = {
+                        showDialog = false
+                        dreamImage?.let {
+                            onNavigateToDreamDetail(it)
+                        }
+                    }
+                )
+            }
         }
     }
 }

@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -17,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -72,29 +76,27 @@ fun GalleryListItem(
                         .height(100.dp)
                 )
                 // Beschreibung
-                // TODO: Helper Func Text kürzen
                 Text(
                     truncateText(prompt, 100),
-                    modifier = Modifier,
+                    modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
             }
         }
 
         // Datumanzeige
-        Card(
-            shape = RoundedCornerShape(8.dp),
+        Box(
             modifier = Modifier
-                .height(28.dp)
                 .offset(x = 25.dp, y = (-12).dp)
                 .zIndex(1f)         // über Box herausragen lassen
+                .height(26.dp)
+                .width(130.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(DreamZzzLavender),
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 formattedDate,
-                modifier = Modifier
-                    .width(130.dp)
-                    .background(DreamZzzLavender)
-                    .padding(horizontal = 24.dp, vertical = 4.dp),
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center
             )

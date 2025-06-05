@@ -19,6 +19,7 @@ import de.syntax_institut.androidabschlussprojekt.dataStore
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.NightSkyViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.PreviewViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.UserProfileViewModel
@@ -104,4 +105,6 @@ val appModule = module {
     viewModelOf(::UserProfileViewModel)
 
     viewModelOf(::PreviewViewModel)
+
+    viewModelOf(::NightSkyViewModel)
 }

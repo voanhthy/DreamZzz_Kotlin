@@ -153,7 +153,7 @@ class DreamViewModel(
                         prompt = prompt,
                         mood = _selectedMood.value,
                         typeOfDream = _selectedDreamCategory.value,
-                        title = _title.value,
+                        title = if (_title.value.isEmpty()) "Unbekannter Traum" else _title.value,
                         date = dateWithoutTimestamp(_date.value),
                         interpretation = interpretation
                     )

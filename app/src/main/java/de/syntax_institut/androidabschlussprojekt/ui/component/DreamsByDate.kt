@@ -86,12 +86,20 @@ fun DreamsByDate(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             // Titel
-                            Text(
-                                dream.title.toString().uppercase(),
-                                style = MaterialTheme.typography.labelSmall,
-                                textAlign = TextAlign.Center,
-                                fontSize = 16.sp
-                            )
+                            if (dream.title!!.isEmpty()) {
+                                Text(stringResource(R.string.unknown_title).uppercase(),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 16.sp
+                                )
+                            } else {
+                                Text(
+                                    dream.title.toString().uppercase(),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 16.sp
+                                )
+                            }
 
                             // Beschreibung
                             Text(
