@@ -1,16 +1,13 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
-import android.R.attr.description
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.res.Configuration
 import android.speech.RecognizerIntent
-import android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,11 +40,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
-import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
-import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzCalendar
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzCalendar
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
-import de.syntax_institut.androidabschlussprojekt.ui.component.DreamsByDate
 import de.syntax_institut.androidabschlussprojekt.ui.component.ImageStylePicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme

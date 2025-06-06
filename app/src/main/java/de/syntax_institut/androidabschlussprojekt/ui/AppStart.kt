@@ -255,7 +255,7 @@ fun AppStart(
                                     id = dream.id
                                 )
                             )
-                        },
+                        }
                     )
                 }
             }
