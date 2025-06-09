@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.ui.component.LoadingAnimation
 import de.syntax_institut.androidabschlussprojekt.utils.getRandomSleepFact
@@ -37,12 +39,17 @@ fun LoadingScreen(
 ) {
     val dreamImage by dreamViewModel.dreamImage.collectAsState()
     var sleepFact by remember { mutableStateOf(getRandomSleepFact()) }
+    val isImageReady by dreamViewModel.isImageReady.collectAsState()
+    val isLoading by dreamViewModel.isLoading.collectAsState()
 
     LaunchedEffect(dreamImage) {
-        // erst navigieren, wenn Bild und Interpretation vorhanden sind
-        if (dreamImage != null && !dreamImage!!.interpretation.isNullOrBlank()) {
-            Log.d("AddDreamScreen", "Bild wurde geladen - zu PreviewScreen navigieren")
-            delay(5000)
+        dreamViewModel.checkIfImageReady(dreamImage)
+    }
+
+    LaunchedEffect(isImageReady, isLoading) {
+        if (!isLoading && isImageReady && dreamImage != null) {
+            Log.d("LoadingScreen", "Bild bereit - zu PreviewScreen navigieren")
+            delay(1000)
             onNavigateToPreview(dreamImage!!)
         }
     }
@@ -69,7 +76,11 @@ fun LoadingScreen(
         Spacer(modifier = Modifier.padding(16.dp))
 
         Text(sleepFact,
-            style = MaterialTheme.typography.bodyLarge)
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+        )
     }
 }
 

@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.libs
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -76,7 +77,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // extended icons
-        implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material.icons.extended)
     // viewmodel
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // navigation

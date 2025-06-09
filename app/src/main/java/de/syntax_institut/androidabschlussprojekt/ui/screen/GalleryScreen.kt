@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryListItem
+import de.syntax_institut.androidabschlussprojekt.ui.component.SwipeableGalleryListItem
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import kotlin.random.Random
@@ -61,6 +63,7 @@ fun GalleryScreen(
     var gridColumns by remember { mutableStateOf(3) }
     val minColumns = 1
     val maxColumns = 8
+    var showDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -146,8 +149,8 @@ fun GalleryScreen(
                         contentDescription = "Traumbild",
                         modifier = Modifier
                             .clickable {
-                            onNavigateToDetailScreen(dream)
-                        }
+                                onNavigateToDetailScreen(dream)
+                            }
                             .clip(shape = RoundedCornerShape(10.dp))
                             .fillMaxWidth()
                             .height(randomHeight),
@@ -159,14 +162,16 @@ fun GalleryScreen(
             // GalleryList
             LazyColumn {
                 items(dreamImages) { dream ->
-                    GalleryListItem(
-                        imageUrl = dream.url,
-                        prompt = dream.prompt,
-                        date = dream.date,
-                        modifier = Modifier
-                            .clickable {
-                                onNavigateToDetailScreen(dream)
-                            }
+
+                    SwipeableGalleryListItem(
+                        dream = dream,
+                        onSwipeDelete = {
+                            Log.d("GalleryScreen", "Wird gelöscht: ${dream.id}")
+                            dreamViewModel.deleteDreamImage(dream)
+                        },
+                        onClick = {
+                            onNavigateToDetailScreen(dream)
+                        }
                     )
                 }
             }

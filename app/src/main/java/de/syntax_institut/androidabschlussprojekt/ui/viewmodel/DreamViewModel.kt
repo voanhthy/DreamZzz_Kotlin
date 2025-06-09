@@ -75,6 +75,9 @@ class DreamViewModel(
     private val _selectedDate = MutableStateFlow(dateWithoutTimestamp(Date()))
     val selectedDate = _selectedDate.asStateFlow()
 
+    private val _isImageReady = MutableStateFlow(false)
+    val isImageReady = _isImageReady.asStateFlow()
+
 
     //// Room
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
@@ -238,6 +241,7 @@ class DreamViewModel(
             try {
                 dreamImagedao.delete(dreamImage)
             } catch (e: Exception) {
+
                 e(TAG, "Fehler beim Löschen", e)
             }
         }
@@ -251,5 +255,11 @@ class DreamViewModel(
     // transkibierter Text
     fun appendTranscribedDescription(text: String) {
         _description.value += if (_description.value.isBlank()) text else " $text"
+    }
+
+    // für Preview
+    fun checkIfImageReady(image: DreamImage?) {
+        _isImageReady.value = image != null && !image.url
+            .isNullOrBlank() && !image.interpretation.isNullOrBlank()
     }
 }

@@ -3,28 +3,36 @@ package de.syntax_institut.androidabschlussprojekt.ui.component
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuccessDialog(
+fun DeleteDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (showDialog) {
-        AlertDialog(    
+        AlertDialog(
             onDismissRequest = onDismiss,
             modifier = modifier,
-            title = { Text("Erfolg")},
-            text = { Text("Bild wurde erfolgreich gespeichert") },
+            title = { Text("Traum löschen") },
+            text = { Text("Möchtest du diesen Traum wirklich löschen?") },
             confirmButton = {
-                Text("OK",
+                Text(
+                    "OK",
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable { onConfirm() }
+                )
+            },
+            dismissButton = {
+                Text(
+                    "Abbrechen",
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable { onDismiss() }
@@ -36,10 +44,11 @@ fun SuccessDialog(
 
 @Preview(showBackground = true)
 @Composable
-private fun SuccessDialogPreview() {
+private fun DeleteDialogPreview() {
     // Use Theme here
-    SuccessDialog(
+    DeleteDialog(
         showDialog = true,
-        onDismiss = {}
+        onDismiss = {},
+        onConfirm = {}
     )
 }

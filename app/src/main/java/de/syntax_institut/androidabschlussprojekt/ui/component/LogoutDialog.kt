@@ -19,7 +19,7 @@ fun LogoutDialog(
     if (showDialog) {
         AlertDialog(
             onDismissRequest = onDismiss,
-            modifier = Modifier,
+            modifier = modifier,
             title = { Text("Abmelden") },
             text = { Text("Möchtest du dich wirklich abmelden?") },
             confirmButton = {
