@@ -235,7 +235,6 @@ fun AddDreamScreen(
                     onDateSelected = { dreamViewModel.updateDate(it) }
                 )
 
-
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 // Traum-Kategorie auswählen
@@ -258,7 +257,7 @@ fun AddDreamScreen(
                     onClick = { dreamViewModel.updateImageStyle(it) }
                 )
 
-                Spacer(modifier = Modifier.padding(16.dp))
+                Spacer(modifier = Modifier.padding(8.dp))
 
                 // Mood Picker TODO: in eine Box packen
                 Row(

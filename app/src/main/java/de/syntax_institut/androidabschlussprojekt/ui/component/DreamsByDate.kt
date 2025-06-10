@@ -70,7 +70,7 @@ fun DreamsByDate(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(130.dp)
+                        .height(120.dp)
                 ) {
                     Row(
                         modifier = modifier
@@ -118,7 +118,7 @@ fun DreamsByDate(
                             contentDescription = "generiertes Bild",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .size(120.dp)
+                                .size(115.dp)
                                 .clip(RoundedCornerShape(5.dp))
                                 .weight(1f),
                         )

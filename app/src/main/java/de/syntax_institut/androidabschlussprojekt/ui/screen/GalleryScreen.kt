@@ -27,7 +27,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -79,7 +78,9 @@ fun GalleryScreen(
                     .fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium
             ) {
-                DreamZzzFilterMenu()
+                DreamZzzFilterMenu(
+                    onDissmiss = { showFilter = false }
+                )
             }
         }
     }
@@ -147,7 +148,7 @@ fun GalleryScreen(
                 itemsIndexed(dreams) { index, dream ->
                     // zufällige Höhe generieren
                     val randomHeight = remember(dream.id) {
-                        Random.nextInt(100, 400).dp
+                        Random.nextInt(80, 400).dp
                     }
 
                     AsyncImage(

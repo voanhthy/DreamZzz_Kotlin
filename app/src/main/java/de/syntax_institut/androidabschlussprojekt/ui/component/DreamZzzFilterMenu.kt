@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -59,7 +61,8 @@ import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzLavender
 @Composable
 fun DreamZzzFilterMenu(
     dreamViewModel: DreamViewModel = koinViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onDissmiss: () -> Unit
 ) {
     // Filter ausklappen
     var showMoodFilter by remember { mutableStateOf(false) }
@@ -73,7 +76,7 @@ fun DreamZzzFilterMenu(
     val selectedImageStylesFilter by dreamViewModel.selectedImageStylesFilter.collectAsState()
     val gridColumns by dreamViewModel.gridColums.collectAsState()
 
-    val sortOptions = listOf("Neueste zuerst", "Älteste zuerst")
+    val sortOptions = listOf("Älteste zuerst", "Neueste zuerst")
 
     Box(
         modifier = modifier
@@ -151,7 +154,7 @@ fun DreamZzzFilterMenu(
                                 unselectedColor = DreamZzzLavender
                             )
                         )
-                        Text(sortOptions[0])
+                        Text(sortOptions[1])
                     }
 
                     // Älteste zuerst
@@ -170,7 +173,7 @@ fun DreamZzzFilterMenu(
                                 unselectedColor = DreamZzzLavender
                             )
                         )
-                        Text(sortOptions[1])
+                        Text(sortOptions[0])
                     }
                 }
             }
@@ -365,10 +368,30 @@ fun DreamZzzFilterMenu(
             Spacer(modifier = Modifier.padding(16.dp))
 
             DreamZzzTextButton(
-                onClickText = {},
+                onClickText = { onDissmiss() },
                 title = "Anwenden",
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
+
+            Spacer(modifier = Modifier.padding(4.dp))
+
+            Button(
+                onClick = {
+                    dreamViewModel.clearMoodsFilter()
+                    dreamViewModel.clearCategoriesFilter()
+                    dreamViewModel.clearImageStylesFilter()
+                    dreamViewModel.setSortArc(true)
+                    dreamViewModel.setGridColumns(3)
+                },
+                modifier = Modifier
+                    .fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(Color.LightGray),
+                shape = RoundedCornerShape(10.dp)
+            ) {
+                Text("Zurücksetzen",
+                    fontSize = 16.sp)
+            }
         }
     }
 }
@@ -377,5 +400,7 @@ fun DreamZzzFilterMenu(
 @Composable
 private fun DreamZzzFilterMenuPreview() {
     // Use Theme here
-    DreamZzzFilterMenu()
+    DreamZzzFilterMenu(
+        onDissmiss = {}
+    )
 }

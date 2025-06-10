@@ -1,14 +1,19 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material3.Button
@@ -30,10 +35,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import de.syntax_institut.androidabschlussprojekt.ui.component.NightSkyInfoBox
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.StarItem
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
+import android.view.WindowInsets
+
 
 
 @Composable
@@ -46,8 +56,11 @@ fun NightSkyScreen(
     var showImage by remember { mutableStateOf(false) }
     val dreamImages by dreamViewModel.savedDreamImagesState.collectAsState()
 
+
     Box(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+
     ) {
         Image(
             painter = painterResource(R.drawable.sky),

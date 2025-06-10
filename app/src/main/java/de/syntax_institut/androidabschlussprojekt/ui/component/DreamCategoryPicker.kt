@@ -39,9 +39,9 @@ fun DreamCategoryPicker(
             items(DreamCategory.entries.size) { index ->
                 val category = DreamCategory.entries[index]
                 val borderColor = if (category == selectedCategory) SelectedCategoryBorder else Color.Transparent
-                val borderWidth = if (category == selectedCategory) 2.dp else 0.dp
+                val borderWidth = if (category == selectedCategory) 4.dp else 0.dp
                 val buttonContainerColor = DreamZzzLavender
-                val customShape = RoundedCornerShape(15.dp)
+                val customShape = RoundedCornerShape(10.dp)
 
                 Button(
                     onClick = {

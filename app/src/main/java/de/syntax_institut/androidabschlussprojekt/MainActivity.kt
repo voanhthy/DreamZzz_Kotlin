@@ -17,9 +17,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import de.syntax_institut.androidabschlussprojekt.ui.AppStart
 import de.syntax_institut.androidabschlussprojekt.ui.DreamZzzRoot
-import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -31,23 +29,22 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         WindowInsetsControllerCompat(window, window.decorView).let { controller ->
-            controller.hide(android.view.WindowInsets.Type.statusBars())
+            controller.hide(
+                android.view.WindowInsets.Type.statusBars() or android.view.WindowInsets.Type.navigationBars()
+            )
             controller.systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
         setContent {
             enableEdgeToEdge()
-//            AndroidAbschlussprojektTheme {
 
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-//                    AppStart()
                 DreamZzzRoot()
             }
-//            }
         }
     }
 }

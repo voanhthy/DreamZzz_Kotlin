@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,9 +55,10 @@ fun MoodPicker(
             Text(stringResource(R.string.todays_mood))
 
             Box {
-                Button(
+                ElevatedButton(
                     onClick = { expanded = true },
-                    modifier = Modifier
+                    modifier = Modifier,
+                    shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(stringResource(id = selectedMood.titleResId),
                         modifier = Modifier)

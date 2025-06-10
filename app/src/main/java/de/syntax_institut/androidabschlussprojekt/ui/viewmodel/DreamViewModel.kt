@@ -206,7 +206,8 @@ class DreamViewModel(
                         typeOfDream = _selectedDreamCategory.value,
                         title = if (_title.value.isEmpty()) "Unbekannter Traum" else _title.value,
                         date = dateWithoutTimestamp(_date.value),
-                        interpretation = interpretation
+                        interpretation = interpretation,
+                        imageStyle = _selectedImageStyle.value,
                     )
 
                     Log.d(TAG, "Neues DreamImage erstellt: $newDream")
@@ -318,12 +319,13 @@ class DreamViewModel(
         styles: List<String>,
         sortAsc: Boolean
     ): Flow<List<DreamImage>> {
-        return if (moods.isEmpty() && categories.isEmpty() && styles.isEmpty()) {
-            if (sortAsc) dreamImagedao.getAllSortedAsc()
-            else dreamImagedao.getAllSortedDesc()
-        } else {
-            dreamImagedao.getFilteredAndSortedDreams(moods, categories, styles, sortAsc)
-        }
+        val moodsParam = if (moods.isEmpty()) Mood.entries.map { it.name } else moods
+        val categoriesParam = if (categories.isEmpty()) DreamCategory.entries.map { it.name } else categories
+        val stylesParam = if (styles.isEmpty()) ImageStyle.entries.map { it.name } else styles
+
+        return dreamImagedao.getFilteredAndSortedDreams(
+            moodsParam, categoriesParam, stylesParam, sortAsc
+        )
     }
 
     fun setGridColumns(count: Int) {

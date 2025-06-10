@@ -77,7 +77,7 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 24.dp, bottom = 8.dp)
-                    .height(250.dp)
+                    .height(240.dp)
                     .clip(RoundedCornerShape(20.dp))
                     .clickable {
                         onClickNavigateToNightSky()

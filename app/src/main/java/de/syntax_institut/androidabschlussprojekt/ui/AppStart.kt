@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
@@ -86,12 +87,16 @@ fun AppStart(
     authViewModel: AuthViewModel = koinViewModel()
 ) {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route ?: ""
+    val hideBottomBarRoutes = listOf("RegisterRoute", "LoginRoute", "NightSkyRoute", "LoadingRoute", "PreviewRoute")
+    val showBottomBar = hideBottomBarRoutes.none { route ->
+        currentRoute.contains(route)
+    }
 
     var selectedTabItem by remember { mutableStateOf(TabItem.HOME) }
 
     val isLoggedIn by authViewModel.isLoggedIn.collectAsState()
-
-    val loginSuccess by authViewModel.loginSuccess.collectAsState()
 
     LaunchedEffect(isLoggedIn) {
         if (isLoggedIn) {
@@ -106,27 +111,25 @@ fun AppStart(
 
     Scaffold(
         bottomBar = {
-            TabBar(
-                modifier = Modifier.padding(bottom = 16.dp),
-                activeTab = selectedTabItem,
-                onTabSelected = { selectedTab ->
-                    selectedTabItem = selectedTab
-                    navController.navigate(selectedTab.route) {
-                        // Stack Wachstum bei jedem Tab Klick vermeiden
-//                        popUpTo(navController.graph.startDestinationId) {
-//                            saveState = true        // Zustand des vorherigen Tabs sichern
-//                        }
-//                        launchSingleTop = true      // doppelte Instanzen vermeiden
-//                        restoreState =
-//                            true                    // alten Zustand beim Zurückspringen wiederherstellen
+            if (showBottomBar) {
+                TabBar(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    activeTab = selectedTabItem,
+                    onTabSelected = { selectedTab ->
+                        selectedTabItem = selectedTab
+                        navController.navigate(selectedTab.route) {
 
-                        // besser: Tab wird jedes mal auf Anfang gesetzt
-                        popUpTo(MainGraphRoute) { saveState = false }
-                        launchSingleTop = true
-                        restoreState = false
+                            // Tab (BottomBar) wird jedes mal auf Anfang gesetzt
+                            popUpTo(MainGraphRoute) {
+                                inclusive = false
+                                saveState = true        // Zustand des vorherigen Tabs sichern
+                            }
+                            launchSingleTop = true      // doppelte Instanzen vermeiden
+                            restoreState = false
+                        }
                     }
-                }
-            )
+                )
+            }
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
