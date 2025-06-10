@@ -80,6 +80,8 @@ fun LoadingScreen(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 4.dp)
+                .align(Alignment.CenterHorizontally)
         )
     }
 }

@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.firebase.firestore.DocumentId
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.ImageStyle
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import java.util.Date
 
@@ -19,5 +20,6 @@ data class DreamImage(
     var title: String? = "Unbekannter Traum",
     var interpretation: String? = "Keine Traumdeutung vorhanden",
     var mood: Mood = Mood.GOOD,
-    var typeOfDream: DreamCategory = DreamCategory.NORMAL
+    var typeOfDream: DreamCategory = DreamCategory.NORMAL,
+    var imageStyle: ImageStyle = ImageStyle.WATERCOLOR
 )

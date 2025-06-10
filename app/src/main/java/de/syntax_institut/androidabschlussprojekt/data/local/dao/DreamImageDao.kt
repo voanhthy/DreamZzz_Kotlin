@@ -7,6 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.ImageStyle
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
@@ -28,6 +30,25 @@ interface DreamImageDao {
 
     @Query("SELECT * from dreams WHERE date = :date")
     fun getDreamsByDate(date: Date): Flow<List<DreamImage>>
+
+    @Query(
+        """
+        SELECT * from dreams
+        WHERE (:moods IS NULL OR mood IN (:moods))
+        AND (:categories IS NULL OR typeOfDream IN (:categories))
+        AND (:styles IS NULL OR imageStyle IN (:styles) )
+        ORDER BY
+        CASE WHEN :sortAsc = 1 THEN date END ASC,
+        CASE WHEN :sortAsc = 0 THEN date END DESC
+    """
+    )
+
+    fun getFilteredAndSortedDreams(
+        moods: List<Mood>?,
+        categories: List<ImageStyle>?,
+        styles: List<ImageStyle>?,
+        sortAsc: Boolean
+    ): Flow<List<DreamImage>>
 
     @Delete
     suspend fun delete(dreamImage: DreamImage)

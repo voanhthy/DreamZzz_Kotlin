@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,10 +23,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,10 +44,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
+import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzFilterMenu
+import de.syntax_institut.androidabschlussprojekt.ui.component.FilterBottomSheet
+import de.syntax_institut.androidabschlussprojekt.ui.component.FilterButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.FilterDropdownMenu
 import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryListItem
 import de.syntax_institut.androidabschlussprojekt.ui.component.SwipeableGalleryListItem
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
@@ -51,6 +61,7 @@ import org.koin.androidx.compose.koinViewModel
 import kotlin.random.Random
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GalleryScreen(
     modifier: Modifier = Modifier,
@@ -64,6 +75,29 @@ fun GalleryScreen(
     val minColumns = 1
     val maxColumns = 8
     var showDialog by remember { mutableStateOf(false) }
+    var showFilter by remember { mutableStateOf(false) }
+
+    val selectedMood by dreamViewModel.selectedMood.collectAsState()
+    val selectedDreamCategory by dreamViewModel.selectedDreamCategory.collectAsState()
+    val sortAsc by dreamViewModel.sortAsc.collectAsState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    if (showFilter) {
+        Dialog(
+            onDismissRequest = { showFilter = false }       // bei Klick außerhalb schließen
+        ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(),
+//                    .fillMaxHeight(0.85f),
+                shape = MaterialTheme.shapes.medium,
+
+            ) {
+
+                DreamZzzFilterMenu()
+            }
+        }
+    }
 
     Column(
         modifier = modifier
@@ -105,28 +139,41 @@ fun GalleryScreen(
         if (!isGrid) {
             // Button minus plus
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
                 horizontalArrangement = Arrangement.End
             ) {
-                TextButton(
-                    onClick = {
-                        if (gridColumns > minColumns) {
-                            gridColumns--
-                        }
-                    },
-                    enabled = gridColumns > minColumns
+//                TextButton(
+//                    onClick = {
+//                        if (gridColumns > minColumns) {
+//                            gridColumns--
+//                        }
+//                    },
+//                    enabled = gridColumns > minColumns
+//                ) {
+//                    Text(stringResource(R.string.button_minus))
+//                }
+//                TextButton(
+//                    onClick = {
+//                        if (gridColumns < maxColumns) {
+//                            gridColumns++
+//                        }
+//                    },
+//                    enabled = gridColumns < maxColumns
+//                ) {
+//                    Text(stringResource(R.string.button_plus))
+//                }
+
+                Column(
+                    modifier = Modifier
+//                        .fillMaxWidth()
                 ) {
-                    Text(stringResource(R.string.button_minus))
-                }
-                TextButton(
-                    onClick = {
-                        if (gridColumns < maxColumns) {
-                            gridColumns++
+                    FilterButton(
+                        onClickDropdown = {
+                            showFilter = true
                         }
-                    },
-                    enabled = gridColumns < maxColumns
-                ) {
-                    Text(stringResource(R.string.button_plus))
+                    )
                 }
             }
 

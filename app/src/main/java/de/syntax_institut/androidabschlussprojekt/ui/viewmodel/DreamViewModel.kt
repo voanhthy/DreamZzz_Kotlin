@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 
+import android.R.attr.category
 import android.util.Log
 import android.util.Log.e
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -98,6 +100,48 @@ class DreamViewModel(
             started = SharingStarted.WhileSubscribed(),
             initialValue = emptyList()
         )
+
+    ////   Filter & Sortierung   ////
+    private val _sortAsc = MutableStateFlow(true)
+    val sortAsc = _sortAsc.asStateFlow()
+
+    private val _selectedMoodsFilter = MutableStateFlow<List<Mood>>(emptyList())
+    val selectedMoodsFilter = _selectedMoodsFilter.asStateFlow()
+
+    private val _selectedCategoriesFilter = MutableStateFlow<List<DreamCategory>>(emptyList())
+    val selectedCategoriesFilter = _selectedCategoriesFilter.asStateFlow()
+
+    private val _selectedImageStylesFilter = MutableStateFlow<List<ImageStyle>>(emptyList())
+    val selectedImageStylesFilter = _selectedImageStylesFilter.asStateFlow()
+
+
+    val filteredAndSortedDreams = combine(
+        _sortAsc, _selectedMoodsFilter, _selectedCategoriesFilter, _selectedImageStylesFilter
+    ) { sortAsc, moods, categories, styles ->
+
+        val moodsToFilter = if (moods.isEmpty()) null else moods
+        val categoriesToFilter = if (categories.isEmpty()) null else categories
+        val stylesToFilter = if (styles.isEmpty()) null else styles
+
+        // Object für Quadruple
+        object {
+            val sortAscParam = sortAsc
+            val moodsParam = moodsToFilter
+            val categoriesParam = stylesToFilter
+            val stylesParam = stylesToFilter
+        }
+    }.flatMapLatest { params ->
+        dreamImagedao.getFilteredAndSortedDreams(
+            moods = params.moodsParam,
+            categories = params.categoriesParam,
+            styles = params.stylesParam,
+            sortAsc = params.sortAscParam
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = emptyList()
+    )
 
 
     //// Firestore
@@ -261,5 +305,47 @@ class DreamViewModel(
     fun checkIfImageReady(image: DreamImage?) {
         _isImageReady.value = image != null && !image.url
             .isNullOrBlank() && !image.interpretation.isNullOrBlank()
+    }
+
+    // Filter
+
+    fun setSortArc(isAscending: Boolean) {
+        _sortAsc.value = isAscending
+    }
+
+    fun toggleMoodFilter(mood: Mood) {
+        val currentList = _selectedMoodsFilter.value.toMutableList()
+
+        if (currentList.contains(mood)) {
+            currentList.remove(mood)
+        } else {
+            currentList.add(mood)
+        }
+
+        _selectedMoodsFilter.value = currentList
+    }
+
+    fun toggleCategoryFilter(category: DreamCategory) {
+        val currentList = _selectedCategoriesFilter.value.toMutableList()
+
+        if (currentList.contains(category)) {
+            currentList.remove(category)
+        } else {
+            currentList.add(category)
+        }
+
+        _selectedCategoriesFilter.value = currentList
+    }
+
+    fun toggleImageStylesFilter(style: ImageStyle) {
+        val currentList = _selectedImageStylesFilter.value.toMutableList()
+
+        if (currentList.contains(style)) {
+            currentList.remove(style)
+        } else {
+            currentList.add(style)
+        }
+
+        _selectedImageStylesFilter.value = currentList
     }
 }
