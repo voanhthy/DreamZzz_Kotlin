@@ -114,6 +114,9 @@ class DreamViewModel(
     private val _selectedImageStylesFilter = MutableStateFlow<List<ImageStyle>>(emptyList())
     val selectedImageStylesFilter = _selectedImageStylesFilter.asStateFlow()
 
+    private val _gridColumns = MutableStateFlow(3)
+    val gridColums = _gridColumns.asStateFlow()
+
 
     val filteredAndSortedDreams = combine(
         _sortAsc, _selectedMoodsFilter, _selectedCategoriesFilter, _selectedImageStylesFilter
@@ -127,7 +130,7 @@ class DreamViewModel(
         object {
             val sortAscParam = sortAsc
             val moodsParam = moodsToFilter
-            val categoriesParam = stylesToFilter
+            val categoriesParam = categoriesToFilter
             val stylesParam = stylesToFilter
         }
     }.flatMapLatest { params ->
@@ -308,6 +311,9 @@ class DreamViewModel(
     }
 
     // Filter
+    fun setGridColumns(count: Int) {
+        _gridColumns.value = count
+    }
 
     fun setSortArc(isAscending: Boolean) {
         _sortAsc.value = isAscending
@@ -347,5 +353,18 @@ class DreamViewModel(
         }
 
         _selectedImageStylesFilter.value = currentList
+    }
+
+    // Filterlisten leeren
+    fun clearMoodsFilter() {
+        _selectedMoodsFilter.value = emptyList()
+    }
+
+    fun clearCategoriesFilter() {
+        _selectedCategoriesFilter.value = emptyList()
+    }
+
+    fun clearImageStylesFilter() {
+        _selectedImageStylesFilter.value = emptyList()
     }
 }

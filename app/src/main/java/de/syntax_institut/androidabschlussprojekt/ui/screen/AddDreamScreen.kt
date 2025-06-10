@@ -8,6 +8,9 @@ import android.speech.RecognizerIntent
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -58,7 +61,7 @@ import java.util.Locale
 fun AddDreamScreen(
     modifier: Modifier = Modifier,
     onClickNavigateToLoadingScreen: () -> Unit,
-    dreamViewModel: DreamViewModel = koinViewModel(),
+    dreamViewModel: DreamViewModel = koinViewModel()
 ) {
     // State Variablen
     val title by dreamViewModel.title.collectAsState()
@@ -87,7 +90,10 @@ fun AddDreamScreen(
 
     val speechIntent = remember {
         Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
             putExtra(RecognizerIntent.EXTRA_PROMPT, "Sprich deinen Traum...")
 
@@ -108,68 +114,85 @@ fun AddDreamScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+//            .padding(16.dp)
+//        contentPadding = PaddingValues(horizontal = contentPadding.dp)
     ) {
         item {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
+                Spacer(modifier = Modifier.padding(16.dp))
 
-            Text(
-                stringResource(R.string.add_new_dream),
-                style = MaterialTheme.typography.titleLarge,
-                fontSize = 34.sp,
-                modifier = Modifier.padding(top = 16.dp)
-            )
-
-            // Texteingabefeld: Titel
-            OutlinedTextField(
-                value = title,
-                onValueChange = { dreamViewModel.updateTitle(it) },
-                label = {
-                    Text(stringResource(R.string.title))
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White,
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black,
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent
+                Text(
+                    stringResource(R.string.add_new_dream),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontSize = 34.sp,
+                    modifier = Modifier.padding(top = 16.dp)
                 )
-            )
 
-            // Texteingabefeld: Traumbeschreibung
-            OutlinedTextField(
-                value = description,
-                onValueChange = { dreamViewModel.updateDescription(it) },
-                label = {
-                    Text(stringResource(R.string.tell_about_dream))
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White,
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent
-                ),
-                // Mikrofon-Icon für Sprachaufnahme
-                trailingIcon = {
+                // Texteingabefeld: Titel
+                OutlinedTextField(
+                    value = title,
+                    onValueChange = { dreamViewModel.updateTitle(it) },
+                    label = {
+                        Text(stringResource(R.string.title))
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedContainerColor = Color.White,
+                        focusedContainerColor = Color.White,
+                        focusedTextColor = Color.Black,
+                        unfocusedTextColor = Color.Black,
+                        focusedBorderColor = Color.Transparent,
+                        unfocusedBorderColor = Color.Transparent
+                    )
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                ) {
+                    // Texteingabefeld: Traumbeschreibung
+                    OutlinedTextField(
+                        value = description,
+                        onValueChange = { dreamViewModel.updateDescription(it) },
+                        label = {
+                            Text(stringResource(R.string.tell_about_dream))
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(150.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedContainerColor = Color.White,
+                            focusedContainerColor = Color.White,
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent
+                        )
+                    )
+
+                    // Mikrofon-Icon für Sprachaufnahme
                     IconButton(
-                        onClick = { launcher.launch(speechIntent) }
+                        onClick = { launcher.launch(speechIntent) },
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .align(Alignment.TopEnd)
                     ) {
                         Icon(
                             Icons.Default.Mic,
-                            contentDescription = "Spracheingabe starten")
+                            contentDescription = "Spracheingabe starten"
+                        )
                     }
                 }
-            )
 
-            // Datum auswählen
-            val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
 
-            if (showDatePicker) {
-                // Kalender Instanz basierend auf dem aktuellem Datum
+                // Datum auswählen
+                val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
+
+                if (showDatePicker) {
+                    // Kalender Instanz basierend auf dem aktuellem Datum
 
                     val calendar = Calendar.getInstance().apply { time = date }
 
@@ -205,80 +228,62 @@ fun AddDreamScreen(
 //                        showDatePicker = true
 //                    }
 //            )
-            Spacer(modifier = Modifier.padding(16.dp))
+                Spacer(modifier = Modifier.padding(16.dp))
 
-            DreamZzzCalendar(
-                selectedDate = date,
-                onDateSelected = { dreamViewModel.updateDate(it) }
-            )
+                DreamZzzCalendar(
+                    selectedDate = date,
+                    onDateSelected = { dreamViewModel.updateDate(it) }
+                )
 
-//        if (showDatePicker) {
-//            DisposableEffect(Unit) {
-//                datePickerDialog.show()
-//                onDispose {  }
-//            }
-//        }
 
-            Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(8.dp))
 
-            // Traum-Kategorie auswählen
-            DreamCategoryPicker(
-                selectedCategory = selectedCategory,
-                onClickSelected = { dreamViewModel.updateDreamCategory(it) }
-            )
+                // Traum-Kategorie auswählen
+                DreamCategoryPicker(
+                    selectedCategory = selectedCategory,
+                    onClickSelected = { dreamViewModel.updateDreamCategory(it) }
+                )
 
-            Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(8.dp))
 
-            Text(
-                stringResource(R.string.choose_style).uppercase(),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+                Text(
+                    stringResource(R.string.choose_style).uppercase(),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
 
-            // Style Picker
-            ImageStylePicker(
-                selectedStyle = selectedImageStyle,
-                onClick = { dreamViewModel.updateImageStyle(it) }
-            )
+                // Style Picker
+                ImageStylePicker(
+                    selectedStyle = selectedImageStyle,
+                    onClick = { dreamViewModel.updateImageStyle(it) }
+                )
 
-            Spacer(modifier = Modifier.padding(16.dp))
+                Spacer(modifier = Modifier.padding(16.dp))
 
-            // Mood Picker TODO: in eine Box packen
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+                // Mood Picker TODO: in eine Box packen
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
-                MoodPicker(
-                    selectedMood = selectedMood,
-                    onSelectedMood = { dreamViewModel.setMood(it) }
+                    MoodPicker(
+                        selectedMood = selectedMood,
+                        onSelectedMood = { dreamViewModel.setMood(it) }
+                    )
+                }
+
+                Spacer(modifier = Modifier.padding(16.dp))
+
+                // Button zum Generieren
+                DreamZzzTextButton(
+                    onClickText = {
+                        dreamViewModel.fetchImage(description)
+                        Log.d("ButtonTest", "Generate-Button wurde gedrückt")
+                    },
+                    title = stringResource(R.string.generate),
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
-
-            // TODO: temporär Bild anzeigen
-            dreamImage?.url?.let { imageUrl ->
-                AsyncImage(
-                    model = imageUrl,
-                    contentDescription = "Bild",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-
-            result?.let {
-                Text(it)
-            }
-
-            Spacer(modifier = Modifier.padding(16.dp))
-
-            // Button zum Generieren
-            DreamZzzTextButton(
-                onClickText = {
-                    dreamViewModel.fetchImage(description)
-                    Log.d("ButtonTest", "Generate-Button wurde gedrückt")
-                },
-                title = stringResource(R.string.generate),
-                modifier = Modifier.fillMaxWidth(),
-            )
         }
     }
 }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,7 +27,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -36,7 +34,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -48,13 +45,9 @@ import androidx.compose.ui.window.Dialog
 import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
-import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import de.syntax_institut.androidabschlussprojekt.ui.component.AddButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzFilterMenu
-import de.syntax_institut.androidabschlussprojekt.ui.component.FilterBottomSheet
 import de.syntax_institut.androidabschlussprojekt.ui.component.FilterButton
-import de.syntax_institut.androidabschlussprojekt.ui.component.FilterDropdownMenu
-import de.syntax_institut.androidabschlussprojekt.ui.component.GalleryListItem
 import de.syntax_institut.androidabschlussprojekt.ui.component.SwipeableGalleryListItem
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -71,16 +64,11 @@ fun GalleryScreen(
 ) {
     var isGrid by remember { mutableStateOf(false) }
     val dreamImages by dreamViewModel.savedDreamImages.collectAsState(listOf())
-    var gridColumns by remember { mutableStateOf(3) }
-    val minColumns = 1
-    val maxColumns = 8
-    var showDialog by remember { mutableStateOf(false) }
+    val gridColumns by dreamViewModel.gridColums.collectAsState()
+
     var showFilter by remember { mutableStateOf(false) }
 
-    val selectedMood by dreamViewModel.selectedMood.collectAsState()
-    val selectedDreamCategory by dreamViewModel.selectedDreamCategory.collectAsState()
-    val sortAsc by dreamViewModel.sortAsc.collectAsState()
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val dreams by dreamViewModel.filteredAndSortedDreams.collectAsState()
 
     if (showFilter) {
         Dialog(
@@ -89,11 +77,8 @@ fun GalleryScreen(
             Surface(
                 modifier = Modifier
                     .fillMaxWidth(),
-//                    .fillMaxHeight(0.85f),
-                shape = MaterialTheme.shapes.medium,
-
+                shape = MaterialTheme.shapes.medium
             ) {
-
                 DreamZzzFilterMenu()
             }
         }
@@ -136,46 +121,20 @@ fun GalleryScreen(
         Text(stringResource(R.string.gallery_description),
             style = MaterialTheme.typography.bodyLarge)
 
-        if (!isGrid) {
-            // Button minus plus
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.End
-            ) {
-//                TextButton(
-//                    onClick = {
-//                        if (gridColumns > minColumns) {
-//                            gridColumns--
-//                        }
-//                    },
-//                    enabled = gridColumns > minColumns
-//                ) {
-//                    Text(stringResource(R.string.button_minus))
-//                }
-//                TextButton(
-//                    onClick = {
-//                        if (gridColumns < maxColumns) {
-//                            gridColumns++
-//                        }
-//                    },
-//                    enabled = gridColumns < maxColumns
-//                ) {
-//                    Text(stringResource(R.string.button_plus))
-//                }
-
-                Column(
-                    modifier = Modifier
-//                        .fillMaxWidth()
-                ) {
-                    FilterButton(
-                        onClickDropdown = {
-                            showFilter = true
-                        }
-                    )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            FilterButton(
+                onClickDropdown = {
+                    showFilter = true
                 }
-            }
+            )
+        }
+
+        if (!isGrid) {
 
             // GalleryGrid
             LazyVerticalStaggeredGrid(
@@ -185,7 +144,7 @@ fun GalleryScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalItemSpacing = 8.dp
             ) {
-                itemsIndexed(dreamImages) { index, dream ->
+                itemsIndexed(dreams) { index, dream ->
                     // zufällige Höhe generieren
                     val randomHeight = remember(dream.id) {
                         Random.nextInt(100, 400).dp
@@ -208,7 +167,7 @@ fun GalleryScreen(
         } else {
             // GalleryList
             LazyColumn {
-                items(dreamImages) { dream ->
+                items(dreams) { dream ->
 
                     SwipeableGalleryListItem(
                         dream = dream,

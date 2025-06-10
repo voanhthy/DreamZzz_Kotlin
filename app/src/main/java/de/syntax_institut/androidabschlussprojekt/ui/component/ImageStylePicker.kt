@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -30,11 +31,13 @@ import androidx.compose.foundation.lazy.items
 fun ImageStylePicker(
     selectedStyle: ImageStyle,
     onClick: (ImageStyle) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentPadding: Int = 16
 ) {
     LazyRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(contentPadding.dp)
     ) {
         items(ImageStyle.entries) {currentStyle ->
 
