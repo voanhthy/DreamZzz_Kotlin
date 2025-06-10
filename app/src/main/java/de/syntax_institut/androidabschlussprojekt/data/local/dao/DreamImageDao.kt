@@ -32,12 +32,18 @@ interface DreamImageDao {
     @Query("SELECT * from dreams WHERE date = :date")
     fun getDreamsByDate(date: Date): Flow<List<DreamImage>>
 
+    @Query("SELECT * from dreams ORDER BY date ASC")
+    fun getAllSortedAsc(): Flow<List<DreamImage>>
+
+    @Query("SELECT * from dreams ORDER BY date DESC")
+    fun getAllSortedDesc(): Flow<List<DreamImage>>
+
     @Query(
         """
         SELECT * from dreams
-        WHERE (:moods IS NULL OR mood IN (:moods))
-        AND (:categories IS NULL OR typeOfDream IN (:categories))
-        AND (:styles IS NULL OR imageStyle IN (:styles) )
+        WHERE mood IN (:moods)
+        AND typeOfDream IN (:categories)
+        AND imageStyle IN (:styles)
         ORDER BY
             CASE WHEN :sortAsc = 1 THEN date END ASC,
             CASE WHEN :sortAsc = 0 THEN date END DESC
@@ -45,9 +51,9 @@ interface DreamImageDao {
     )
 
     fun getFilteredAndSortedDreams(
-        moods: List<Mood>?,
-        categories: List<DreamCategory>?,
-        styles: List<ImageStyle>?,
+        moods: List<String>?,
+        categories: List<String>?,
+        styles: List<String>?,
         sortAsc: Boolean
     ): Flow<List<DreamImage>>
 

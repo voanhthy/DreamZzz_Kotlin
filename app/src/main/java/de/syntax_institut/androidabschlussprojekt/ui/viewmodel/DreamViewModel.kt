@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 
-import android.R.attr.category
 import android.util.Log
 import android.util.Log.e
 import androidx.lifecycle.ViewModel
@@ -118,27 +117,20 @@ class DreamViewModel(
     val gridColums = _gridColumns.asStateFlow()
 
 
+    // per combine Filter beobachten, als List übergeben und bekomme Flow<List>DreamImage>>
     val filteredAndSortedDreams = combine(
-        _sortAsc, _selectedMoodsFilter, _selectedCategoriesFilter, _selectedImageStylesFilter
+        sortAsc, selectedMoodsFilter, selectedCategoriesFilter, selectedImageStylesFilter
     ) { sortAsc, moods, categories, styles ->
 
-        val moodsToFilter = if (moods.isEmpty()) null else moods
-        val categoriesToFilter = if (categories.isEmpty()) null else categories
-        val stylesToFilter = if (styles.isEmpty()) null else styles
+        Triple(moods, categories, styles) to sortAsc
+    }.flatMapLatest { (filters, sortAsc) ->
+        val (moods, categories, styles) = filters
 
-        // Object für Quadruple
-        object {
-            val sortAscParam = sortAsc
-            val moodsParam = moodsToFilter
-            val categoriesParam = categoriesToFilter
-            val stylesParam = stylesToFilter
-        }
-    }.flatMapLatest { params ->
-        dreamImagedao.getFilteredAndSortedDreams(
-            moods = params.moodsParam,
-            categories = params.categoriesParam,
-            styles = params.stylesParam,
-            sortAsc = params.sortAscParam
+        getFilteredDreams(
+            moods.map { it.name },
+            categories.map { it.name },
+            styles.map { it.name },
+            sortAsc
         )
     }.stateIn(
         scope = viewModelScope,
@@ -311,6 +303,20 @@ class DreamViewModel(
     }
 
     // Filter
+    fun getFilteredDreams(
+        moods: List<String>,
+        categories: List<String>,
+        styles: List<String>,
+        sortAsc: Boolean
+    ): Flow<List<DreamImage>> {
+        return if (moods.isEmpty() && categories.isEmpty() && styles.isEmpty()) {
+            if (sortAsc) dreamImagedao.getAllSortedAsc()
+            else dreamImagedao.getAllSortedDesc()
+        } else {
+            dreamImagedao.getFilteredAndSortedDreams(moods, categories, styles, sortAsc)
+        }
+    }
+
     fun setGridColumns(count: Int) {
         _gridColumns.value = count
     }

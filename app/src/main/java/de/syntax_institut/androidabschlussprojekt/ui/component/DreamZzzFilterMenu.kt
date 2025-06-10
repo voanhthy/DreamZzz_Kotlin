@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -21,6 +22,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Slider
@@ -86,7 +88,7 @@ fun DreamZzzFilterMenu(
                 .verticalScroll(rememberScrollState())
         ) {
             Text("Filter",
-                fontSize = 24.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.SemiBold)
 
             Spacer(modifier = Modifier.padding(8.dp))
@@ -130,13 +132,15 @@ fun DreamZzzFilterMenu(
                 isExpanded = showSortFilter,
                 onToggleExpand = { showSortFilter = it }
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.padding(bottom = 8.dp)
+                ) {
                     // Neueste zuerst
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { dreamViewModel.setSortArc(true) }
-                            .padding(4.dp),
+                            .height(28.dp)
+                            .clickable { dreamViewModel.setSortArc(true) },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
@@ -147,7 +151,6 @@ fun DreamZzzFilterMenu(
                                 unselectedColor = DreamZzzLavender
                             )
                         )
-                        Spacer(modifier = Modifier.padding(8.dp))
                         Text(sortOptions[0])
                     }
 
@@ -155,8 +158,8 @@ fun DreamZzzFilterMenu(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { dreamViewModel.setSortArc(true) }
-                            .padding(4.dp),
+                            .height(28.dp)
+                            .clickable { dreamViewModel.setSortArc(false) },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
@@ -167,7 +170,6 @@ fun DreamZzzFilterMenu(
                                 unselectedColor = DreamZzzLavender
                             )
                         )
-                        Spacer(modifier = Modifier.padding(8.dp))
                         Text(sortOptions[1])
                     }
                 }

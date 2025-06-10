@@ -6,12 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
-import de.syntax_institut.androidabschlussprojekt.utils.helper.EnumConversters
+import de.syntax_institut.androidabschlussprojekt.utils.helper.EnumConverters
 import de.syntax_institut.androidabschlussprojekt.utils.helper.DateConverter
 
 // eine Tabelle mit entity DreamImage
 @Database(entities = [DreamImage::class], version = 1, exportSchema = false)
-@TypeConverters(DateConverter::class, EnumConversters::class)
+@TypeConverters(DateConverter::class, EnumConverters::class)
 abstract class DreamImageDatabase: RoomDatabase() {
     abstract fun dreamImageDao(): DreamImageDao
 
