@@ -47,6 +47,7 @@ fun CalendarBar(
     val today = remember { Calendar.getInstance() }
     val daysRange = (-4..0).toList()        // 4 Tage vor heute
 
+
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly

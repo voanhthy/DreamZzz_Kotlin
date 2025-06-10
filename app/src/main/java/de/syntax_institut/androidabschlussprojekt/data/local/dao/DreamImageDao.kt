@@ -32,6 +32,9 @@ interface DreamImageDao {
     @Query("SELECT * from dreams WHERE date = :date")
     fun getDreamsByDate(date: Date): Flow<List<DreamImage>>
 
+    @Query("SELECT DISTINCT date FROM dreams")
+    fun getAllDreamDates(): Flow<List<Date>>
+
     @Query("SELECT * from dreams ORDER BY date ASC")
     fun getAllSortedAsc(): Flow<List<DreamImage>>
 

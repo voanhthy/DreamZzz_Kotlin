@@ -45,15 +45,13 @@ fun HomeScreen(
     onClickNavigateToDreamDetail: (DreamImage) -> Unit,
     dreamViewModel: DreamViewModel = koinViewModel()
 ) {
-    val date by dreamViewModel.date.collectAsState()
-    // TODO: Daten kommen aus Firestore (lieber Room?)
-    val datesWithDreams by dreamViewModel.datesWithDreams.collectAsState()
     val dreamCount by dreamViewModel.dreamCount.collectAsState()
     // aus DB
     val dreamsByDate by dreamViewModel.dreamsForSelectedDate.collectAsState(
         initial = emptyList()
     )
     val selectedDate by dreamViewModel.selectedDate.collectAsState()
+    val dreamDates by dreamViewModel.dreamDates.collectAsState()
 
     LazyColumn(
         modifier = modifier
@@ -109,7 +107,7 @@ fun HomeScreen(
             CalendarBar(
                 selectedDate = selectedDate,
                 onSelectedDate = { dreamViewModel.updateSelectedDate(it) },
-                datesWithDreams = datesWithDreams
+                datesWithDreams = dreamDates
             )
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 16.dp)

@@ -13,6 +13,7 @@ import de.syntax_institut.androidabschlussprojekt.data.repository.DreamAnalyzeRe
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamFirestoreRepoInterface
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestamp
+import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestampLong
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -98,6 +99,14 @@ class DreamViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = emptyList()
+        )
+
+    val dreamDates = dreamImagedao.getAllDreamDates()
+        .map { list -> list.map { dateWithoutTimestampLong(it) }.toSet() }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = emptySet()
         )
 
     ////   Filter & Sortierung   ////
