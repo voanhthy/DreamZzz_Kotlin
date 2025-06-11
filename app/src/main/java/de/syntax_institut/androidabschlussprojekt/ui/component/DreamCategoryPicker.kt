@@ -1,19 +1,14 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
-import android.R.attr.category
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedTextFieldDefaults.contentPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzLavender
 import de.syntax_institut.androidabschlussprojekt.ui.theme.SelectedCategoryBorder
@@ -34,7 +28,7 @@ fun DreamCategoryPicker(
 ) {
 
     LazyRow(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
@@ -46,31 +40,26 @@ fun DreamCategoryPicker(
             val buttonContainerColor = DreamZzzLavender
             val customShape = RoundedCornerShape(10.dp)
 
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.spacedBy(4.dp)
-//            ) {
-                Button(
-                    onClick = {
-                        onClickSelected(category)
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = buttonContainerColor,
-                        contentColor = Color.Black
-                    ),
-                    shape = customShape,
-                    modifier = Modifier
-                        .width(160.dp)
-                        .border(
-                            width = borderWidth,
-                            color = borderColor,
-                            shape = customShape
-                        )
-                ) {
-                    Text(stringResource(id = category.titleResId))
-                }
+            Button(
+                onClick = {
+                    onClickSelected(category)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = buttonContainerColor,
+                    contentColor = Color.Black
+                ),
+                shape = customShape,
+                modifier = Modifier
+                    .width(160.dp)
+                    .border(
+                        width = borderWidth,
+                        color = borderColor,
+                        shape = customShape
+                    )
+            ) {
+                Text(stringResource(id = category.titleResId))
             }
-//        }
+        }
     }
 }
 

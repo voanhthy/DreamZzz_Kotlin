@@ -1,9 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
-import android.R.attr.bottom
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,18 +18,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -47,14 +39,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.ImageStyle
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
-import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
-import org.koin.androidx.compose.koinViewModel
-import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzGray
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzLavender
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -131,7 +123,7 @@ fun DreamZzzFilterMenu(
 
             // nach Datum auf- oder absteigend sortieren
             ExpandableFilterSection(
-                title = "nach Datum sortieren",
+                title = stringResource(R.string.sort_by_date),
                 isExpanded = showSortFilter,
                 onToggleExpand = { showSortFilter = it }
             ) {
@@ -182,7 +174,7 @@ fun DreamZzzFilterMenu(
 
             // Mood Filter
             ExpandableFilterSection(
-                title = "Stimmung",
+                title = stringResource(R.string.mood),
                 isExpanded = showMoodFilter,
                 onToggleExpand = { showMoodFilter = it }
             ) {
@@ -211,7 +203,7 @@ fun DreamZzzFilterMenu(
                             )
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Alle")
+                        Text(stringResource(R.string.all))
                     }
 
                     Mood.entries.forEach { mood ->
@@ -244,7 +236,7 @@ fun DreamZzzFilterMenu(
 
             // DreamCategory Filter
             ExpandableFilterSection(
-                title = "Traumart",
+                title = stringResource(R.string.type_of_dream_add_screen),
                 isExpanded = showDreamCategoryFilter,
                 onToggleExpand = { showDreamCategoryFilter = it }
             ) {
@@ -273,7 +265,7 @@ fun DreamZzzFilterMenu(
                             )
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Alle")
+                        Text(stringResource(R.string.all))
                     }
 
                     DreamCategory.entries.forEach { category ->
@@ -306,7 +298,7 @@ fun DreamZzzFilterMenu(
 
             // ImageStyle Filter
             ExpandableFilterSection(
-                title = "Bildstil",
+                title = stringResource(R.string.image_style),
                 isExpanded = showImageStyleFilter,
                 onToggleExpand = { showImageStyleFilter = it }
             ) {
@@ -335,7 +327,7 @@ fun DreamZzzFilterMenu(
                             )
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Alle")
+                        Text(stringResource(R.string.all))
                     }
 
                     ImageStyle.entries.forEach { style ->
@@ -369,7 +361,7 @@ fun DreamZzzFilterMenu(
 
             DreamZzzTextButton(
                 onClickText = { onDissmiss() },
-                title = "Anwenden",
+                title = stringResource(R.string.apply),
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -389,7 +381,7 @@ fun DreamZzzFilterMenu(
                 colors = ButtonDefaults.buttonColors(Color.LightGray),
                 shape = RoundedCornerShape(10.dp)
             ) {
-                Text("Zurücksetzen",
+                Text(stringResource(R.string.reset),
                     fontSize = 16.sp)
             }
         }

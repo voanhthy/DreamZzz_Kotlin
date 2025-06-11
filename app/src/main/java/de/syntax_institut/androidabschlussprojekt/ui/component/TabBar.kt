@@ -1,13 +1,10 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
-import android.R.attr.end
-import android.R.attr.top
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -29,7 +26,6 @@ fun TabBar(
     Box(
         modifier = modifier
             .fillMaxWidth(),
-//            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 8.dp),
         contentAlignment = Alignment.Center
     ) {
         Row(

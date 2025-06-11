@@ -7,8 +7,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.androidabschlussprojekt.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,8 +23,8 @@ fun SuccessDialog(
         AlertDialog(    
             onDismissRequest = onDismiss,
             modifier = modifier,
-            title = { Text("Erfolg")},
-            text = { Text("Bild wurde erfolgreich gespeichert") },
+            title = { Text(stringResource(R.string.success))},
+            text = { Text(stringResource(R.string.image_saved)) },
             confirmButton = {
                 Text("OK",
                     modifier = Modifier

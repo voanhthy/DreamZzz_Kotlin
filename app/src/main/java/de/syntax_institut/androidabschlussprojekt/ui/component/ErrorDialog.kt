@@ -6,8 +6,10 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.androidabschlussprojekt.R
 
 @Composable
 fun ErrorDialog(
@@ -19,8 +21,8 @@ fun ErrorDialog(
         AlertDialog(
             onDismissRequest = onDismiss,
             modifier = modifier,
-            title = { Text("Hoppla!")},
-            text = { Text("Das Textfeld ist noch leer. Bitte beschreibe deinen Traum, damit ich ein Bild für dich generieren kann.") },
+            title = { Text(stringResource(R.string.oops))},
+            text = { Text(stringResource(R.string.error_no_description)) },
             confirmButton = {
                 Text("OK",
                     modifier = Modifier

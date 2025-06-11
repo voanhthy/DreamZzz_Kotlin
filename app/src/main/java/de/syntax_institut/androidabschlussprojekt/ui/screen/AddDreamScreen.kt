@@ -25,7 +25,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.OutlinedTextFieldDefaults.contentPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,7 +41,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzCalendar
@@ -53,7 +51,6 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
@@ -68,19 +65,18 @@ fun AddDreamScreen(
     // State Variablen
     val title by dreamViewModel.title.collectAsState()
     val description by dreamViewModel.description.collectAsState()
-    val dreamImage by dreamViewModel.dreamImage.collectAsState()
     val selectedCategory by dreamViewModel.selectedDreamCategory.collectAsState()
     val selectedMood by dreamViewModel.selectedMood.collectAsState()
     val selectedImageStyle by dreamViewModel.selectedImageStyle.collectAsState()
     val date by dreamViewModel.date.collectAsState()
-    val result by dreamViewModel.analysisResult.collectAsState()
     val isLoading by dreamViewModel.isLoading.collectAsState()
 
     var showDatePicker by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
 
+    // Speech-to-Text
     val context = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(
+    val launcher = rememberLauncherForActivityResult(           // Aktivität starten
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         val spokenText = result.data
@@ -91,6 +87,7 @@ fun AddDreamScreen(
         }
     }
 
+    // Intent startet Spracherkennungsfunktion
     val speechIntent = remember {
         Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
@@ -189,8 +186,6 @@ fun AddDreamScreen(
 
 
                 // Datum auswählen
-                val formattedDate =
-                    SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
 
                 if (showDatePicker) {
                     // Kalender Instanz basierend auf dem aktuellem Datum

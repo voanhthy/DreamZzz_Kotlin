@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
-import android.R
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically

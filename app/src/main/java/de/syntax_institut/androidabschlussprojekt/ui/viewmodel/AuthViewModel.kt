@@ -4,7 +4,6 @@ import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.syntax_institut.androidabschlussprojekt.data.repository.AuthServiceRepoImpl
 import de.syntax_institut.androidabschlussprojekt.data.repository.AuthServiceRepoInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

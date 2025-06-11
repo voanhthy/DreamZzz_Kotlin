@@ -6,8 +6,10 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.androidabschlussprojekt.R
 
 @Composable
 fun DeleteDialog(
@@ -20,8 +22,8 @@ fun DeleteDialog(
         AlertDialog(
             onDismissRequest = onDismiss,
             modifier = modifier,
-            title = { Text("Traum löschen") },
-            text = { Text("Möchtest du diesen Traum wirklich löschen?") },
+            title = { stringResource(R.string.delete_dream) },
+            text = { stringResource(R.string.delete_dream_permanently) },
             confirmButton = {
                 Text(
                     "OK",

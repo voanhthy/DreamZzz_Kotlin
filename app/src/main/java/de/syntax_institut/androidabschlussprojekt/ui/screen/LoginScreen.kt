@@ -69,19 +69,6 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.padding(2.dp))
 
-//        OutlinedTextField(
-//            value = passwordInput,
-//            onValueChange = { authViewModel.updatePasswordInput(it) },
-//            label = { Text(stringResource(R.string.passwordInput))},
-//            modifier = Modifier.fillMaxWidth(),
-//            colors = OutlinedTextFieldDefaults.colors(
-//                focusedContainerColor = Color.White,
-//                unfocusedContainerColor = Color.White,
-//                focusedBorderColor = Color.Transparent,
-//                unfocusedBorderColor = Color.Transparent
-//            )
-//        )
-
         PasswordTextField(
             value = passwordInput,
             onValueChange = { authViewModel.updatePasswordInput(it) },
@@ -107,12 +94,6 @@ fun LoginScreen(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // "Kein Account?"
-//            Text(
-//                stringResource(R.string.no_account),
-//                modifier = Modifier,
-//                style = MaterialTheme.typography.bodyLarge
-//            )
             // "Registriere dich hier"
             TextButton(
                 onClick = {

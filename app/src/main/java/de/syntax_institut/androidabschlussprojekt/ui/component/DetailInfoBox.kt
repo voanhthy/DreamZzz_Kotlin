@@ -1,11 +1,9 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
-import android.R.attr.top
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -65,7 +63,7 @@ fun DetailInfoBox(
                     modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
                     textAlign = TextAlign.Center)
             } else {
-                Text("Unbekannter Traum")       // TODO: ???
+                Text(stringResource(R.string.unknown_title))
             }
 
             Row {

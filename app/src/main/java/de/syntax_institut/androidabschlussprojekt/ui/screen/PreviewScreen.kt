@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,13 +20,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
-import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
-import org.koin.androidx.compose.koinViewModel
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.SuccessDialog
-import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.PreviewViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PreviewScreen(

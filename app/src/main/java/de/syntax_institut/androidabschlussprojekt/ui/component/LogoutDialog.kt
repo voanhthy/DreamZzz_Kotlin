@@ -6,8 +6,10 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.androidabschlussprojekt.R
 
 @Composable
 fun LogoutDialog(
@@ -20,11 +22,11 @@ fun LogoutDialog(
         AlertDialog(
             onDismissRequest = onDismiss,
             modifier = modifier,
-            title = { Text("Abmelden") },
-            text = { Text("Möchtest du dich wirklich abmelden?") },
+            title = { Text(stringResource(R.string.logout)) },
+            text = { Text(stringResource(R.string.logout_confirm)) },
             confirmButton = {
                 Text(
-                    "OK",
+                    stringResource(R.string.ok),
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable { onConfirm() }
@@ -32,7 +34,7 @@ fun LogoutDialog(
             },
             dismissButton = {
                 Text(
-                    "Abbrechen",
+                    stringResource(R.string.cancel),
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable { onDismiss() }

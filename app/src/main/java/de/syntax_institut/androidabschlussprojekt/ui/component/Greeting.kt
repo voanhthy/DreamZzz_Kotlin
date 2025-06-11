@@ -43,7 +43,9 @@ fun Greeting(
     }
 
 
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         Text(stringResource(R.string.welcome_with_name, displayName),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)

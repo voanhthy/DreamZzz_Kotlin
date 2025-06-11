@@ -70,4 +70,25 @@
     </plurals>
     <string name="no_dream_for_date">Was hat dich diese Nacht bewegt? Halte es fest, bevor dein Traum verblasst...</string>
     <string name="unknown_title">Unbekannter Traum</string>
+    <string name="delete_dream">Traum löschen</string>
+    <string name="delete_dream_permanently">Möchtest du diesen Traum wirklich löschen?</string>
+    <string name="when_was_dream">Wann hattest du den Traum?</string>
+    <string name="sort_by_date">nach Datum sortieren</string>
+    <string name="mood">Gefühlslage</string>
+    <string name="all">Alle</string>
+    <string name="image_style">Bildstil</string>
+    <string name="apply">Anwenden</string>
+    <string name="reset">Zurücksetzen</string>
+    <string name="email_hint">Die E-Mail muss in einem gültigen Format sein, wie z.B. jane@doe.de</string>
+    <string name="error_no_description">Das Textfeld ist noch leer. Bitte beschreibe deinen Traum, damit ein Bild für dich  generiert werden kann.</string>
+    <string name="oops">Hoppla!</string>
+    <string name="filter">Filter</string>
+    <string name="logout">Abmelden</string>
+    <string name="logout_confirm">Möchtest du dich wirklich abmelden?</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="success">Erfolg</string>
+    <string name="image_saved">Bild wurde erfolgreich gespeichert</string>
+    <string name="on">an</string>
+    <string name="off">aus</string>
 </resources>

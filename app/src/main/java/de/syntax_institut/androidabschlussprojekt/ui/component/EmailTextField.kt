@@ -33,7 +33,6 @@ fun EmailTextField(
         },
         modifier = modifier
             .fillMaxWidth(),
-//                .height(40.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.White,
@@ -45,7 +44,7 @@ fun EmailTextField(
             imeAction = ImeAction.Next,         // nächstes Eingabefeld
             keyboardType = KeyboardType.Email
         ),
-        supportingText = { if (showSupportingText) Text("Die E-Mail muss in einem gültigen Format sein, wie z.B. jane@doe.de") },
+        supportingText = { if (showSupportingText) Text(stringResource(R.string.email_hint)) },
         isError = showSupportingText
     )
 }

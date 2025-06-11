@@ -7,9 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
-import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.DreamCategory
-import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.ImageStyle
-import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.Mood
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 

@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button

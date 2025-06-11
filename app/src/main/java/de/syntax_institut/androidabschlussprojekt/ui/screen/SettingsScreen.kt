@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -61,7 +60,6 @@ fun SettingsScreen(
             LogoutButton(
                 onClickLogout = {
                     showDialog = true
-//                    authViewModel.logoutUser()
                 }
             )
         }
@@ -131,7 +129,7 @@ fun SettingsScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(stringResource(R.string.notifications))
-            Text(if (isNotificationOn) "an" else "aus",
+            Text(if (isNotificationOn) stringResource(R.string.on) else stringResource(R.string.off),
                 modifier = Modifier.clickable {
                     settingsViewModel.toggleNotificationOn()
                 },
@@ -149,7 +147,7 @@ fun SettingsScreen(
         ) {
             Text(stringResource(R.string.dark_mode),
                 style = MaterialTheme.typography.bodyLarge)
-            Text(if (isDarkModeOn) "an" else "aus",
+            Text(if (isDarkModeOn) stringResource(R.string.on) else stringResource(R.string.off),
                 modifier = Modifier.clickable {
                     settingsViewModel.toggleDarkMode()
                 },
