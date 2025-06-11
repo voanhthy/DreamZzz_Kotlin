@@ -1,5 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
+import android.R.attr.end
+import android.R.attr.top
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -26,8 +28,8 @@ fun TabBar(
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
+//            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 8.dp),
         contentAlignment = Alignment.Center
     ) {
         Row(

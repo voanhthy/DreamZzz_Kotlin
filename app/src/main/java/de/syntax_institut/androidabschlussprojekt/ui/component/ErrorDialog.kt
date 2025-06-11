@@ -10,32 +10,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DeleteDialog(
+fun ErrorDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (showDialog) {
         AlertDialog(
             onDismissRequest = onDismiss,
             modifier = modifier,
-            title = { Text("Traum löschen") },
-            text = { Text("Möchtest du diesen Traum wirklich löschen?") },
+            title = { Text("Hoppla!")},
+            text = { Text("Das Textfeld ist noch leer. Bitte beschreibe deinen Traum, damit ich ein Bild für dich generieren kann.") },
             confirmButton = {
-                Text(
-                    "OK",
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .clickable {
-                            onConfirm()
-                            onDismiss()
-                        }
-                )
-            },
-            dismissButton = {
-                Text(
-                    "Abbrechen",
+                Text("OK",
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable { onDismiss() }
@@ -47,11 +34,10 @@ fun DeleteDialog(
 
 @Preview(showBackground = true)
 @Composable
-private fun DeleteDialogPreview() {
+private fun ErrorDialogPreview() {
     // Use Theme here
-    DeleteDialog(
+    ErrorDialog(
         showDialog = true,
-        onDismiss = {},
-        onConfirm = {}
+        onDismiss = {}
     )
 }

@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -121,7 +122,9 @@ fun AppStart(
         bottomBar = {
             if (showBottomBar) {
                 TabBar(
-                    modifier = Modifier.padding(bottom = 16.dp),
+                    modifier = Modifier
+                        .padding(top = 16.dp, bottom = 32.dp),
+//                        .height(70.dp),
                     activeTab = selectedTabItem,
                     onTabSelected = { selectedTab ->
                         selectedTabItem = selectedTab

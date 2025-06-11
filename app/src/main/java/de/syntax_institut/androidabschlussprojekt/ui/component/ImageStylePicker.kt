@@ -31,13 +31,12 @@ import androidx.compose.foundation.lazy.items
 fun ImageStylePicker(
     selectedStyle: ImageStyle,
     onClick: (ImageStyle) -> Unit,
-    modifier: Modifier = Modifier,
-    contentPadding: Int = 16
+    modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(contentPadding.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(ImageStyle.entries) {currentStyle ->
 

@@ -110,7 +110,7 @@ class DreamViewModel(
         )
 
     ////   Filter & Sortierung   ////
-    private val _sortAsc = MutableStateFlow(true)
+    private val _sortAsc = MutableStateFlow(false)
     val sortAsc = _sortAsc.asStateFlow()
 
     private val _selectedMoodsFilter = MutableStateFlow<List<Mood>>(emptyList())

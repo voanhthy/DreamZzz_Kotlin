@@ -143,12 +143,12 @@ fun DreamZzzFilterMenu(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(28.dp)
-                            .clickable { dreamViewModel.setSortArc(true) },
+                            .clickable { dreamViewModel.setSortArc(false) },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = sortAsc,
-                            onClick = { dreamViewModel.setSortArc(true) },
+                            selected = !sortAsc,
+                            onClick = { dreamViewModel.setSortArc(false) },
                             colors = RadioButtonDefaults.colors(
                                 selectedColor = DreamZzzLavender,
                                 unselectedColor = DreamZzzLavender
@@ -162,12 +162,12 @@ fun DreamZzzFilterMenu(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(28.dp)
-                            .clickable { dreamViewModel.setSortArc(false) },
+                            .clickable { dreamViewModel.setSortArc(true) },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = !sortAsc,
-                            onClick = { dreamViewModel.setSortArc(false) },
+                            selected = sortAsc,
+                            onClick = { dreamViewModel.setSortArc(true) },
                             colors = RadioButtonDefaults.colors(
                                 selectedColor = DreamZzzLavender,
                                 unselectedColor = DreamZzzLavender
@@ -381,7 +381,7 @@ fun DreamZzzFilterMenu(
                     dreamViewModel.clearMoodsFilter()
                     dreamViewModel.clearCategoriesFilter()
                     dreamViewModel.clearImageStylesFilter()
-                    dreamViewModel.setSortArc(true)
+                    dreamViewModel.setSortArc(false)
                     dreamViewModel.setGridColumns(3)
                 },
                 modifier = Modifier

@@ -25,6 +25,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.OutlinedTextFieldDefaults.contentPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -46,6 +47,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamCategoryPicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzCalendar
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.ErrorDialog
 import de.syntax_institut.androidabschlussprojekt.ui.component.ImageStylePicker
 import de.syntax_institut.androidabschlussprojekt.ui.component.MoodPicker
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
@@ -75,6 +77,7 @@ fun AddDreamScreen(
     val isLoading by dreamViewModel.isLoading.collectAsState()
 
     var showDatePicker by remember { mutableStateOf(false) }
+    var showErrorDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
@@ -113,15 +116,12 @@ fun AddDreamScreen(
 
     LazyColumn(
         modifier = modifier
-            .fillMaxSize()
-//            .padding(16.dp)
-//        contentPadding = PaddingValues(horizontal = contentPadding.dp)
+            .fillMaxSize(),
+        contentPadding = PaddingValues(0.dp)
     ) {
         item {
             Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp)
             ) {
                 Spacer(modifier = Modifier.padding(16.dp))
 
@@ -189,7 +189,8 @@ fun AddDreamScreen(
 
 
                 // Datum auswählen
-                val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
+                val formattedDate =
+                    SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
 
                 if (showDatePicker) {
                     // Kalender Instanz basierend auf dem aktuellem Datum
@@ -216,18 +217,6 @@ fun AddDreamScreen(
                     dialog.show()
                 }
 
-
-//            OutlinedTextField(
-//                value = formattedDate,
-//                onValueChange = {},
-//                readOnly = true,
-//                label = { Text(stringResource(R.string.detail_date)) },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .clickable {
-//                        showDatePicker = true
-//                    }
-//            )
                 Spacer(modifier = Modifier.padding(16.dp))
 
                 DreamZzzCalendar(
@@ -235,14 +224,25 @@ fun AddDreamScreen(
                     onDateSelected = { dreamViewModel.updateDate(it) }
                 )
 
-                Spacer(modifier = Modifier.padding(8.dp))
+                Text(stringResource(R.string.type_of_dream_add_screen).uppercase(),
+                    modifier = Modifier.padding(vertical = 8.dp))
+            }
+        }
 
-                // Traum-Kategorie auswählen
-                DreamCategoryPicker(
-                    selectedCategory = selectedCategory,
-                    onClickSelected = { dreamViewModel.updateDreamCategory(it) }
-                )
+        item {
+            Spacer(modifier = Modifier.padding(horizontal = 8.dp))
 
+            // Traum-Kategorie auswählen
+            DreamCategoryPicker(
+                selectedCategory = selectedCategory,
+                onClickSelected = { dreamViewModel.updateDreamCategory(it) }
+            )
+        }
+
+        item {
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 Text(
@@ -250,13 +250,20 @@ fun AddDreamScreen(
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
+            }
+        }
+        item {
+            // Style Picker
+            ImageStylePicker(
+                selectedStyle = selectedImageStyle,
+                onClick = { dreamViewModel.updateImageStyle(it) }
+            )
+        }
 
-                // Style Picker
-                ImageStylePicker(
-                    selectedStyle = selectedImageStyle,
-                    onClick = { dreamViewModel.updateImageStyle(it) }
-                )
-
+        item {
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 // Mood Picker TODO: in eine Box packen
@@ -276,8 +283,12 @@ fun AddDreamScreen(
                 // Button zum Generieren
                 DreamZzzTextButton(
                     onClickText = {
-                        dreamViewModel.fetchImage(description)
-                        Log.d("ButtonTest", "Generate-Button wurde gedrückt")
+                        if (description.isEmpty()) {
+                            showErrorDialog = true
+                        } else {
+                            dreamViewModel.fetchImage(description)
+                            Log.d("ButtonTest", "Generate-Button wurde gedrückt")
+                        }
                     },
                     title = stringResource(R.string.generate),
                     modifier = Modifier.fillMaxWidth(),
@@ -285,7 +296,13 @@ fun AddDreamScreen(
             }
         }
     }
+
+    ErrorDialog(
+        showDialog = showErrorDialog,
+        onDismiss = { showErrorDialog = false }
+    )
 }
+
 
 // englisch
 @Preview(showBackground = true, locale = "en", uiMode = Configuration.UI_MODE_NIGHT_YES)

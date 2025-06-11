@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,60 +57,71 @@ fun HomeScreen(
 
     LazyColumn(
         modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
+            .fillMaxSize(),
+        contentPadding = PaddingValues(0.dp)
     ) {
         item {
-            // Add Button
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                AddButton(
-                    onAddClick = onClickNavigateToAddDream
-                )
-            }
-
-            // Begrüßungstext
-            Greeting()
-
-            // interaktiver Nachthimmel
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp, bottom = 8.dp)
-                    .height(240.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .clickable {
-                        onClickNavigateToNightSky()
-                    }
+                    .fillMaxSize()
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp),
             ) {
-                Image(
-                    painter = painterResource(R.drawable.sky),
-                    contentDescription = "Night Sky",
-                    modifier = Modifier.matchParentSize(),       // füllt die ganze Box aus
-                    contentScale = ContentScale.Crop
-                )
+                // Add Button
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    AddButton(
+                        onAddClick = onClickNavigateToAddDream
+                    )
+                }
 
-                Text(
-                    pluralStringResource(R.plurals.dream_count_plurals, dreamCount, dreamCount),
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyLarge,
+                // Begrüßungstext
+                Greeting()
+
+                // interaktiver Nachthimmel
+                Box(
                     modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(12.dp)
-                )
-            }
+                        .fillMaxWidth()
+                        .padding(top = 24.dp, bottom = 8.dp)
+                        .height(240.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .clickable {
+                            onClickNavigateToNightSky()
+                        }
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.sky),
+                        contentDescription = "Night Sky",
+                        modifier = Modifier.matchParentSize(),       // füllt die ganze Box aus
+                        contentScale = ContentScale.Crop
+                    )
 
+                    Text(
+                        pluralStringResource(R.plurals.dream_count_plurals, dreamCount, dreamCount),
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(12.dp)
+                    )
+                }
+            }
+        }
+
+        item {
             // Kalender
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 16.dp)
             )
+
             CalendarBar(
                 selectedDate = selectedDate,
                 onSelectedDate = { dreamViewModel.updateSelectedDate(it) },
-                datesWithDreams = dreamDates
+                datesWithDreams = dreamDates,
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
+
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = 16.dp)
             )
@@ -117,11 +130,13 @@ fun HomeScreen(
                 dreams = dreamsByDate,
                 onClickDream = { dream ->
                     onClickNavigateToDreamDetail(dream)
-                }
+                },
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

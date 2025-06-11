@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -22,12 +23,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.EmailTextField
 import de.syntax_institut.androidabschlussprojekt.ui.component.PasswordTextField
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -43,6 +47,7 @@ fun RegisterScreen(
     val emailInput by authViewModel.emailInput.collectAsState()
     val passwordInput by authViewModel.passwordInput.collectAsState()
     val passwordRepeatInput by authViewModel.passwordRepeatInput.collectAsState()
+    val showEmailHint by authViewModel.showEmailHint.collectAsState()
 
     Column(
         modifier = modifier
@@ -95,41 +100,12 @@ fun RegisterScreen(
         }
 
         // Email
-        OutlinedTextField(
-            value = emailInput,
-            onValueChange = { authViewModel.updateEmailInput(it) },
-            label = {
-                Text(
-                    stringResource(R.string.email),
-                    fontSize = 14.sp
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth(),
-//                .height(40.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent
-            )
+        EmailTextField(
+            emailInput = emailInput,
+            onEmailTextChange = { authViewModel.updateEmailInput(it) },
+            showSupportingText = showEmailHint
         )
 
-//        Spacer(modifier = Modifier.padding(2.dp))
-
-        // Password
-//        OutlinedTextField(
-//            value = passwordInput,
-//            onValueChange = { authViewModel.updatePasswordInput(it) },
-//            label = { Text(stringResource(R.string.passwordInput)) },
-//            modifier = Modifier.fillMaxWidth(),
-//            colors = OutlinedTextFieldDefaults.colors(
-//                focusedContainerColor = Color.White,
-//                unfocusedContainerColor = Color.White,
-//                focusedBorderColor = Color.Transparent,
-//                unfocusedBorderColor = Color.Transparent
-//            )
-//        )
         PasswordTextField(
             value = passwordInput,
             onValueChange = { authViewModel.updatePasswordInput(it) },
