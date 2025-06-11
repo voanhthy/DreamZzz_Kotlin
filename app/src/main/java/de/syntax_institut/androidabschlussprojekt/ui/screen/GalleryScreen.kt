@@ -15,7 +15,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -61,8 +63,7 @@ fun GalleryScreen(
     onNavigateToAddDreamScreen: () -> Unit,
     dreamViewModel: DreamViewModel = koinViewModel()
 ) {
-    var isGrid by remember { mutableStateOf(false) }
-    val dreamImages by dreamViewModel.savedDreamImages.collectAsState(listOf())
+    var isGrid by remember { mutableStateOf(true) }
     val gridColumns by dreamViewModel.gridColums.collectAsState()
 
     var showFilter by remember { mutableStateOf(false) }
@@ -85,103 +86,182 @@ fun GalleryScreen(
         }
     }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp )
-    ) {
+    if (isGrid) {
+        val gridState = rememberLazyStaggeredGridState()
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(gridColumns),
+            modifier = modifier
+                .fillMaxSize(),
+            state = gridState,
+            contentPadding = PaddingValues(top = 16.dp, start = 16.dp, end = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalItemSpacing = 8.dp
         ) {
-            // Toggle List/Grid
-            Button(
-                onClick = { isGrid = !isGrid },
-                shape = CircleShape,
-                modifier = Modifier.size(36.dp),
-                contentPadding = PaddingValues(0.dp),      // entfernt Standardabstände
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.List,
-                    contentDescription = null,
-                )
-            }
 
-            // Add Button
-            AddButton(
-                onAddClick = onNavigateToAddDreamScreen
-            )
-        }
-        Text(stringResource(R.string.tab_gallery),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
-        Text(stringResource(R.string.gallery_description),
-            style = MaterialTheme.typography.bodyLarge)
+//    LazyColumn(
+//        modifier = modifier
+//            .fillMaxSize()
+//            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+//    ) {
+            // span: nimmt volle Breite ein
+            item(span = StaggeredGridItemSpan.FullLine) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        // Toggle List/Grid
+                        Button(
+                            onClick = { isGrid = !isGrid },
+                            shape = CircleShape,
+                            modifier = Modifier.size(36.dp),
+                            contentPadding = PaddingValues(0.dp),      // entfernt Standardabstände
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Black
+                            )
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.List,
+                                contentDescription = null,
+                            )
+                        }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.End
-        ) {
-            FilterButton(
-                onClickDropdown = {
-                    showFilter = true
-                }
-            )
-        }
-
-        if (!isGrid) {
-
-            // GalleryGrid
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(gridColumns),
-                modifier = modifier
-                    .fillMaxSize(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalItemSpacing = 8.dp
-            ) {
-                itemsIndexed(dreams) { index, dream ->
-                    // zufällige Höhe generieren
-                    val randomHeight = remember(dream.id) {
-                        Random.nextInt(80, 400).dp
+                        // Add Button
+                        AddButton(
+                            onAddClick = onNavigateToAddDreamScreen
+                        )
                     }
 
-                    AsyncImage(
-                        model = dream.url,
-                        contentDescription = "Traumbild",
-                        modifier = Modifier
-                            .clickable {
-                                onNavigateToDetailScreen(dream)
-                            }
-                            .clip(shape = RoundedCornerShape(10.dp))
-                            .fillMaxWidth()
-                            .height(randomHeight),
-                        contentScale = ContentScale.Crop
+                    Text(
+                        stringResource(R.string.tab_gallery),
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
                     )
+                    Text(
+                        stringResource(R.string.gallery_description),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        FilterButton(
+                            onClickDropdown = {
+                                showFilter = true
+                            }
+                        )
+                    }
                 }
             }
-        } else {
-            // GalleryList
-            LazyColumn {
-                items(dreams) { dream ->
 
-                    SwipeableGalleryListItem(
-                        dream = dream,
-                        onSwipeDelete = {
-                            Log.d("GalleryScreen", "Wird gelöscht: ${dream.id}")
-                            dreamViewModel.deleteDreamImage(dream)
-                        },
-                        onClick = {
+//        if (!isGrid) {
+//            item {
+//                // GalleryGrid
+//                LazyVerticalStaggeredGrid(
+//                    columns = StaggeredGridCells.Fixed(gridColumns),
+//                    modifier = modifier
+//                        .fillMaxSize(),
+//                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+//                    verticalItemSpacing = 8.dp
+//                ) {
+            itemsIndexed(dreams) { index, dream ->
+                // zufällige Höhe generieren
+                val randomHeight = remember(dream.id) {
+                    Random.nextInt(80, 400).dp
+                }
+
+                AsyncImage(
+                    model = dream.url,
+                    contentDescription = "Traumbild",
+                    modifier = Modifier
+                        .clickable {
                             onNavigateToDetailScreen(dream)
+                        }
+                        .clip(shape = RoundedCornerShape(10.dp))
+                        .fillMaxWidth()
+                        .height(randomHeight),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+        }
+    } else {
+        // GalleryList
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(top = 16.dp, start = 16.dp, end = 16.dp)
+        ) {
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    // Toggle List/Grid
+                    Button(
+                        onClick = { isGrid = !isGrid },
+                        shape = CircleShape,
+                        modifier = Modifier.size(36.dp),
+                        contentPadding = PaddingValues(0.dp),      // entfernt Standardabstände
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Black
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.List,
+                            contentDescription = null,
+                        )
+                    }
+
+                    // Add Button
+                    AddButton(
+                        onAddClick = onNavigateToAddDreamScreen
+                    )
+                }
+
+                Text(
+                    stringResource(R.string.tab_gallery),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                )
+                Text(
+                    stringResource(R.string.gallery_description),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    FilterButton(
+                        onClickDropdown = {
+                            showFilter = true
                         }
                     )
                 }
             }
+
+            items(dreams) { dream ->
+
+                SwipeableGalleryListItem(
+                    dream = dream,
+                    onSwipeDelete = {
+                        Log.d("GalleryScreen", "Wird gelöscht: ${dream.id}")
+                        dreamViewModel.deleteDreamImage(dream)
+                    },
+                    onClick = {
+                        onNavigateToDetailScreen(dream)
+                    }
+                )
+            }
+
         }
     }
 }
