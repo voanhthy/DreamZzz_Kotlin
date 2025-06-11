@@ -28,12 +28,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        WindowInsetsControllerCompat(window, window.decorView).let { controller ->
-            controller.hide(
-                android.view.WindowInsets.Type.statusBars() or android.view.WindowInsets.Type.navigationBars()
-            )
-            controller.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            hide(android.view.WindowInsets.Type.statusBars())       // StatusBar verstecken
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
         setContent {

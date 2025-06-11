@@ -1,12 +1,15 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -19,11 +22,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.PasswordTextField
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -87,7 +92,6 @@ fun RegisterScreen(
                     unfocusedBorderColor = Color.Transparent
                 )
             )
-
         }
 
         // Email
@@ -111,36 +115,46 @@ fun RegisterScreen(
             )
         )
 
-        Spacer(modifier = Modifier.padding(2.dp))
+//        Spacer(modifier = Modifier.padding(2.dp))
 
         // Password
-        OutlinedTextField(
+//        OutlinedTextField(
+//            value = passwordInput,
+//            onValueChange = { authViewModel.updatePasswordInput(it) },
+//            label = { Text(stringResource(R.string.passwordInput)) },
+//            modifier = Modifier.fillMaxWidth(),
+//            colors = OutlinedTextFieldDefaults.colors(
+//                focusedContainerColor = Color.White,
+//                unfocusedContainerColor = Color.White,
+//                focusedBorderColor = Color.Transparent,
+//                unfocusedBorderColor = Color.Transparent
+//            )
+//        )
+        PasswordTextField(
             value = passwordInput,
             onValueChange = { authViewModel.updatePasswordInput(it) },
-            label = { Text(stringResource(R.string.passwordInput)) },
-            modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent
-            )
+            label = stringResource(R.string.passwordInput)
         )
 
         // Password wiederholen
-        OutlinedTextField(
+//        OutlinedTextField(
+//            value = passwordRepeatInput,
+//            onValueChange = { authViewModel.updatePasswordRepeatInput(it) },
+//            label = { Text(stringResource(R.string.passwordInput)) },
+//            modifier = Modifier.fillMaxWidth(),
+//            colors = OutlinedTextFieldDefaults.colors(
+//                focusedContainerColor = Color.White,
+//                unfocusedContainerColor = Color.White,
+//                focusedTextColor = Color.Black,
+//                unfocusedTextColor = Color.Black,
+//                focusedBorderColor = Color.Transparent,
+//                unfocusedBorderColor = Color.Transparent
+//            )
+//        )
+        PasswordTextField(
             value = passwordRepeatInput,
             onValueChange = { authViewModel.updatePasswordRepeatInput(it) },
-            label = { Text(stringResource(R.string.passwordInput)) },
-            modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedTextColor = Color.Black,
-                unfocusedTextColor = Color.Black,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent
-            )
+            label = stringResource(R.string.passwordInput)
         )
 
         Spacer(modifier = Modifier.padding(16.dp))
@@ -159,22 +173,21 @@ fun RegisterScreen(
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center
         ) {
-            // "Du hast bereits einen Account?"
-            Text(
-                stringResource(R.string.already_have_an_account),
-                modifier = Modifier,
-                style = MaterialTheme.typography.bodyLarge
-            )
-            // "Logge dich hier ein"
+
+            // zu RegisterScreen navigieren
             TextButton(
                 onClick = {
                     onNavigateToLoginScreen()
-                }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
-                Text(stringResource(R.string.login_here),
-                    style = MaterialTheme.typography.bodyLarge)
+                Text(stringResource(R.string.already_have_an_account),
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

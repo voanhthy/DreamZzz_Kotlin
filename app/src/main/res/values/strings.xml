@@ -55,7 +55,7 @@
     <string name="last_name">Nachname</string>
     <string name="password_repeat">Passwort wiederholen</string>
     <string name="register_here">Registriere dich hier</string>
-    <string name="already_have_an_account">Du hast bereits einen Account?</string>
+    <string name="already_have_an_account">Du hast bereits einen Account?\nLogge dich hier ein</string>
     <string name="login_here">Logge dich hier ein</string>
     <string name="description">Traumbeschreibung</string>
     <string name="analysis">Traumdeutung</string>

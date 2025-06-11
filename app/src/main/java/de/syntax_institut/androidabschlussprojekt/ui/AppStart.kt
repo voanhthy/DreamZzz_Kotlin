@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +19,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import de.syntax_institut.androidabschlussprojekt.data.local.model.enums.TabItem
+import de.syntax_institut.androidabschlussprojekt.service.AppNotificationService
 import de.syntax_institut.androidabschlussprojekt.ui.LoginRoute
 import de.syntax_institut.androidabschlussprojekt.ui.component.TabBar
 import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
@@ -89,10 +91,16 @@ fun AppStart(
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: ""
+
+    // BottomBar ausblenden
     val hideBottomBarRoutes = listOf("RegisterRoute", "LoginRoute", "NightSkyRoute", "LoadingRoute", "PreviewRoute")
     val showBottomBar = hideBottomBarRoutes.none { route ->
         currentRoute.contains(route)
     }
+
+    // Benachrichtigungen
+    val context = LocalContext.current
+    val notificationService = AppNotificationService(context)
 
     var selectedTabItem by remember { mutableStateOf(TabItem.HOME) }
 

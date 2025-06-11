@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
 import android.app.Activity
+import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -43,9 +44,12 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.StarItem
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import android.view.WindowInsets
+import androidx.annotation.RequiresApi
+import androidx.compose.runtime.DisposableEffect
+import de.syntax_institut.androidabschlussprojekt.utils.helper.enableFullscreen
 
 
-
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun NightSkyScreen(
     dreamViewModel: DreamViewModel = koinViewModel(),
@@ -56,6 +60,16 @@ fun NightSkyScreen(
     var showImage by remember { mutableStateOf(false) }
     val dreamImages by dreamViewModel.savedDreamImagesState.collectAsState()
 
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        (context as? Activity)?.enableFullscreen(true)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            (context as? Activity)?.enableFullscreen(false)
+        }
+    }
 
     Box(
         modifier = modifier
@@ -116,11 +130,11 @@ fun NightSkyScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun NightSkyScreenPreview() {
-    // Use Theme here
-    NightSkyScreen(
-        onNavigateToDreamDetail = {}
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun NightSkyScreenPreview() {
+//    // Use Theme here
+//    NightSkyScreen(
+//        onNavigateToDreamDetail = {}
+//    )
+//}

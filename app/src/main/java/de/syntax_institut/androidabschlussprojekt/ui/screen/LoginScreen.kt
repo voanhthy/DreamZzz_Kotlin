@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamZzzTextButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.PasswordTextField
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -68,17 +69,23 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.padding(2.dp))
 
-        OutlinedTextField(
+//        OutlinedTextField(
+//            value = passwordInput,
+//            onValueChange = { authViewModel.updatePasswordInput(it) },
+//            label = { Text(stringResource(R.string.passwordInput))},
+//            modifier = Modifier.fillMaxWidth(),
+//            colors = OutlinedTextFieldDefaults.colors(
+//                focusedContainerColor = Color.White,
+//                unfocusedContainerColor = Color.White,
+//                focusedBorderColor = Color.Transparent,
+//                unfocusedBorderColor = Color.Transparent
+//            )
+//        )
+
+        PasswordTextField(
             value = passwordInput,
             onValueChange = { authViewModel.updatePasswordInput(it) },
-            label = { Text(stringResource(R.string.passwordInput))},
-            modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent
-            )
+            label = stringResource(R.string.passwordInput)
         )
 
         Spacer(modifier = Modifier.padding(16.dp))
