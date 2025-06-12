@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import de.syntax_institut.androidabschlussprojekt.R
 
 class AuthViewModel(
     private val authServiceRepoInterface: AuthServiceRepoInterface
@@ -65,25 +66,57 @@ class AuthViewModel(
     ///
 
 
-    private val _showEmailHint = MutableStateFlow(false)
-    val showEmailHint = _showEmailHint.asStateFlow()
-
     private val _showPasswordHint = MutableStateFlow(false)
     val showPasswordHint = _showPasswordHint.asStateFlow()
 
     private val _showPasswordRepeatHint = MutableStateFlow(false)
     val showPasswordRepeatHint = _showPasswordRepeatHint.asStateFlow()
 
+    private val _showEmailError = MutableStateFlow(false)
+    val showEmailError = _showEmailError.asStateFlow()
+
+    private val _showPasswordError = MutableStateFlow(false)
+    val showPasswordError = _showPasswordError.asStateFlow()
+
+    private val _showPasswordErrorRepeat = MutableStateFlow(false)
+    val showPasswordErrorRepeat = _showPasswordErrorRepeat.asStateFlow()
+
     fun updateEmailInput(value: String) {
         _emailInput.value = value
+        _showEmailError.value = false
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(value).matches() && value.isNotBlank()) {
+            _showEmailError.value = true
+        } else if (value.isBlank()) {
+            _showEmailError.value = true
+        }
     }
 
     fun updatePasswordInput(value: String) {
         _passwordInput.value = value
+        _showPasswordError.value = false
+        _showPasswordErrorRepeat.value = false
+
+        if (value.isBlank() || value.length < 6) {
+            _showPasswordError.value = true
+        }
+
+        if (_passwordRepeatInput.value.isNotBlank() && _passwordRepeatInput.value != value) {
+            _showPasswordErrorRepeat.value = true
+        } else if (_passwordRepeatInput.value.isNotBlank() && _passwordRepeatInput.value == value) {
+            _showPasswordErrorRepeat.value = false
+        }
     }
 
     fun updatePasswordRepeatInput(value: String) {
         _passwordRepeatInput.value = value
+        _showPasswordErrorRepeat.value = false
+
+        if (value != _passwordInput.value) {
+            _showPasswordErrorRepeat.value = true
+        } else if (value.isBlank()) {
+            _showPasswordErrorRepeat.value = true
+        }
     }
 
     fun updateFirstNameInput(value: String) {
@@ -126,28 +159,26 @@ class AuthViewModel(
         passwordRepeat: String
     ): Boolean {
 
-        resetShowHintStates()
+        resetErrorStates()
 
         var isValid = true
 
         // wenn email leer ist oder kein gültiges email pattern hat dann zeigen wir dem nutzer einen hinweis an
         if (email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _showEmailHint.value = true
+            _showEmailError.value = true
             isValid = false
         }
         // wenn das password leer ist oder kürzer als 6 zeichen zeigen wir dem nutzer einen hinweis an
         if (password.isBlank() || password.length < 6) {
-            _showPasswordHint.value = true
+            _showPasswordError.value = true
             isValid = false
         }
 
         // wenn das wiederholte password nicht gleich ist dann zeigen wir dem nutzer einen hinweis an
         if (passwordRepeat != password) {
-            _showPasswordRepeatHint.value = true
+            _showPasswordErrorRepeat.value = true
             isValid = false
         }
-
-        // TODO validate username
 
         return isValid
     }
@@ -205,6 +236,7 @@ class AuthViewModel(
         viewModelScope.launch {
             _isLoading.value = true
             _errorMessageResId.value = null     // vorherige Fehler löschen
+            resetErrorStates()
 
             val email = _emailInput.value.trim()
             val password = _passwordInput.value
@@ -212,29 +244,34 @@ class AuthViewModel(
 
             // Hinweis, wenn Email leer oder kein gültiges Email pattern
             if (email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                _showEmailHint.value = true
-                _isLoading.value = false
+                _showEmailError.value = true
                 isValid = false
-                return@launch       // abbrechen
             }
 
             // Hinweis, wenn Passwort leer oder kürzer als 6 Zeichen
             if (password.isBlank() || password.length < 6) {
                 _showPasswordHint.value = true
                 isValid = false
-                _isLoading.value = false
-                return@launch       // abbrechen
             }
 
-            // Hinweis, wenn wiederholtes Passwort nicht gleich Passwort ist
-//            if (passwordRepeat != password) {
-//                _showPasswordRepeatHint.value = true
-//                isValid = false
-//            }
+            if (!isValid) {
+                _isLoading.value = false    // Ladezustand beenden, da Validierung fehlgeschlagen
+                return@launch               // abbrechen
+            }
 
-            // User anmelden
-            authServiceRepoInterface.login(email, password)
-            Log.d(TAG, "User erfolgreich angemeldet: $email")
+            val result = authServiceRepoInterface.login(email, password)
+            _isLoading.value = false
+
+            result.onSuccess {
+                _loginSuccess.value = true
+                Log.d(TAG, "User erfolgreich angemeldet: $email")
+                resetInputs()               // Eingabefelder nach erfolgreichem Login leeren
+                resetErrorStates()          // Fehler zurücksetzen
+            }.onFailure {
+                _errorMessageResId.value = R.string.error_login_failed_credentials
+            }
+
+            _loginSuccess.value = false     // bleibt falsch, wenn Login fehlschlägt
         }
     }
 
@@ -247,10 +284,10 @@ class AuthViewModel(
         }
     }
 
-    private fun resetShowHintStates() {
-        _showEmailHint.value = false
-        _showPasswordHint.value = false
-        _showPasswordRepeatHint.value = false
+    fun resetErrorStates() {
+        _showEmailError.value = false
+        _showPasswordError.value = false
+        _showPasswordErrorRepeat.value = false
     }
 
     private fun resetInputs() {

@@ -79,7 +79,7 @@
     <string name="image_style">Bildstil</string>
     <string name="apply">Anwenden</string>
     <string name="reset">Zurücksetzen</string>
-    <string name="email_hint">Die E-Mail muss in einem gültigen Format sein, wie z.B. jane@doe.de</string>
+    <string name="error_email_invalid">Die E-Mail muss in einem gültigen Format sein, wie z.B. jane@doe.de</string>
     <string name="error_no_description">Das Textfeld ist noch leer. Bitte beschreibe deinen Traum, damit ein Bild für dich  generiert werden kann.</string>
     <string name="oops">Hoppla!</string>
     <string name="filter">Filter</string>
@@ -91,4 +91,8 @@
     <string name="image_saved">Bild wurde erfolgreich gespeichert</string>
     <string name="on">an</string>
     <string name="off">aus</string>
+    <string name="error_password_mismatch">Die Passwörter stimmen nicht überein.</string>
+    <string name="error_password_too_short">Das Passwort muss mindestens 6 Zeichen lang sein</string>
+    <string name="error_wrong_password">E-Mail oder Passwort ist falsch.</string>
+    <string name="error_login_failed_credentials">Fehler bei der Anmeldung. Die Zugangsdaten sind möglicherweise falsch.</string>
 </resources>

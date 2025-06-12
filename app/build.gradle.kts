@@ -27,7 +27,7 @@ android {
 
     defaultConfig {
         applicationId = "de.syntax_institut.androidabschlussprojekt"
-        minSdk = 26
+        minSdk = 30
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -104,7 +104,7 @@ dependencies {
     // location
     implementation(libs.play.services.location)
     implementation(kotlin("test"))
-    // Für LazyVerticalStaggeredGrid
+    // für LazyVerticalStaggeredGrid
     implementation(libs.androidx.compose.foundation)
     // firebase
     implementation(libs.firebase.auth)
@@ -114,4 +114,8 @@ dependencies {
     implementation(libs.firebase.firestore)
     // Kalender
     implementation("com.kizitonwose.calendar:compose:2.7.0")
+    // Coil für GIF
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    // GIF Support für Coil
+    implementation("io.coil-kt:coil-gif:2.7.0")
 }

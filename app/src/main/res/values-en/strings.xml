@@ -71,7 +71,7 @@
     <string name="image_style">Image Style</string>
     <string name="apply">Apply</string>
     <string name="reset">Reset</string>
-    <string name="email_hint">The email must be in a valid format, such as jane@doe.de</string>
+    <string name="error_email_invalid">The email must be in a valid format, such as jane@doe.de</string>
     <string name="error_no_description">" The text field is still empty. Please describe your dream so that an image can be generated for you."</string>
     <string name="oops">Oops!</string>
     <string name="filter">Filters</string>
@@ -82,4 +82,8 @@
     <string name="image_saved">Image was saved successfully</string>
     <string name="on">on</string>
     <string name="off">off</string>
+    <string name="error_password_mismatch">The passwords are not identical.</string>
+    <string name="error_password_too_short">The password must be at least 6 characters long.</string>
+    <string name="error_wrong_password">Email or password is wrong.</string>
+    <string name="error_login_failed_credentials">Login failed. Your login credentials may be incorrect.</string>
 </resources>

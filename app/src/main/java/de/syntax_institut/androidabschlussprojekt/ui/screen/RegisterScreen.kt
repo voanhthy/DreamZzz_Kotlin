@@ -13,6 +13,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -40,7 +41,12 @@ fun RegisterScreen(
     val emailInput by authViewModel.emailInput.collectAsState()
     val passwordInput by authViewModel.passwordInput.collectAsState()
     val passwordRepeatInput by authViewModel.passwordRepeatInput.collectAsState()
-    val showEmailHint by authViewModel.showEmailHint.collectAsState()
+    val showEmailError by authViewModel.showEmailError.collectAsState()
+
+    val showPasswordError by authViewModel.showPasswordError.collectAsState()
+    val showPasswordErrorRepeat by authViewModel.showPasswordErrorRepeat.collectAsState()
+    val registrationSuccess by authViewModel.registrationSuccess.collectAsState()
+
 
     Column(
         modifier = modifier
@@ -48,6 +54,8 @@ fun RegisterScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.padding(16.dp))
+
         Text(
             stringResource(R.string.register),
             style = MaterialTheme.typography.titleLarge,
@@ -58,7 +66,8 @@ fun RegisterScreen(
 
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             // Vorname
@@ -96,21 +105,27 @@ fun RegisterScreen(
         EmailTextField(
             emailInput = emailInput,
             onEmailTextChange = { authViewModel.updateEmailInput(it) },
-            showSupportingText = showEmailHint
+            showSupportingText = showEmailError,
+            showAsError = showEmailError,
+            errorMessage = if (showEmailError) stringResource(R.string.error_email_invalid) else null
         )
 
         // Passwort
         PasswordTextField(
             value = passwordInput,
             onValueChange = { authViewModel.updatePasswordInput(it) },
-            label = stringResource(R.string.passwordInput)
+            label = stringResource(R.string.passwordInput),
+            showAsError = showPasswordError,
+            errorMessage = if (showPasswordError) stringResource(R.string.error_password_too_short) else null
         )
 
         // Password wiederholen
         PasswordTextField(
             value = passwordRepeatInput,
             onValueChange = { authViewModel.updatePasswordRepeatInput(it) },
-            label = stringResource(R.string.passwordInput)
+            label = stringResource(R.string.passwordInput),
+            showAsError = showPasswordErrorRepeat,
+            errorMessage = if (showPasswordErrorRepeat) stringResource(R.string.error_password_mismatch) else null
         )
 
         Spacer(modifier = Modifier.padding(16.dp))

@@ -20,6 +20,8 @@ fun EmailTextField(
     emailInput: String,
     onEmailTextChange: (String) -> Unit,
     showSupportingText: Boolean,
+    showAsError: Boolean,           // zeigt ob Fehler vorliegt
+    errorMessage: String? = null,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
@@ -44,8 +46,8 @@ fun EmailTextField(
             imeAction = ImeAction.Next,         // nächstes Eingabefeld
             keyboardType = KeyboardType.Email
         ),
-        supportingText = { if (showSupportingText) Text(stringResource(R.string.email_hint)) },
-        isError = showSupportingText
+        supportingText = { if (showAsError && errorMessage != null) Text(errorMessage) },
+        isError = showAsError
     )
 }
 
@@ -56,6 +58,7 @@ private fun EmailTextFieldPreview() {
     EmailTextField(
         emailInput = "Email",
         onEmailTextChange = {},
-        showSupportingText = true
+        showSupportingText = true,
+        showAsError = false
     )
 }

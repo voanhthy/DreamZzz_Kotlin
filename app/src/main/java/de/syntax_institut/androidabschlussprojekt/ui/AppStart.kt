@@ -161,9 +161,6 @@ fun AppStart(
                     LoginScreen(
                         onNavigateToRegisterScreen = {
                             navController.navigate(RegisterRoute)
-                        },
-                        onNavigateToHomeScreen = {
-                            navController.navigate(HomeRoute)
                         }
                     )
                 }

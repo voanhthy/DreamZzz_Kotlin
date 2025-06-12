@@ -32,12 +32,12 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LoginScreen(
     onNavigateToRegisterScreen: () -> Unit,
-    onNavigateToHomeScreen: () -> Unit,
     modifier: Modifier = Modifier,
     authViewModel: AuthViewModel = koinViewModel()
 ) {
     val emailInput by authViewModel.emailInput.collectAsState()
     val passwordInput by authViewModel.passwordInput.collectAsState()
+    val showPasswordError by authViewModel.showPasswordError.collectAsState()
 
     Column(
         modifier = modifier
@@ -45,6 +45,8 @@ fun LoginScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.padding(16.dp))
+
         Text(stringResource(R.string.login),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
@@ -72,7 +74,9 @@ fun LoginScreen(
         PasswordTextField(
             value = passwordInput,
             onValueChange = { authViewModel.updatePasswordInput(it) },
-            label = stringResource(R.string.passwordInput)
+            label = stringResource(R.string.passwordInput),
+            showAsError = showPasswordError,
+            errorMessage = if (showPasswordError) stringResource(R.string.error_wrong_password) else null
         )
 
         Spacer(modifier = Modifier.padding(16.dp))
@@ -80,7 +84,6 @@ fun LoginScreen(
         DreamZzzTextButton(
             onClickText = {
                 authViewModel.loginUser()
-                onNavigateToHomeScreen()
             },
             title = stringResource(R.string.login),
             modifier = Modifier
@@ -112,7 +115,6 @@ fun LoginScreen(
 private fun LoginScreenPreview() {
     // Use Theme here
     LoginScreen(
-        onNavigateToRegisterScreen = {},
-        onNavigateToHomeScreen = {}
+        onNavigateToRegisterScreen = {}
     )
 }

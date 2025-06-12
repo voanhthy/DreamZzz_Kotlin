@@ -2,10 +2,12 @@ package de.syntax_institut.androidabschlussprojekt.ui.screen
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.ui.component.LoadingAnimation
+import de.syntax_institut.androidabschlussprojekt.ui.component.LoadingSpinner
 import de.syntax_institut.androidabschlussprojekt.utils.getRandomSleepFact
 import kotlinx.coroutines.Delay
 import kotlinx.coroutines.delay
@@ -69,9 +72,16 @@ fun LoadingScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        LoadingAnimation(
-            modifier = Modifier.size(100.dp)
-        )
+//        LoadingAnimation(
+//            modifier = Modifier.size(100.dp)
+//        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(160.dp)
+        ) {
+            LoadingSpinner()
+        }
 
         Spacer(modifier = Modifier.padding(16.dp))
 

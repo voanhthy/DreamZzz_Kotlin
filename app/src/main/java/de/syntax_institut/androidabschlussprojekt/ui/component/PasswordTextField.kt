@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
+import android.R.attr.label
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -28,10 +29,13 @@ fun PasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
+    showAsError: Boolean,           // zeigt ob Fehler vorliegt
+    errorMessage: String? = null,
     modifier: Modifier = Modifier
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
 
+    
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -61,7 +65,9 @@ fun PasswordTextField(
                     )
                 }
             }
-        }
+        },
+        supportingText = { if (showAsError && errorMessage != null) Text(errorMessage) },
+        isError = showAsError
     )
 }
 
@@ -72,6 +78,7 @@ private fun PasswordTextFieldPreview() {
     PasswordTextField(
         value = "",
         onValueChange = {},
-        label = "Passwort"
+        label = "Passwort",
+        showAsError = true
     )
 }
