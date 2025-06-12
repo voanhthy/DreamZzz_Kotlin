@@ -335,7 +335,7 @@ fun DreamZzzFilterMenu(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable { dreamViewModel.toggleImageStylesFilter(style) }
-                                .padding(8.dp),
+                                .padding(vertical = 8.dp, horizontal = 4.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Checkbox(

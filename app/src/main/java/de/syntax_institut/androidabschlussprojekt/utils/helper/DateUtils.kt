@@ -1,6 +1,8 @@
 package de.syntax_institut.androidabschlussprojekt.utils.helper
 
 import android.icu.util.Calendar
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.Date
 
 object DateUtils {
@@ -26,5 +28,9 @@ object DateUtils {
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
         return  calendar.timeInMillis
+    }
+
+    fun Date.toLocalDate(): LocalDate {
+        return this.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
     }
 }

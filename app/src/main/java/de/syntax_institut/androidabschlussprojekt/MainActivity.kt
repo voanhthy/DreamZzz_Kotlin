@@ -29,13 +29,11 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            hide(android.view.WindowInsets.Type.statusBars())       // StatusBar verstecken
+            hide(android.view.WindowInsets.Type.statusBars() or android.view.WindowInsets.Type.navigationBars())    // StatusBar verstecken
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
         setContent {
-            enableEdgeToEdge()
-
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background

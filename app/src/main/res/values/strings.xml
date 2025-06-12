@@ -74,7 +74,7 @@
     <string name="delete_dream_permanently">Möchtest du diesen Traum wirklich löschen?</string>
     <string name="when_was_dream">Wann hattest du den Traum?</string>
     <string name="sort_by_date">nach Datum sortieren</string>
-    <string name="mood">Gefühlslage</string>
+    <string name="mood">Stimmung</string>
     <string name="all">Alle</string>
     <string name="image_style">Bildstil</string>
     <string name="apply">Anwenden</string>

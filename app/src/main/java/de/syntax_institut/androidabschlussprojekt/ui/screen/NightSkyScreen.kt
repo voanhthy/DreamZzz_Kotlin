@@ -17,6 +17,7 @@ import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -46,6 +47,7 @@ import org.koin.androidx.compose.koinViewModel
 fun NightSkyScreen(
     dreamViewModel: DreamViewModel = koinViewModel(),
     onNavigateToDreamDetail: (DreamImage) -> Unit,
+    onNavigateToSleepScreen: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showInfoBox by remember { mutableStateOf(false) }
@@ -65,7 +67,6 @@ fun NightSkyScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-
     ) {
         Image(
             painter = painterResource(R.drawable.sky),
@@ -108,6 +109,12 @@ fun NightSkyScreen(
                     contentDescription = "Help Button",
                     modifier = Modifier.size(36.dp)
                 )
+            }
+
+            Button(
+                onClick = { onNavigateToSleepScreen() }
+            ) {
+                Text("Sleep")
             }
         }
 

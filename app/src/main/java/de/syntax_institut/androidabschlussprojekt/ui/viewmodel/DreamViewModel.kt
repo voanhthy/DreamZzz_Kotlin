@@ -2,6 +2,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 
 import android.util.Log
 import android.util.Log.e
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDao
@@ -18,11 +19,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.toSet
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
@@ -80,9 +84,24 @@ class DreamViewModel(
     private val _isImageReady = MutableStateFlow(false)
     val isImageReady = _isImageReady.asStateFlow()
 
+    private val _dreamImages = MutableStateFlow<List<DreamImage>>(emptyList())
+    val dreamImages = _dreamImages.asStateFlow()
+
+
 
     //// Room
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
+
+    val moodCount: StateFlow<Map<Int, Int>> = savedDreamImages
+        .map { dreams ->
+            Mood.values().associate { mood ->
+                mood.value to dreams.count { it.mood == mood }
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = emptyMap()
+        )
 
     // bei jeder Änderung von _selectedDate wird automatisch eine neue Datenbankabfrage gestartet
     val dreamsForSelectedDate = _selectedDate

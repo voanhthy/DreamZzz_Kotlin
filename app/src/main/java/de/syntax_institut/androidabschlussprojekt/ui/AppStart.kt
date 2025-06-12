@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -31,6 +32,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.screen.NightSkyScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.PreviewScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.RegisterScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.SettingsScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.SleepScreen
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.AuthViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import kotlinx.serialization.Serializable
@@ -74,6 +76,9 @@ data class DreamDetailRoute(
     val id: String
 )
 
+@Serializable
+object SleepRoute
+
 
 // Routen innerhalb AuthGraph
 @Serializable
@@ -92,7 +97,7 @@ fun AppStart(
     val currentRoute = navBackStackEntry?.destination?.route ?: ""
 
     // BottomBar ausblenden
-    val hideBottomBarRoutes = listOf("RegisterRoute", "LoginRoute", "NightSkyRoute", "LoadingRoute", "PreviewRoute")
+    val hideBottomBarRoutes = listOf("RegisterRoute", "LoginRoute", "NightSkyRoute", "LoadingRoute", "PreviewRoute", "SleepRoute")
     val showBottomBar = hideBottomBarRoutes.none { route ->
         currentRoute.contains(route)
     }
@@ -122,7 +127,6 @@ fun AppStart(
                 TabBar(
                     modifier = Modifier
                         .padding(top = 16.dp, bottom = 32.dp),
-//                        .height(70.dp),
                     activeTab = selectedTabItem,
                     onTabSelected = { selectedTab ->
                         selectedTabItem = selectedTab
@@ -140,6 +144,7 @@ fun AppStart(
                 )
             }
         },
+        contentWindowInsets = WindowInsets(0,0,0,0),    // verhindert automatische Insets
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         NavHost(
@@ -202,7 +207,9 @@ fun AppStart(
                 }
 
                 composable<SettingsRoute> {
-                    SettingsScreen()
+                    SettingsScreen(
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
 
                 composable<DreamDetailRoute> {
@@ -225,7 +232,20 @@ fun AppStart(
                                     id = dream.id
                                 )
                             )
-                        }
+                        },
+                        onNavigateToSleepScreen = {
+                            navController.navigate(SleepRoute)
+                        },
+                        modifier =  Modifier.fillMaxSize()
+                    )
+                }
+
+                composable<SleepRoute> {
+                    SleepScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        onNavigateToHome = {
+                            navController.navigate(HomeRoute)
+                        },
                     )
                 }
 
