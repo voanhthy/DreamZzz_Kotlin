@@ -22,6 +22,21 @@ Füge hier am Ende die Screenshots deiner App ein.
   <img src="./img/screen3.png" width="200">
 </p>
 
+### Minimalistisches Design: 
+Die App setzt auf eine schlichte und moderne Ästhetik mit klaren Linien und einer ruhigen Farbgebung. Farbpalette: Grau, Schwarz und Weiß als Basisfarben, kombiniert mit Flieder als Akzentfarbe für Highlights und interaktive Elemente.
+
+### Überschriften: 
+Andreas – markant und charakterstark für eine einprägsame Typografie.
+Unterüberschriften: IBM Plex Mono Regular – klare, moderne Schrift für Struktur und Lesbarkeit.
+Fließtexte: Manrope Regular – eine elegante, leicht lesbare Schrift für ein angenehmes Leseerlebnis.
+
+### Individuelle Tab Bar:
+Ermöglicht eine schnelle und intuitive Navigation zwischen den Hauptbereichen:
+- Home: Übersicht und Eingabe neuer Träume.
+- Galerie: Sammlung gespeicherter Träume mit KI-generierten Bildern.
+- Profil: Einstellungen, persönliche Daten und Cloud-Synchronisation.
+Klares Icon-Design für eine intuitive Bedienung.
+
 
 ## Features
 Kernfunktionen:
@@ -38,17 +53,24 @@ Kernfunktionen:
 ## Technischer Aufbau
 
 #### Projektaufbau
-Eine kurze Beschreibung deiner Ordnerstruktur und Architektur (MVVM, Repositories) um Außenstehenden zu helfen, sich in deinem Projekt zurecht zu finden.
+
+Die Architektur basiert auf MVVM (Model-View-ViewModel), ergänzt durch Repositories, Manager, ViewModels, Models und Views, um eine klare Trennung der Verantwortlichkeiten und eine einfache Wartbarkeit zu gewährleisten.
 
 #### Datenspeicherung
-Welche Daten speicherst du? Wo und wie (Firebase, Core Data)? Erkläre hier auch, warum du den jeweiligen Dienst nutzt (offline-first, Sync usw.).
+
+<b>Firebase</b>        für die Benutzeranmeldung und -registrierung
+                <br>-> synchronisiert nahtlos zwischen den Geräten und bietet Cloud-basierte Lösung, die den Zugang von überall sicherstellt
+<br><b>Firestore</b>       zur Speicherung benutzerspezifischer Daten, um diese sicher und skalierbar zu verwalten
+                <br>-> Flexibilität, schnelle Datenabfrage und Echtzeit-Synchronisierung zwischen Geräten
+<br><b>Room</b>       für das lokale Speichern von Bildern und Medienelementen
+                <br>-> Offline-Zugriff der Bilder, da die Daten direkt auf dem Gerät gespeichert werden
+<br><b>DataStore</b>     speichert App-Einstellungen wie Dunkelmodus, Sprache und Benachrichigungseinstellungen, die lokal auf dem Gerät bleiben
+                <br>-> einfache App-Einstellungen lokal auf dem Gerät speichern ohne externe Abhängigkeiten, wobei die Daten sofort nach der Änderung verfügbar sind
 
 #### API Calls
-Welche APIs verwendest du?
 
-#### 3rd-Party Frameworks
-Verwendest du Frameworks/Libraries, die nicht von dir stammen?
-
+Bilder generieren: DALL·E (OpenAI) zur Erstellung von Bildern basierend auf Traumbeschreibungen
+Bilder analysieren und interpretieren: ChatGPT (OpenAI) zur Analyse und Interpretation von Traumbildern und -texten
 
 ## Ausblick
 Beschreibe hier, wo die Reise nach deinem Praxisprojekt hin geht. Was möchtest du in Zukunft noch ergänzen?
