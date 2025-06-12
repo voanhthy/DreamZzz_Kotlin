@@ -22,15 +22,15 @@ Füge hier am Ende die Screenshots deiner App ein.
   <img src="./img/screen3.png" width="200">
 </p>
 
-### Minimalistisches Design: 
+#### Minimalistisches Design
 Die App setzt auf eine schlichte und moderne Ästhetik mit klaren Linien und einer ruhigen Farbgebung. Farbpalette: Grau, Schwarz und Weiß als Basisfarben, kombiniert mit Flieder als Akzentfarbe für Highlights und interaktive Elemente.
 
-### Überschriften: 
+#### Typografie 
 Andreas – markant und charakterstark für eine einprägsame Typografie.
 Unterüberschriften: IBM Plex Mono Regular – klare, moderne Schrift für Struktur und Lesbarkeit.
 Fließtexte: Manrope Regular – eine elegante, leicht lesbare Schrift für ein angenehmes Leseerlebnis.
 
-### Individuelle Tab Bar:
+#### Individuelle Tab Bar
 Ermöglicht eine schnelle und intuitive Navigation zwischen den Hauptbereichen:
 - Home: Übersicht und Eingabe neuer Träume.
 - Galerie: Sammlung gespeicherter Träume mit KI-generierten Bildern.
