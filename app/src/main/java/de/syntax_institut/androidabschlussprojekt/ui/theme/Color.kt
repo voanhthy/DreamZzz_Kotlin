@@ -16,9 +16,9 @@ val DreamZzzLavender = Color((0xFFD9CFF8))
 val SelectedCategoryBorder = Color(0xFFFFEA64)
 val DreamZzzDarkBlue = Color(0x1E329FFF)
 
-val MoodColorAngry = Color(0xFF2035A8)
+val MoodColorAnxious = Color(0xFF2035A8)
 val MoodColorSad = Color(0xFFFFC107)     // Gelb-Orange
-val MoodColorNeutral = Color(0xFF8BC34A) // Hellgrün
+val MoodColorRelaxed = Color(0xFF8BC34A) // Hellgrün
 val MoodColorGood = Color(0xFF4CAF50)    // Grün
 val MoodColorHappy = Color(0xFF2196F3)   // Blau
 val MoodColorDefault = Color.LightGray   // Für Tage ohne Daten

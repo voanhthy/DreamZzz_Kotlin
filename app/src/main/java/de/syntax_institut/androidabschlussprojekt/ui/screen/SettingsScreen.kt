@@ -51,127 +51,159 @@ fun SettingsScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // Logout Button
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            LogoutButton(
-                onClickLogout = {
-                    showDialog = true
-                }
-            )
-        }
-
-        Text(stringResource(R.string.tab_you).uppercase(),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-            )
-
-        HorizontalDivider()
-
-        // Name
-        Row(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(stringResource(R.string.name),
-                style = MaterialTheme.typography.bodyLarge)
-
-            val fullName = if (userProfile?.firstName?.isNotBlank() == true || userProfile?.lastName?.isNotBlank() == true) {
-                "${userProfile?.firstName.orEmpty()} ${userProfile?.lastName.orEmpty()}"
-            } else {
-                stringResource(R.string.guest)
+            // Logout Button
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                LogoutButton(
+                    onClickLogout = {
+                        showDialog = true
+                    }
+                )
             }
-            Text(fullName,
-                style = MaterialTheme.typography.bodyLarge)
-        }
-        HorizontalDivider()
 
-        // E-Mail
-        Row(
+            Text(
+                stringResource(R.string.tab_you).uppercase(),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+            )
+
+            HorizontalDivider()
+
+            // Name
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    stringResource(R.string.name),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                val fullName =
+                    if (userProfile?.firstName?.isNotBlank() == true || userProfile?.lastName?.isNotBlank() == true) {
+                        "${userProfile?.firstName.orEmpty()} ${userProfile?.lastName.orEmpty()}"
+                    } else {
+                        stringResource(R.string.guest)
+                    }
+                Text(
+                    fullName,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+            HorizontalDivider()
+
+            // E-Mail
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    stringResource(R.string.email),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    email ?: "keine E-Mail",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+            HorizontalDivider()
+
+
+            // Mitglied seit
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    stringResource(R.string.member_since),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(memberSince?.let { SimpleDateFormat("dd.MM.yyyy").format(it) }
+                    ?: "Nicht verfügbar",
+                    style = MaterialTheme.typography.bodyLarge)
+            }
+            HorizontalDivider()
+
+
+            // Benachrichtigungen
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(stringResource(R.string.notifications))
+                Text(
+                    if (isNotificationOn) stringResource(R.string.on) else stringResource(R.string.off),
+                    modifier = Modifier.clickable {
+                        settingsViewModel.toggleNotificationOn()
+                    },
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+            HorizontalDivider()
+
+
+            // Dunkelmodus
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    stringResource(R.string.dark_mode),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    if (isDarkModeOn) stringResource(R.string.on) else stringResource(R.string.off),
+                    modifier = Modifier.clickable {
+                        settingsViewModel.toggleDarkMode()
+                    },
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+            HorizontalDivider()
+
+            // Sprache
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    stringResource(R.string.language),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    "Deutsch",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+            HorizontalDivider()
+        }
+
+//        Spacer(modifier = Modifier.weight(1f))
+
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(stringResource(R.string.email),
-                style = MaterialTheme.typography.bodyLarge)
-            Text(email ?: "keine E-Mail",
-                style = MaterialTheme.typography.bodyLarge)
-        }
-        HorizontalDivider()
+            Spacer(modifier = Modifier.padding(32.dp))
 
-
-        // Mitglied seit
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(stringResource(R.string.member_since),
-                style = MaterialTheme.typography.bodyLarge)
-            Text(memberSince?.let { SimpleDateFormat("dd.MM.yyyy").format(it) } ?: "Nicht verfügbar",
-                style = MaterialTheme.typography.bodyLarge)
-        }
-        HorizontalDivider()
-
-
-        // Benachrichtigungen
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(stringResource(R.string.notifications))
-            Text(if (isNotificationOn) stringResource(R.string.on) else stringResource(R.string.off),
-                modifier = Modifier.clickable {
-                    settingsViewModel.toggleNotificationOn()
-                },
-                style = MaterialTheme.typography.bodyLarge)
-        }
-        HorizontalDivider()
-
-
-        // Dunkelmodus
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(stringResource(R.string.dark_mode),
-                style = MaterialTheme.typography.bodyLarge)
-            Text(if (isDarkModeOn) stringResource(R.string.on) else stringResource(R.string.off),
-                modifier = Modifier.clickable {
-                    settingsViewModel.toggleDarkMode()
-                },
-                style = MaterialTheme.typography.bodyLarge)
-        }
-        HorizontalDivider()
-
-        // Sprache
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(stringResource(R.string.language),
-                style = MaterialTheme.typography.bodyLarge)
-            Text("Deutsch",
-                style = MaterialTheme.typography.bodyLarge)
-        }
-        HorizontalDivider()
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Column {
             HorizontalDivider()
             // Über diese App
             Text(stringResource(R.string.about_this_app),

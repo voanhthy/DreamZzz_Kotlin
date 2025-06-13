@@ -24,7 +24,8 @@
     <string name="detail_date">"Date: "</string>
     <string name="mood_good">Good</string>
     <string name="mood_sad">Sad</string>
-    <string name="mood_angry">Angry</string>
+    <string name="mood_relaxed">Relaxed</string>
+    <string name="mood_anxious">Anxious</string>
     <string name="mood_happy">Happy</string>
     <string name="login">Login</string>
     <string name="passwordInput">Password</string>

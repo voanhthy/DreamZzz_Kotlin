@@ -3,6 +3,7 @@ package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 import android.util.Log
 import android.util.Log.e
 import androidx.compose.runtime.remember
+import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDao
@@ -15,6 +16,7 @@ import de.syntax_institut.androidabschlussprojekt.data.repository.DreamFirestore
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestamp
 import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestampLong
+import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.toLocalDate
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,6 +30,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.toSet
 import kotlinx.coroutines.launch
+import java.time.YearMonth
 import java.util.Date
 import java.util.UUID
 
@@ -87,11 +90,14 @@ class DreamViewModel(
     private val _dreamImages = MutableStateFlow<List<DreamImage>>(emptyList())
     val dreamImages = _dreamImages.asStateFlow()
 
-
+    // Monat für Mood Diagramm
+    private val _selectedMonth = MutableStateFlow(YearMonth.now())
+    val selectedMonth = _selectedMonth.asStateFlow()
 
     //// Room
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
 
+    // alle Monate für Mood Diagramm
     val moodCount: StateFlow<Map<Int, Int>> = savedDreamImages
         .map { dreams ->
             Mood.values().associate { mood ->
@@ -101,6 +107,35 @@ class DreamViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = emptyMap()
+        )
+
+    // nur für ausgewählten Monat
+    val moodCountByMonth: StateFlow<Map<Int, Int>> = combine(savedDreamImages, selectedMonth) { dreams, month ->
+        val filtered = dreams.filter { it.date.toLocalDate().year == month.year && it.date.toLocalDate().month == month.month }
+
+        Mood.values().associate { mood ->
+            mood.value to filtered.count { it.mood == mood }
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = emptyMap()
+    )
+
+    // sortierte List von YearMonth
+    val availableMonths: StateFlow<List<YearMonth>> = savedDreamImages
+        .map { dreams ->
+            dreams
+                // jedes DreamImage -> YearMonth
+                .map { dream ->
+                    dream.date.toLocalDate().let { local ->
+                        YearMonth.of(local.year, local.month) } }
+                .distinct()     // nur eindeutige Monate
+                .sorted()       // aufsteigend sortieren
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = emptyList()
         )
 
     // bei jeder Änderung von _selectedDate wird automatisch eine neue Datenbankabfrage gestartet
@@ -286,6 +321,15 @@ class DreamViewModel(
     // ImageStyle
     fun updateImageStyle(newStyle: ImageStyle) {
         _selectedImageStyle.value = newStyle
+    }
+
+    // bewegt Monat um +/- Monate
+    fun changeMonth(offset: Long) {
+        _selectedMonth.value = _selectedMonth.value.plusMonths(offset)
+    }
+
+    fun setSelectedMonth(month: YearMonth) {
+        _selectedMonth.value = month
     }
 
     // Traum lokal speichern (Room)

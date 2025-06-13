@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DismissButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.MonthDropdownMenu
 import de.syntax_institut.androidabschlussprojekt.ui.component.MoodLineChart
 import de.syntax_institut.androidabschlussprojekt.ui.component.SleepBoxButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzGray
@@ -44,6 +45,8 @@ fun SleepScreen(
     dreamViewModel: DreamViewModel = koinViewModel(),
     modifier: Modifier = Modifier
 ) {
+    val months by dreamViewModel.availableMonths.collectAsState()
+    val selectedMonth by dreamViewModel.selectedMonth.collectAsState()
     val moodCounts by dreamViewModel.moodCount.collectAsState()
     val scrollState = rememberScrollState()
 
@@ -77,7 +80,9 @@ fun SleepScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                 horizontalArrangement = Arrangement.End
             ) {
                 DismissButton(
@@ -96,6 +101,12 @@ fun SleepScreen(
             Text("Deine Stimmungen nach dem Aufwachen im Überblick",
                 fontSize = 19.sp,
                 fontWeight = FontWeight.SemiBold
+            )
+
+            MonthDropdownMenu(
+                months = months,
+                selected = selectedMonth,
+                onSelect = { dreamViewModel.selectedMonth }
             )
 
             // Mood Diagramm
@@ -125,11 +136,13 @@ fun SleepScreen(
             ) {
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Besserer Schlaf"
+                    title = "Schlafphasen & Träume",
+                    subtitle = "Tauche ein in die Zyklen der Nacht."
                 )
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Stressabbau"
+                    title = "Schlafstörungen & Probleme",
+                    subtitle = "Häufige Hürden für deinen Schlaf"
                 )
             }
 
@@ -139,19 +152,38 @@ fun SleepScreen(
             ) {
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Meditation"
+                    title = "Schlafhygiene & Rituale",
+                    subtitle = "Rituale für erholsames Einschlafen"
                 )
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Ernährung & Schlaf"
+                    title = "Technologie & Schlaf",
+                    subtitle = "Digitale Helfer und Stolperfallen"
                 )
             }
 
-            SleepBoxButton(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                title = "FAQ"
-            )
+            Row(
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                SleepBoxButton(
+                    modifier = Modifier.weight(1f),
+                    title = "Bewegung & Schlaf",
+                    subtitle = "Wie Bewegung deine Nacht beeinflusst"
+                )
+                SleepBoxButton(
+                    modifier = Modifier.weight(1f),
+                    title = "Achtsamkeit & Meditation",
+                    subtitle = "Ruhe finden vor dem Schlafengehen"
+                )
+            }
+
+//            SleepBoxButton(
+//                modifier = Modifier
+//                    .fillMaxWidth(),
+//                title = "FAQ",
+//                subtitle = ""
+//            )
 
             Spacer(modifier = Modifier.padding(16.dp))
         }

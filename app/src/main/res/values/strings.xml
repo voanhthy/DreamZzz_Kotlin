@@ -30,8 +30,8 @@
     <string name="button_plus" translatable="false">plus</string>
     <string name="mood_good">Gut</string>
     <string name="mood_sad">Traurig</string>
-    <string name="mood_neutral" translatable="false">Neutral</string>
-    <string name="mood_angry">Wütend</string>
+    <string name="mood_relaxed">Entspannt</string>
+    <string name="mood_anxious">Ängstlich</string>
     <string name="mood_happy">Glücklich</string>
     <string name="login">Anmelden</string>
     <string name="passwordInput">Passwort</string>

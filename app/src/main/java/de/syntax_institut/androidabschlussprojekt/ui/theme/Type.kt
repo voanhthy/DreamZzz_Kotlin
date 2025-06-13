@@ -33,8 +33,8 @@ val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = font_andreas,
         fontWeight = FontWeight.Normal,
-        fontSize = 45.sp,
-        lineHeight = 50.sp,
+        fontSize = 48.sp,
+        lineHeight = 52.sp,
         letterSpacing = 0.sp
     ),
 
