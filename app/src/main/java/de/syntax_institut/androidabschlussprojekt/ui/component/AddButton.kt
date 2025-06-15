@@ -30,7 +30,7 @@ fun AddButton(
             contentPadding = PaddingValues(0.dp),      // entfernt Standardabstände
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black
-            )
+            ),
         ) {
             Icon(
                 imageVector = Icons.Default.Add,

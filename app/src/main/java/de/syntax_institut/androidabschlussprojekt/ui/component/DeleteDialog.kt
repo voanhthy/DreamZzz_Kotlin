@@ -22,11 +22,11 @@ fun DeleteDialog(
         AlertDialog(
             onDismissRequest = onDismiss,
             modifier = modifier,
-            title = { stringResource(R.string.delete_dream) },
-            text = { stringResource(R.string.delete_dream_permanently) },
+            title = { Text(stringResource(R.string.delete_dream)) },
+            text = { Text(stringResource(R.string.delete_dream_permanently)) },
             confirmButton = {
                 Text(
-                    "OK",
+                    stringResource(R.string.ok),
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable {
@@ -37,7 +37,7 @@ fun DeleteDialog(
             },
             dismissButton = {
                 Text(
-                    "Abbrechen",
+                    stringResource(R.string.cancel),
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable { onDismiss() }

@@ -15,6 +15,9 @@ val DreamZzzDarkGray = Color(0xFF1E1E20)
 val DreamZzzLavender = Color((0xFFD9CFF8))
 val SelectedCategoryBorder = Color(0xFFFFEA64)
 val DreamZzzDarkBlue = Color(0x1E329FFF)
+val DreamZzzPurple = Color(0xFFA888EF)
+val DreamZzzBlue = Color(0xFF7155D3)
+val DreamZzzLightBlue = Color(0xFF7BB5EA)
 
 val MoodColorAnxious = Color(0xFF2035A8)
 val MoodColorSad = Color(0xFFFFC107)     // Gelb-Orange

@@ -34,6 +34,12 @@ fun MoodLineChart(
         stringResource(id = mood.titleResId)
     }
 
+    val numYAxisLabels = if (maxCount.toInt() % 2 == 0) {
+        6       // Wenn gerade, 6 Labels
+    } else {
+        5       // Wenn ungerade, 5 Labels
+    }
+
     Canvas(
         modifier = modifier
             .fillMaxWidth()
@@ -45,6 +51,17 @@ fun MoodLineChart(
         // Abstand zwischen Punkten auf der x-Achse
         val pointDistance = chartWidth / (moodsSorted.size - 1).coerceAtLeast(1)
 
+//        // Linien und Y-Achse Offset
+//        val yAxisStartX = 0f                        // Y-Achse startet links am Canvas-Rand
+//        val xAxisStartY = chartHeight        // X-Achse startet unten am Canvas-Rand
+//
+//        drawLine(
+//            color = Color.LightGray,                // Farbe der Y-Achse
+//            start = Offset(yAxisStartX, 0f),        // Oben links
+//            end = Offset(yAxisStartX, xAxisStartY), // Unten links
+//            strokeWidth = 2f
+//        )
+
         // Punkte Berechnung
         val points = moodsSorted.mapIndexed { index, mood ->
             val count = moodCounts[mood.value] ?: 0
@@ -53,7 +70,7 @@ fun MoodLineChart(
             Offset(x, y)
         }
 
-        // Linien zeichnen
+        // Verbindungslinien zeichnen
         for (i in 0 until points.size - 1) {
             drawLine(
                 color = DreamZzzLavender,
@@ -61,6 +78,24 @@ fun MoodLineChart(
                 end =  points[i + 1],
                 strokeWidth = 6f
             )
+        }
+
+
+        for (i in 0 until numYAxisLabels) {
+            val labelValue = (maxCount / (numYAxisLabels - 1)) * i
+            val yPos = chartHeight - (labelValue / maxCount) * chartHeight
+
+            // Zahlen für y Achse
+//            drawContext.canvas.nativeCanvas.drawText(
+//                "${labelValue.toInt()}",    // Label als Integer anzeigen
+//                yAxisStartX - 25f,          // Etwas links von der Y-Achsenlinie
+//                yPos + (28f / 2),           // Text mittig zur Linie ausrichten (textSize / 2)
+//                android.graphics.Paint().apply {
+//                    textAlign = android.graphics.Paint.Align.RIGHT // Text rechtsbündig zur Linie
+//                    textSize = 28f
+//                    color = android.graphics.Color.DKGRAY
+//                }
+//            )
         }
 
         // Punkte + x-Achse Labels
@@ -84,6 +119,19 @@ fun MoodLineChart(
                     color = android.graphics.Color.BLACK
                 }
             )
+
+//            val count = moodCounts[mood.value] ?: 0
+//            drawContext.canvas.nativeCanvas.drawText(
+//                count.toString(), // Die Anzahl als String
+//                point.x,
+//                point.y - 30f, // Positionierung 30f Pixel über dem Punkt
+//                android.graphics.Paint().apply {
+//                    textAlign = android.graphics.Paint.Align.CENTER
+//                    textSize = 28f // Gleiche Textgröße wie Mood-Labels
+//                    color = android.graphics.Color.BLACK // Farbe des Textes
+//                    // Füge hier weitere Paint-Eigenschaften hinzu, falls gewünscht, z.B. Typeface
+//                }
+//            )
         }
     }
 }

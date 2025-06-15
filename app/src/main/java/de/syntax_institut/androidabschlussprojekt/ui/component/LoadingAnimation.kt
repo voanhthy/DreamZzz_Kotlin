@@ -22,7 +22,11 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzBlue
+import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzDarkBlue
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzLavender
+import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzLightBlue
+import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzPurple
 
 @Composable
 fun LoadingAnimation(
@@ -34,7 +38,7 @@ fun LoadingAnimation(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 2000)
+            animation = tween(durationMillis = 4000)
         )
     )
 
@@ -55,7 +59,7 @@ fun LoadingAnimation(
     ) {
         CircularProgressIndicator(
             strokeWidth = 1.dp,
-            color = Color.Gray,
+            color = DreamZzzPurple,
             modifier = Modifier
                 .fillMaxSize()
                 .graphicsLayer(
@@ -65,7 +69,7 @@ fun LoadingAnimation(
 
         CircularProgressIndicator(
             strokeWidth = 1.dp,
-            color = Color.Blue,
+            color = DreamZzzLavender,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
@@ -80,7 +84,7 @@ fun LoadingAnimation(
 
         CircularProgressIndicator(
             strokeWidth = 1.dp,
-            color = DreamZzzLavender,
+            color = DreamZzzBlue,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(

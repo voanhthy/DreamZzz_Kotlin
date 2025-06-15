@@ -2,10 +2,12 @@ package de.syntax_institut.androidabschlussprojekt.ui.screen
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -50,13 +52,20 @@ fun PreviewScreen(
         } else {
             Log.d("PreviewScreen", "Bild ist da: ${dreamImage?.url}")
 
-            dreamImage?.url?.let { imageUrl ->
-                AsyncImage(
-                    model = imageUrl,
-                    contentDescription = "Bild",
-                    modifier = Modifier.fillMaxWidth()
-                )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(350.dp)
+            ) {
+                dreamImage?.url?.let { imageUrl ->
+                    AsyncImage(
+                        model = imageUrl,
+                        contentDescription = "Bild",
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
+
             Spacer(modifier = Modifier.padding(16.dp))
 
             // Speichern Button - nur wenn Bild geladen
@@ -68,7 +77,8 @@ fun PreviewScreen(
                     }
                 },
                 title = stringResource(R.string.save),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
             if (showDialog) {

@@ -53,7 +53,7 @@ val ALL_MONTHS_SENTINEL = YearMonth.of(0, 1)
 fun SleepScreen(
     onNavigateToHome: () -> Unit,
     onNavigateToNightSky: ()-> Unit,
-    dreamViewModel: DreamViewModel = koinViewModel(),
+    onNavigateToInfoSleepPhase: () -> Unit,
     sleepViewModel: SleepViewModel = koinViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -165,13 +165,15 @@ fun SleepScreen(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.sleep_phases_dreams),
                     subtitle = "Tauche ein in die Zyklen der Nacht.",
-                    backgroundImageResId = R.drawable.background12
+                    backgroundImageResId = R.drawable.background12,
+                    onClick = { onNavigateToInfoSleepPhase() }
                 )
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.sleep_disorders_problems),
                     subtitle = "Häufige Hürden für deinen Schlaf",
-                    backgroundImageResId = R.drawable.background2
+                    backgroundImageResId = R.drawable.background2,
+                    onClick = {}
                 )
             }
 
@@ -183,13 +185,15 @@ fun SleepScreen(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.sleep_hygiene_rituals),
                     subtitle = "Rituale für erholsames Einschlafen",
-                    backgroundImageResId = R.drawable.background9
+                    backgroundImageResId = R.drawable.background9,
+                    onClick = {}
                 )
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.technology_sleep),
                     subtitle = "Digitale Helfer und Stolperfallen",
-                    backgroundImageResId = R.drawable.background11
+                    backgroundImageResId = R.drawable.background11,
+                    onClick = {}
                 )
             }
 
@@ -201,13 +205,15 @@ fun SleepScreen(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.movement_sleep),
                     subtitle = "Wie Bewegung deine Nacht beeinflusst",
-                    backgroundImageResId = R.drawable.background5
+                    backgroundImageResId = R.drawable.background5,
+                    onClick = {}
                 )
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.mindfulness_meditation),
                     subtitle = "Ruhe finden vor dem Schlafengehen",
-                    backgroundImageResId = R.drawable.background6
+                    backgroundImageResId = R.drawable.background6,
+                    onClick = {}
                 )
             }
 
@@ -234,6 +240,7 @@ private fun SleepScreenPreview() {
     // Use Theme here
     SleepScreen(
         onNavigateToHome = {},
-        onNavigateToNightSky = {}
+        onNavigateToNightSky = {},
+        onNavigateToInfoSleepPhase = {}
     )
 }

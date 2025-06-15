@@ -10,9 +10,9 @@ enum class DreamCategory(val titleResId: Int) {
 
 fun getEmojiForCategory(category: DreamCategory): String {
     return when (category) {
-        DreamCategory.NORMAL -> "⭐"
-        DreamCategory.NIGHTMARE -> "\uD83D\uDCAB"
-        DreamCategory.LUCID -> "✨"
+        DreamCategory.NORMAL -> "✨"
+        DreamCategory.NIGHTMARE -> "★"
+        DreamCategory.LUCID -> "\uD83D\uDCA0"
     }
 }
 

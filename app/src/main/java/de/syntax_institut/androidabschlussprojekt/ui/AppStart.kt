@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key.Companion.I
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
@@ -26,6 +27,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.screen.AddDreamScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.DreamDetailScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.GalleryScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.HomeScreen
+import de.syntax_institut.androidabschlussprojekt.ui.screen.InfoSleepPhaseScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.LoadingScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.LoginScreen
 import de.syntax_institut.androidabschlussprojekt.ui.screen.NightSkyScreen
@@ -78,6 +80,9 @@ data class DreamDetailRoute(
 
 @Serializable
 object SleepRoute
+
+@Serializable
+object InfoSleepPhaseRoute
 
 
 // Routen innerhalb AuthGraph
@@ -248,6 +253,17 @@ fun AppStart(
                         },
                         onNavigateToNightSky = {
                             navController.navigate(NightSkyRoute)
+                        },
+                        onNavigateToInfoSleepPhase = {
+                            navController.navigate(InfoSleepPhaseRoute)
+                        }
+                    )
+                }
+
+                composable<InfoSleepPhaseRoute> {
+                    InfoSleepPhaseScreen(
+                        onNavigateToHome = {
+                            navController.navigate(HomeRoute)
                         }
                     )
                 }

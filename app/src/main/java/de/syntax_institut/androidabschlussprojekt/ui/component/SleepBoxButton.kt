@@ -1,7 +1,9 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
+import android.R.attr.subtitle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,12 +38,14 @@ fun SleepBoxButton(
     title: String,
     subtitle: String,
     backgroundImageResId: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp))
             .height(180.dp)
+            .clickable { onClick() }
     ) {
         Image(
             painter = painterResource(backgroundImageResId),
@@ -125,6 +129,7 @@ private fun SleepBoxPreview() {
     SleepBoxButton(
         title = "Schlaf",
         subtitle = "Erforsche die Zyklen deiner Nacht",
-        backgroundImageResId = R.drawable.background1
+        backgroundImageResId = R.drawable.background1,
+        onClick = {}
     )
 }

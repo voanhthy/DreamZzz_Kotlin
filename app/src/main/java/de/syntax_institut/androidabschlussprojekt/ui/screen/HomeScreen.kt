@@ -32,6 +32,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.CalendarBar
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.pluralStringResource
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamsByDate
