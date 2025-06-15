@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
+import android.R.attr.fontWeight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -40,7 +41,7 @@ fun DescriptionAnalysisPicker(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(5.dp))
+                .clip(RoundedCornerShape(10.dp))
                 .height(36.dp)
                 .background(Color.LightGray)
                 .padding(3.dp),
@@ -64,7 +65,7 @@ fun DescriptionAnalysisPicker(
             Text("Traumdeutung",
                 modifier = Modifier
                     .weight(1f)
-                    .clip(RoundedCornerShape(5.dp))
+                    .clip(RoundedCornerShape(10.dp))
                     .background(if (!showDescription.value) Color.White else Color.LightGray)
                     .fillMaxHeight()
                     .wrapContentHeight(align = Alignment.CenterVertically)

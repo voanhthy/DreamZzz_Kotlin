@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -103,7 +104,8 @@ fun SleepScreen(
                 )
             }
 
-            Text("Schlaf",
+            Text(
+                stringResource(R.string.sleep),
                 style = MaterialTheme.typography.titleLarge)
 
             Text("Ein erholsamer Schlaf ist wichtig. Hier beginnt deine nächtliche Reise – zu mehr Ruhe, besseren Träumen und einem klareren Kopf.",
@@ -121,7 +123,7 @@ fun SleepScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(DreamZzzGray.copy(0.8f))
+                        .background(DreamZzzGray.copy(0.7f))
                 ) {
                     Column {
                         Row(
@@ -161,13 +163,15 @@ fun SleepScreen(
             ) {
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Schlafphasen & Träume",
-                    subtitle = "Tauche ein in die Zyklen der Nacht."
+                    title = stringResource(R.string.sleep_phases_dreams),
+                    subtitle = "Tauche ein in die Zyklen der Nacht.",
+                    backgroundImageResId = R.drawable.background12
                 )
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Schlafstörungen & Probleme",
-                    subtitle = "Häufige Hürden für deinen Schlaf"
+                    title = stringResource(R.string.sleep_disorders_problems),
+                    subtitle = "Häufige Hürden für deinen Schlaf",
+                    backgroundImageResId = R.drawable.background2
                 )
             }
 
@@ -177,13 +181,15 @@ fun SleepScreen(
             ) {
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Schlafhygiene & Rituale",
-                    subtitle = "Rituale für erholsames Einschlafen"
+                    title = stringResource(R.string.sleep_hygiene_rituals),
+                    subtitle = "Rituale für erholsames Einschlafen",
+                    backgroundImageResId = R.drawable.background9
                 )
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Technologie & Schlaf",
-                    subtitle = "Digitale Helfer und Stolperfallen"
+                    title = stringResource(R.string.technology_sleep),
+                    subtitle = "Digitale Helfer und Stolperfallen",
+                    backgroundImageResId = R.drawable.background11
                 )
             }
 
@@ -193,23 +199,17 @@ fun SleepScreen(
             ) {
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Bewegung & Schlaf",
-                    subtitle = "Wie Bewegung deine Nacht beeinflusst"
+                    title = stringResource(R.string.movement_sleep),
+                    subtitle = "Wie Bewegung deine Nacht beeinflusst",
+                    backgroundImageResId = R.drawable.background5
                 )
                 SleepBoxButton(
                     modifier = Modifier.weight(1f),
-                    title = "Achtsamkeit & Meditation",
-                    subtitle = "Ruhe finden vor dem Schlafengehen"
+                    title = stringResource(R.string.mindfulness_meditation),
+                    subtitle = "Ruhe finden vor dem Schlafengehen",
+                    backgroundImageResId = R.drawable.background6
                 )
             }
-
-//            SleepBoxButton(
-//                modifier = Modifier
-//                    .fillMaxWidth(),
-//                title = "FAQ",
-//                subtitle = ""
-//            )
-
 
             Spacer(modifier = Modifier.padding(16.dp))
         }

@@ -95,4 +95,11 @@
     <string name="error_password_too_short">Das Passwort muss mindestens 6 Zeichen lang sein</string>
     <string name="error_wrong_password">E-Mail oder Passwort ist falsch.</string>
     <string name="error_login_failed_credentials">Fehler bei der Anmeldung. Die Zugangsdaten sind möglicherweise falsch.</string>
+    <string name="sleep">Schlaf</string>
+    <string name="sleep_phases_dreams">Schlafphasen &amp; Träume</string>
+    <string name="sleep_disorders_problems">Schlafstörungen\n&amp;\nProbleme</string>
+    <string name="sleep_hygiene_rituals">Schlafhygiene\n&amp;\nRituale</string>
+    <string name="technology_sleep">Technologie &amp; Schlaf</string>
+    <string name="movement_sleep">Bewegung &amp; Schlaf</string>
+    <string name="mindfulness_meditation">Achtsamkeit &amp; Meditation</string>
 </resources>

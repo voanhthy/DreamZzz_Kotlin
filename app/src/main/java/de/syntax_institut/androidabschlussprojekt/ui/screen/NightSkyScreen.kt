@@ -38,6 +38,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
 import de.syntax_institut.androidabschlussprojekt.ui.component.DreamsSleepToggle
 import de.syntax_institut.androidabschlussprojekt.ui.component.NightSkyInfoBox
+import de.syntax_institut.androidabschlussprojekt.ui.component.SleepScreenButton
 import de.syntax_institut.androidabschlussprojekt.ui.component.StarItem
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import de.syntax_institut.androidabschlussprojekt.utils.helper.enableFullscreen
@@ -112,15 +113,18 @@ fun NightSkyScreen(
                     modifier = Modifier.size(36.dp)
                 )
             }
-
-
-            Button(
-                onClick = { onNavigateToSleepScreen() }
-            ) {
-                Text("Sleep")
-            }
         }
 
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+        ) {
+
+            SleepScreenButton(
+                onClick = { onNavigateToSleepScreen() }
+            )
+        }
 //        Box(
 //            modifier = Modifier
 //                .align(Alignment.BottomCenter)
