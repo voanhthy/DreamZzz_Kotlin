@@ -246,6 +246,9 @@ fun AppStart(
                         onNavigateToHome = {
                             navController.navigate(HomeRoute)
                         },
+                        onNavigateToNightSky = {
+                            navController.navigate(NightSkyRoute)
+                        }
                     )
                 }
 

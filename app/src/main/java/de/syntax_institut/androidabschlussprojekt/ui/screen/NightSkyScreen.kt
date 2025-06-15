@@ -5,6 +5,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -35,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.data.local.model.DreamImage
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamsSleepToggle
 import de.syntax_institut.androidabschlussprojekt.ui.component.NightSkyInfoBox
 import de.syntax_institut.androidabschlussprojekt.ui.component.StarItem
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
@@ -111,12 +113,25 @@ fun NightSkyScreen(
                 )
             }
 
+
             Button(
                 onClick = { onNavigateToSleepScreen() }
             ) {
                 Text("Sleep")
             }
         }
+
+//        Box(
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .padding(bottom = 16.dp)
+//        ) {
+//            DreamsSleepToggle(
+//                dreams = "",
+//                sleep = "",
+//                onSleepSelected = { onNavigateToSleepScreen() }
+//            )
+//        }
 
         if (showInfoBox) {
             NightSkyInfoBox(

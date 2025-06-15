@@ -20,6 +20,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.component.DismissButton
+import de.syntax_institut.androidabschlussprojekt.ui.component.DreamsSleepToggle
 import de.syntax_institut.androidabschlussprojekt.ui.component.MonthDropdownMenu
 import de.syntax_institut.androidabschlussprojekt.ui.component.MoodLineChart
 import de.syntax_institut.androidabschlussprojekt.ui.component.SleepBoxButton
@@ -42,6 +44,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SleepScreen(
     onNavigateToHome: () -> Unit,
+    onNavigateToNightSky: ()-> Unit,
     dreamViewModel: DreamViewModel = koinViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -184,9 +187,22 @@ fun SleepScreen(
 //                title = "FAQ",
 //                subtitle = ""
 //            )
+            
 
             Spacer(modifier = Modifier.padding(16.dp))
         }
+
+//        Box(
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .padding(bottom = 16.dp)
+//        ) {
+//            DreamsSleepToggle(
+//                dreams = "",
+//                sleep = "",
+//                onSleepSelected = { onNavigateToNightSky }
+//            )
+//        }
     }
 }
 
@@ -195,6 +211,7 @@ fun SleepScreen(
 private fun SleepScreenPreview() {
     // Use Theme here
     SleepScreen(
-        onNavigateToHome = {}
+        onNavigateToHome = {},
+        onNavigateToNightSky = {}
     )
 }
