@@ -1,6 +1,5 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
-import android.R.attr.onClick
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -18,11 +17,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SleepViewModel
+import de.syntax_institut.androidabschlussprojekt.utils.helper.MonthDisplayNameHelper.getMonthDisplayName
+import org.koin.androidx.compose.koinViewModel
 import java.time.YearMonth
-import java.util.Locale
 
 @Composable
 fun MonthDropdownMenu(
@@ -42,13 +42,10 @@ fun MonthDropdownMenu(
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(selected.month
-                .getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault())
-                .replaceFirstChar { it.uppercase() } + " ${selected.year}")
+            Text(getMonthDisplayName(selected))
 
             Icon(Icons.Default.KeyboardArrowDown,
                 contentDescription = "Monat wählen")
-
         }
 
         DropdownMenu(
@@ -58,10 +55,7 @@ fun MonthDropdownMenu(
             months.forEach { month ->
                 DropdownMenuItem(
                     text = {
-                        Text(month.month
-                            .getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault())
-                            .replaceFirstChar { it.uppercase() } + " ${month.year}"
-                        )
+                        Text(getMonthDisplayName(month))    // übergibt den ausgewählten Monat (oder den Sentinel)
                     },
                     onClick = {
                         onSelect(month)

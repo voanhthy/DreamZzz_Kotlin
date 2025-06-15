@@ -21,6 +21,7 @@ import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamDetailViewMo
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.PreviewViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SleepViewModel
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.UserProfileViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
@@ -104,4 +105,6 @@ val appModule = module {
     viewModelOf(::UserProfileViewModel)
 
     viewModelOf(::PreviewViewModel)
+
+    viewModelOf(::SleepViewModel)
 }

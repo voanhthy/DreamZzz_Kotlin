@@ -1,6 +1,7 @@
 package de.syntax_institut.androidabschlussprojekt.ui.screen
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,21 +38,30 @@ import de.syntax_institut.androidabschlussprojekt.ui.component.MoodLineChart
 import de.syntax_institut.androidabschlussprojekt.ui.component.SleepBoxButton
 import de.syntax_institut.androidabschlussprojekt.ui.theme.DreamZzzGray
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.DreamViewModel
+import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SleepViewModel
 import de.syntax_institut.androidabschlussprojekt.utils.helper.enableFullscreen
 import org.koin.androidx.compose.koinViewModel
+import java.time.YearMonth
 
+
+// Sentinel-Wert für "Alle Monate".
+// Jahr 0, Monat 1 ist ungültiges YearMonth-Datum, dient daher als spezieller Wert
+val ALL_MONTHS_SENTINEL = YearMonth.of(0, 1)
 
 @Composable
 fun SleepScreen(
     onNavigateToHome: () -> Unit,
     onNavigateToNightSky: ()-> Unit,
     dreamViewModel: DreamViewModel = koinViewModel(),
+    sleepViewModel: SleepViewModel = koinViewModel(),
     modifier: Modifier = Modifier
 ) {
-    val months by dreamViewModel.availableMonths.collectAsState()
-    val selectedMonth by dreamViewModel.selectedMonth.collectAsState()
-    val moodCounts by dreamViewModel.moodCount.collectAsState()
+    val months by sleepViewModel.availableMonths.collectAsState()
+    val selectedMonth by sleepViewModel.selectedMonth.collectAsState()
+    val moodCounts by sleepViewModel.moodCountByMonth.collectAsState()
     val scrollState = rememberScrollState()
+
+    val monthsWithAll = listOf(ALL_MONTHS_SENTINEL) + months
 
     val context = LocalContext.current
     LaunchedEffect(Unit) {
@@ -92,7 +102,7 @@ fun SleepScreen(
                     onClickDismiss = { onNavigateToHome() }
                 )
             }
-            
+
             Text("Schlaf",
                 style = MaterialTheme.typography.titleLarge)
 
@@ -106,22 +116,34 @@ fun SleepScreen(
                 fontWeight = FontWeight.SemiBold
             )
 
-            MonthDropdownMenu(
-                months = months,
-                selected = selectedMonth,
-                onSelect = { dreamViewModel.selectedMonth }
-            )
-
             // Mood Diagramm
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(DreamZzzGray.copy(0.7f))
-            ) {
-                MoodLineChart(
-                    moodCounts = moodCounts,
-                    modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 32.dp)
-                )
+            Column {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(DreamZzzGray.copy(0.8f))
+                ) {
+                    Column {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            MonthDropdownMenu(
+                                months = months,
+                                selected = selectedMonth,
+                                onSelect = { month ->
+                                    Log.d("SleepScreen", "Ausgewählter Monat: $month")
+                                    sleepViewModel.setSelectedMonth(month)
+                                }
+                            )
+                        }
+
+                        MoodLineChart(
+                            moodCounts = moodCounts,
+                            modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 32.dp)
+                        )
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.padding(8.dp))
@@ -187,7 +209,7 @@ fun SleepScreen(
 //                title = "FAQ",
 //                subtitle = ""
 //            )
-            
+
 
             Spacer(modifier = Modifier.padding(16.dp))
         }

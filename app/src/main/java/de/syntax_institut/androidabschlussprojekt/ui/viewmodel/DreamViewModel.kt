@@ -90,9 +90,6 @@ class DreamViewModel(
     private val _dreamImages = MutableStateFlow<List<DreamImage>>(emptyList())
     val dreamImages = _dreamImages.asStateFlow()
 
-    // Monat für Mood Diagramm
-    private val _selectedMonth = MutableStateFlow(YearMonth.now())
-    val selectedMonth = _selectedMonth.asStateFlow()
 
     //// Room
     val savedDreamImages: Flow<List<DreamImage>> = dreamImagedao.getAllItems()
@@ -109,34 +106,6 @@ class DreamViewModel(
             initialValue = emptyMap()
         )
 
-    // nur für ausgewählten Monat
-    val moodCountByMonth: StateFlow<Map<Int, Int>> = combine(savedDreamImages, selectedMonth) { dreams, month ->
-        val filtered = dreams.filter { it.date.toLocalDate().year == month.year && it.date.toLocalDate().month == month.month }
-
-        Mood.values().associate { mood ->
-            mood.value to filtered.count { it.mood == mood }
-        }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = emptyMap()
-    )
-
-    // sortierte List von YearMonth
-    val availableMonths: StateFlow<List<YearMonth>> = savedDreamImages
-        .map { dreams ->
-            dreams
-                // jedes DreamImage -> YearMonth
-                .map { dream ->
-                    dream.date.toLocalDate().let { local ->
-                        YearMonth.of(local.year, local.month) } }
-                .distinct()     // nur eindeutige Monate
-                .sorted()       // aufsteigend sortieren
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = emptyList()
-        )
 
     // bei jeder Änderung von _selectedDate wird automatisch eine neue Datenbankabfrage gestartet
     val dreamsForSelectedDate = _selectedDate
@@ -323,14 +292,6 @@ class DreamViewModel(
         _selectedImageStyle.value = newStyle
     }
 
-    // bewegt Monat um +/- Monate
-    fun changeMonth(offset: Long) {
-        _selectedMonth.value = _selectedMonth.value.plusMonths(offset)
-    }
-
-    fun setSelectedMonth(month: YearMonth) {
-        _selectedMonth.value = month
-    }
 
     // Traum lokal speichern (Room)
     fun saveImage() {
