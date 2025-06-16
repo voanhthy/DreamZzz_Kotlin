@@ -27,8 +27,8 @@ DreamZzz ist für alle, die ihre Träume besser verstehen, ihren Schlaf optimier
 Die App setzt auf eine schlichte und moderne Ästhetik mit klaren Linien und einer ruhigen Farbgebung. Farbpalette: Grau, Schwarz und Weiß als Basisfarben, kombiniert mit Flieder als Akzentfarbe für Highlights und interaktive Elemente.
 
 #### Typografie 
-Andreas – markant und charakterstark für eine einprägsame Typografie.
-Unterüberschriften: IBM Plex Mono Regular – klare, moderne Schrift für Struktur und Lesbarkeit.
+Überschriften: Andreas – markant und charakterstark für eine einprägsame Typografie.  
+Unterüberschriften: IBM Plex Mono Regular – klare, moderne Schrift für Struktur und Lesbarkeit.  
 Fließtexte: Manrope Regular – eine elegante, leicht lesbare Schrift für ein angenehmes Leseerlebnis.
 
 #### Individuelle Tab Bar
@@ -85,8 +85,8 @@ Diese Struktur gewährleistet eine klare Trennung der Verantwortlichkeiten, eine
 
 #### API Calls
 
-Bilder generieren: DALL·E (OpenAI) zur Erstellung von Bildern basierend auf Traumbeschreibungen  
-Bilder analysieren und interpretieren: ChatGPT (OpenAI) zur Analyse und Interpretation von Traumbildern und -texten
+Bilder generieren: <b>DALL·E</b> (OpenAI) zur Erstellung von Bildern basierend auf Traumbeschreibungen  
+Bilder analysieren und interpretieren: <b>ChatGPT</b> (OpenAI) zur Analyse und Interpretation von Traumbildern und -texten
 
 ## Ausblick
 Geplante Features:
