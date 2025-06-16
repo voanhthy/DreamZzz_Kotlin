@@ -81,15 +81,18 @@ class AuthViewModel(
     private val _showPasswordErrorRepeat = MutableStateFlow(false)
     val showPasswordErrorRepeat = _showPasswordErrorRepeat.asStateFlow()
 
+    private val _showNameError = MutableStateFlow(false)
+    val showNameError = _showNameError.asStateFlow()
+
     fun updateEmailInput(value: String) {
         _emailInput.value = value
         _showEmailError.value = false
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(value).matches() && value.isNotBlank()) {
-            _showEmailError.value = true
-        } else if (value.isBlank()) {
-            _showEmailError.value = true
-        }
+//        if (!Patterns.EMAIL_ADDRESS.matcher(value).matches() && value.isNotBlank()) {
+//            _showEmailError.value = true
+//        } else if (value.isBlank()) {
+//            _showEmailError.value = true
+//        }
     }
 
     fun updatePasswordInput(value: String) {
@@ -97,15 +100,15 @@ class AuthViewModel(
         _showPasswordError.value = false
         _showPasswordErrorRepeat.value = false
 
-        if (value.isBlank() || value.length < 6) {
-            _showPasswordError.value = true
-        }
-
-        if (_passwordRepeatInput.value.isNotBlank() && _passwordRepeatInput.value != value) {
-            _showPasswordErrorRepeat.value = true
-        } else if (_passwordRepeatInput.value.isNotBlank() && _passwordRepeatInput.value == value) {
-            _showPasswordErrorRepeat.value = false
-        }
+//        if (value.isBlank() || value.length < 6) {
+//            _showPasswordError.value = true
+//        }
+//
+//        if (_passwordRepeatInput.value.isNotBlank() && _passwordRepeatInput.value != value) {
+//            _showPasswordErrorRepeat.value = true
+//        } else if (_passwordRepeatInput.value.isNotBlank() && _passwordRepeatInput.value == value) {
+//            _showPasswordErrorRepeat.value = false
+//        }
     }
 
     fun updatePasswordRepeatInput(value: String) {
@@ -177,6 +180,11 @@ class AuthViewModel(
         // wenn das wiederholte password nicht gleich ist dann zeigen wir dem nutzer einen hinweis an
         if (passwordRepeat != password) {
             _showPasswordErrorRepeat.value = true
+            isValid = false
+        }
+
+        if (firstName.isEmpty() && lastName.isEmpty()) {
+            _showNameError.value = true
             isValid = false
         }
 
@@ -269,10 +277,29 @@ class AuthViewModel(
                 resetErrorStates()          // Fehler zurücksetzen
             }.onFailure {
                 _errorMessageResId.value = R.string.error_login_failed_credentials
+                _loginSuccess.value = false     // bleibt falsch, wenn Login fehlschlägt
             }
-
-            _loginSuccess.value = false     // bleibt falsch, wenn Login fehlschlägt
         }
+    }
+
+    fun tryLogin() {
+        val email = _emailInput.value
+        val password = _passwordInput.value
+        var isValid = true
+
+        if (email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            _showEmailError.value = true
+            isValid = false
+        }
+
+        if (password.isBlank() || password.length < 6) {
+            _showPasswordError.value = true
+            isValid = false
+        }
+
+        if (!isValid) return
+
+        loginUser()
     }
 
     fun logoutUser(): Result<Unit> {

@@ -19,6 +19,7 @@ import de.syntax_institut.androidabschlussprojekt.R
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.UserProfileViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.style.TextAlign
 
 
 @Composable

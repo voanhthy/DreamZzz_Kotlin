@@ -61,7 +61,9 @@ fun DetailInfoBox(
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-                    textAlign = TextAlign.Center)
+                    textAlign = TextAlign.Center,
+                    lineHeight = 28.sp
+                )
             } else {
                 Text(stringResource(R.string.unknown_title))
             }

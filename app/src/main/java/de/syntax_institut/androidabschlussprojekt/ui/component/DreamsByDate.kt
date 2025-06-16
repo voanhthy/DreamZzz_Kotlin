@@ -1,5 +1,6 @@
 package de.syntax_institut.androidabschlussprojekt.ui.component
 
+import android.R.attr.maxLines
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,7 +60,7 @@ fun DreamsByDate(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
+                    .padding(horizontal = 16.dp)
             )
         } else {
             // Slider um alle Einträge des Tages zu sehen
@@ -82,7 +84,7 @@ fun DreamsByDate(
                             modifier = Modifier
                                 .weight(2f)
                                 .fillMaxHeight()
-                                .padding(8.dp),
+                                .padding(top = 6.dp, end = 8.dp, start = 8.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             // Titel
@@ -103,12 +105,15 @@ fun DreamsByDate(
 
                             // Beschreibung
                             Text(
-                                truncateText(dream.prompt, 80),
+                                dream.prompt,
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontSize = 14.sp,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
-                                    .padding(top = 8.dp)
+                                    .padding(top = 8.dp),
+//                                lineHeight = 18.sp,
+                                maxLines = 3,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
 

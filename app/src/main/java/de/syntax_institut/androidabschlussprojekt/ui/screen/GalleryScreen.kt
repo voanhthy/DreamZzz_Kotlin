@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -142,7 +143,9 @@ fun GalleryScreen(
                     )
                     Text(
                         stringResource(R.string.gallery_description),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Justify
                     )
 
                     Row(
@@ -229,9 +232,12 @@ fun GalleryScreen(
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
                 )
+
                 Text(
                     stringResource(R.string.gallery_description),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Justify
                 )
 
                 Row(

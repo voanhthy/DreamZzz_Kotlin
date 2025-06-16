@@ -36,7 +36,7 @@ fun DescriptionAnalysisPicker(
     val showDescription = remember { mutableStateOf(true) }
 
     Column(
-        modifier = modifier,
+        modifier = modifier
     ) {
         Row(
             modifier = Modifier

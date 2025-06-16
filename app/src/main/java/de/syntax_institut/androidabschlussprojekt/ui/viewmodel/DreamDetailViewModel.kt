@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDao
-import de.syntax_institut.androidabschlussprojekt.ui.DreamDetailRoute
+import de.syntax_institut.androidabschlussprojekt.navigation.DreamDetailRoute
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 

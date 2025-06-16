@@ -6,6 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.androidabschlussprojekt.ui.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.runtime.getValue
+import de.syntax_institut.androidabschlussprojekt.navigation.AppStart
 import de.syntax_institut.androidabschlussprojekt.ui.theme.AndroidAbschlussprojektTheme
 
 

@@ -83,7 +83,7 @@ fun LoginScreen(
 
         DreamZzzTextButton(
             onClickText = {
-                authViewModel.loginUser()
+                authViewModel.tryLogin()
             },
             title = stringResource(R.string.login),
             modifier = Modifier
