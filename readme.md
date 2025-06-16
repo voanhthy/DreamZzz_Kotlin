@@ -11,11 +11,15 @@ DreamZzz ist für alle, die ihre Träume besser verstehen, ihren Schlaf optimier
   <img src="./img/home.png" width="200">
   <img src="./img/add_dream.png" width="200">
   <img src="./img/gallery_grid2.png" width="200">
+  </p>
+<p>
   <img src="./img/gallery_list.png" width="200">
   <img src="./img/detail.png" width="200">
   <img src="./img/nightsky.png" width="200">
-  <img src="./img/sleep.png" width="200">
-  <img src="./img/sleep2.png" width="200">
+  </p>
+<p>
+  <img src="./img/sleep1.png" width="200">
+  <img src="./img/sleep3.png" width="200">
   <img src="./img/setting.png" width="200">
 </p>
 
