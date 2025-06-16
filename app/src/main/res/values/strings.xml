@@ -97,8 +97,8 @@
     <string name="error_login_failed_credentials">Fehler bei der Anmeldung. Die Zugangsdaten sind möglicherweise falsch.</string>
     <string name="sleep">Schlaf</string>
     <string name="sleep_phases_dreams">Schlafphasen &amp; Träume</string>
-    <string name="sleep_disorders_problems">Schlafstörungen\n&amp;\nProbleme</string>
-    <string name="sleep_hygiene_rituals">Schlafhygiene\n&amp;\nRituale</string>
+    <string name="sleep_disorders_problems">Schlafstörungen\n&amp; Probleme</string>
+    <string name="sleep_hygiene_rituals">Schlafhygiene &amp; Rituale</string>
     <string name="technology_sleep">Technologie &amp; Schlaf</string>
     <string name="movement_sleep">Bewegung &amp; Schlaf</string>
     <string name="mindfulness_meditation">Achtsamkeit &amp; Meditation</string>
