@@ -12,6 +12,7 @@ DreamZzz ist für alle, die ihre Träume besser verstehen, ihren Schlaf optimier
   <img src="./img/add_dream.png" width="200">
   <img src="./img/gallery_grid2.png" width="200">
   <img src="./img/gallery_list.png" width="200">
+  <img src="./img/detail.png" width="200">
   <img src="./img/nightsky.png" width="200">
   <img src="./img/sleep.png" width="200">
   <img src="./img/sleep2.png" width="200">
@@ -86,7 +87,9 @@ Bilder analysieren und interpretieren: ChatGPT (OpenAI) zur Analyse und Interpre
 ## Ausblick
 Geplante Features:
 
-- <b>Traumsymbole-Bibliothek:</b> eine interaktive Bibliothek, die die Bedeutung häufig vorkommender Traumsymbolen erklärt und dem Benutzer so hilft, seine Träume besser zu verstehen  
+- <b>Integrierung von Google Fit:</b> zur Synchronisierung von Schlafdaten und zur tieferen Analyse des Zusammenhangs zwischen Schlafqualität und Traumerinnerung.
+- <b>Traum-Coach / Chatbot:</b> ein interaktiver KI-gestützter Assistent, der Nutzern hilft, ihre Träume zu reflektieren und Fragen zu Schlaf und Traum zu beantworten.
+- <b>Traumsymbole-Bibliothek:</b> eine interaktive Bibliothek, die die Bedeutung häufig vorkommender Traumsymbolen erklärt und dem Nutzer so hilft, seine Träume besser zu verstehen  
 - <b>Anmeldung über Drittanbieter</b> (wie Google oder Apple): einfacher Zugang durch die Anmeldung mit einem Drittanbieter-Konto  
-- <b>Gamifizierung:</b> Durch Gamification-Elemente werden Benutzer motiviert, regelmäßig ihre Träume zu dokumentieren. Belohnungen und Erfolge (z. B. für das Eintragen von Träumen über mehrere Tage hinweg) fördern die Interaktivität und das Engagement.  
-- <b>Monetarisierung – Premium-Mitgliedschaft:</b> Die Premium-Mitgliedschaft bietet erweiterte Funktionen, wie z. B. zusätzliche KI-gestützte Traumanalysen, exklusive Traumbilder, die Möglichkeit, eine unbegrenzte Anzahl von Träumen zu speichern oder erweiterte Schlafstatistiken.  
+- <b>Gamifizierung:</b> durch Gamification-Elemente werden Nutzer motiviert, regelmäßig ihre Träume zu dokumentieren. Belohnungen und Erfolge (z. B. für das Eintragen von Träumen über mehrere Tage hinweg) fördern die Interaktivität und das Engagement.  
+- <b>Monetarisierung – Premium-Mitgliedschaft:</b> die Premium-Mitgliedschaft bietet erweiterte Funktionen, wie z. B. zusätzliche KI-gestützte Traumanalysen, exklusive Traumbilder, die Möglichkeit, eine unbegrenzte Anzahl von Träumen zu speichern oder erweiterte Schlafstatistiken.  
