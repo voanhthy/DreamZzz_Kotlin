@@ -42,7 +42,7 @@ fun SwipeableGalleryListItem(
         confirmValueChange = { boxValue ->
             when (boxValue) {
                 SwipeToDismissBoxValue.StartToEnd -> {
-                    true
+                    false
                 }
 
                 SwipeToDismissBoxValue.EndToStart -> {

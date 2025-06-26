@@ -2,8 +2,6 @@ package de.syntax_institut.androidabschlussprojekt.ui.viewmodel
 
 import android.util.Log
 import android.util.Log.e
-import androidx.compose.runtime.remember
-import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.syntax_institut.androidabschlussprojekt.data.local.dao.DreamImageDao
@@ -16,7 +14,6 @@ import de.syntax_institut.androidabschlussprojekt.data.repository.DreamFirestore
 import de.syntax_institut.androidabschlussprojekt.data.repository.DreamImageRepoInterface
 import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestamp
 import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.dateWithoutTimestampLong
-import de.syntax_institut.androidabschlussprojekt.utils.helper.DateUtils.toLocalDate
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,13 +21,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.toSet
 import kotlinx.coroutines.launch
-import java.time.YearMonth
 import java.util.Date
 import java.util.UUID
 

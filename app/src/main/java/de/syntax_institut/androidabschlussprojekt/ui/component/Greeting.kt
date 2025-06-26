@@ -33,14 +33,14 @@ fun Greeting(
     val today = remember { LocalDate.now() }
 
     val weekdayName = remember {
-        today.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("de"))
-            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale("de")) else it.toString() }
+        today.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
     }
     
     val pattern = stringResource(R.string.pattern_date)
 
     val formattedDate = remember {
-        today.format(DateTimeFormatter.ofPattern(pattern, Locale("de")))
+        today.format(DateTimeFormatter.ofPattern(pattern, Locale.getDefault()))
     }
 
 

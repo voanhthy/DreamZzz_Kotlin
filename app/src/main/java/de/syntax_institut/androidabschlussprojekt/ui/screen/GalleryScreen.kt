@@ -173,6 +173,8 @@ fun GalleryScreen(
 //                    horizontalArrangement = Arrangement.spacedBy(8.dp),
 //                    verticalItemSpacing = 8.dp
 //                ) {
+
+            // Grid
             itemsIndexed(dreams) { index, dream ->
                 // zufällige Höhe generieren
                 val randomHeight = remember(dream.id) {
